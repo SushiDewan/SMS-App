@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smsapp/Card/selectCard.dart';
 import 'dart:async';
+import 'package:smsapp/features/SchoolCode/presentation/pages/school_code_page.dart';
 
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -120,7 +120,7 @@ class _IndicatorState extends State<Indicator> {
     Timer(
         Duration(milliseconds: 4000),
         () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SelectScreen())));
+            context, MaterialPageRoute(builder: (context) => SchoolCodePage())));
   }
 
   @override
