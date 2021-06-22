@@ -4,20 +4,19 @@ import 'strings.dart';
 import 'dart:convert';
 
 class ApiConstants {
-
-  Future<SchoolIdModel> getData() async{
+  Future<SchoolIdModel> getData() async {
     var client = http.Client();
     var welcome = null;
-    try{
+    try {
       var url = Uri.parse(Strings.School_ID_API_KEY);
-      var response = await client.post(url,body: {'Id': '1'});
-      if(response.statusCode == 200){
-       var jsonString = response.body;
+      var response = await client.post(url, body: {'id': '1'});
+      print(response.body);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
         welcome = SchoolIdModel.fromJson(jsonMap);
       }
-    }
-    catch(e){
+    } catch (e) {
       return welcome;
     }
     return welcome;

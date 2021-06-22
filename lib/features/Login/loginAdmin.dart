@@ -39,12 +39,7 @@ class _LoginAdminState extends State<LoginAdmin> {
                         child: Container(
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.centerRight,
-                                  colors: [
-                                HexColor("#F7A529"),
-                                HexColor("#FFCC00")
-                              ])),
+                                  begin: Alignment.topLeft, end: Alignment.centerRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
                           width: MediaQuery.of(context).size.width,
                           // decoration: BoxDecoration(
                           //   color: HexColor("#B9E2DA"),
@@ -73,16 +68,12 @@ class _LoginAdminState extends State<LoginAdmin> {
                       ),
                     ),
                     SizedBox(height: 70),
-                    Center(
-                        child: Text("Hello!",
-                            style: TextStyle(
-                                fontSize: 60, fontWeight: FontWeight.w600))),
+                    Center(child: Text("Hello!", style: TextStyle(fontSize: 60, fontWeight: FontWeight.w600))),
                     // SizedBox(height:10),
                     Center(
                         child: Text(
                       "Sign in to your account",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     )),
                     SizedBox(height: 180),
                     Container(
@@ -91,28 +82,21 @@ class _LoginAdminState extends State<LoginAdmin> {
                         Material(
                             elevation: 10,
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                             child: Padding(
                                 padding: EdgeInsets.only(left: 40, right: 20),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                      suffixIcon:
-                                          Icon(FontAwesomeIcons.userAlt),
+                                      suffixIcon: Icon(FontAwesomeIcons.userAlt),
                                       border: InputBorder.none,
                                       hintText: "Username",
-                                      hintStyle: TextStyle(
-                                          color: Color(0xFFE1E1E1),
-                                          fontSize: 14)),
+                                      hintStyle: TextStyle(color: Color(0xFFE1E1E1), fontSize: 14)),
                                 ))),
                         SizedBox(height: 30),
                         Material(
                             elevation: 10,
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                             child: Padding(
                                 padding: EdgeInsets.only(left: 40, right: 20),
                                 child: TextField(
@@ -120,44 +104,30 @@ class _LoginAdminState extends State<LoginAdmin> {
                                       suffixIcon: Icon(FontAwesomeIcons.lock),
                                       border: InputBorder.none,
                                       hintText: "Password",
-                                      hintStyle: TextStyle(
-                                          color: Color(0xFFE1E1E1),
-                                          fontSize: 14)),
+                                      hintStyle: TextStyle(color: Color(0xFFE1E1E1), fontSize: 14)),
                                 ))),
                         SizedBox(height: 50),
                         Padding(
                           padding: EdgeInsets.only(left: 120, right: 10),
                           child: MaterialButton(
                               height: 50,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AdminDashboardPage()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage()));
                               },
                               elevation: 10,
                               color: HexColor('#B9E2DA'),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "SUBMIT",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "Varela",
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      size: 30,
-                                      color: Colors.white,
-                                    )
-                                  ])),
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                Text(
+                                  "SUBMIT",
+                                  style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  size: 30,
+                                  color: Colors.white,
+                                )
+                              ])),
                         ),
                         SizedBox(height: 10),
                         Align(
@@ -165,17 +135,10 @@ class _LoginAdminState extends State<LoginAdmin> {
                             child: TextButton(
                                 child: Text(
                                   "Forget Password?",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontFamily: "Varela"),
+                                  style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgetPasswordPage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
                                 })),
                         SizedBox(height: 40),
                         Container(
@@ -183,24 +146,14 @@ class _LoginAdminState extends State<LoginAdmin> {
                               child: RichText(
                                 text: TextSpan(
                                     text: "Haven't registered Yet? ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontFamily: "Varela"),
+                                    style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
                                     children: [
                                       TextSpan(
-                                          text: "Register",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                              color: HexColor('#F7A529')))
+                                          text: "Register", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: HexColor('#F7A529')))
                                     ]),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => RegisterAdmin()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterAdmin()));
                               }),
                         )
                       ]),
@@ -230,20 +183,17 @@ class TopClipper extends CustomClipper<Path> {
     /// [Top Left corner]
     var secondControlPoint = Offset(0, 0);
     var secondEndPoint = Offset(width * .2, height * .3);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
 
     /// [Left Middle]
     var fifthControlPoint = Offset(width * .3, height * .5);
     var fiftEndPoint = Offset(width * .23, height * .6);
-    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
-        fiftEndPoint.dx, fiftEndPoint.dy);
+    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy, fiftEndPoint.dx, fiftEndPoint.dy);
 
     /// [Bottom Left corner]
     var thirdControlPoint = Offset(0, height);
     var thirdEndPoint = Offset(width, height);
-    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
-        thirdEndPoint.dx, thirdEndPoint.dy);
+    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy, thirdEndPoint.dx, thirdEndPoint.dy);
 
     path.lineTo(0, size.height);
     path.close();
