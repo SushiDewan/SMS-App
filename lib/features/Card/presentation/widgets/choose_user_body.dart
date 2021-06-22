@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/animation.dart';
-import 'package:smsapp/core/api/api_constants.dart';
 
 class ChooseUserBody extends StatefulWidget {
   String id;
@@ -20,14 +19,12 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
   AnimationController _controller;
   Animation<double> _animation;
 
-  SchoolIdModel _schoolId;
-  bool _loading;
+ 
   @override
   void initState() {
     super.initState();
     _loading = true;
-
-    _controller = AnimationController(
+         _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat(reverse: false);
@@ -43,6 +40,16 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
       return sclId;
     });
   }
+  
+  }
+     Future<SchoolIdModel> getData() async {
+    return await ApiConstants().getData().then((sclId) {
+      return sclId;
+    });
+     }
+  
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +90,10 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
                     top: 10,
                   ),
                   child: FutureBuilder(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                    ),
+                    child: FutureBuilder(
                     future: getData(),
                     builder: (BuildContext context, AsyncSnapshot<SchoolIdModel> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -149,6 +160,63 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
                           child: Text(
                             "Admin",
                             style: TextStyle(fontFamily: 'Varela', color: Colors.white),
+                    )),
+            SizedBox(height: 20),
+            Expanded(
+                child: GridView.count(
+                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 30,
+                    children: [
+                  // decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(50)),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    margin: EdgeInsets.only(
+                        top: 30, left: 20, right: 20, bottom: 5),
+                    elevation: 10,
+                    semanticContainer: true,
+                    color: HexColor('#FABA15'),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 300),
+                            pageBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation) {
+                              return LoginAdmin();
+                            },
+                            transitionsBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return Align(
+                                child: SlideTransition(
+                                  position: Tween(
+                                          begin: Offset(1.0, 0.0),
+                                          end: Offset(0.0, 0.0))
+                                      .animate(animation),
+                                  child: child,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Center(
+                            child: SizedBox(
+                                height: 75,
+                                width: 85,
+                                child: Icon(
+                                  FontAwesomeIcons.userCog,
+                                  size: 35,
+                                  color: Colors.white,
+                                )),
                           ),
                         ))
                       ],
