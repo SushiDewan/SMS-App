@@ -3,6 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
 import 'package:smsapp/features/ForgetSchoolCode/presentation/widgets/forget_sclcode_body.dart';
+import 'package:smsapp/features/SchoolCode/data/models/school_id_models.dart';
+import 'package:http/http.dart' as http;
+import 'package:smsapp/core/api/strings.dart';
+import 'dart:convert';
 
 class SchoolCodeBody extends StatefulWidget {
   @override
@@ -12,6 +16,24 @@ class SchoolCodeBody extends StatefulWidget {
 class _SchoolCodeBodyState extends State<SchoolCodeBody> {
   FocusNode currentFocus = FocusNode();
   final _myController = TextEditingController();
+
+///////////////////
+//////
+/////
+  Future<SchoolIdModel> getId(String id) async {
+    final response =
+        await http.post(Uri.parse(Strings.School_ID_API_KEY), body: {"Id": id});
+    if (response.statusCode == 201) {
+      return SchoolIdModel.fromJson(jsonDecode(response.body));
+    } else {
+      return null;
+    }
+  }
+////
+//////////
+/////////////////
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,36 +162,31 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                       alignment: Alignment.bottomRight,
                       child: TextButton(
                           onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration:
-                                                Duration(milliseconds: 400),
-                                            pageBuilder: (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double>
-                                                    secondaryAnimation) {
-                                              return ForgetSchoolCode();
-                                            },
-                                            transitionsBuilder:
-                                                (BuildContext context,
-                                                    Animation<double> animation,
-                                                    Animation<double>
-                                                        secondaryAnimation,
-                                                    Widget child) {
-                                              return Align(
-                                                child: SlideTransition(
-                                                  position: Tween(
-                                                          begin:
-                                                              Offset(1.0, 0.0),
-                                                          end: Offset(0.0, 0.0))
-                                                      .animate(animation),
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionDuration: Duration(milliseconds: 400),
+                                pageBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation) {
+                                  return ForgetSchoolCode();
+                                },
+                                transitionsBuilder: (BuildContext context,
+                                    Animation<double> animation,
+                                    Animation<double> secondaryAnimation,
+                                    Widget child) {
+                                  return Align(
+                                    child: SlideTransition(
+                                      position: Tween(
+                                              begin: Offset(1.0, 0.0),
+                                              end: Offset(0.0, 0.0))
+                                          .animate(animation),
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
                           },
                           child: Text(
                             "Forget Your Code?",
@@ -207,36 +224,31 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                     ),
                     child: InkWell(
                         onTap: () {
-                           Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration:
-                                                Duration(milliseconds: 400),
-                                            pageBuilder: (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double>
-                                                    secondaryAnimation) {
-                                              return ChooseUserPage();
-                                            },
-                                            transitionsBuilder:
-                                                (BuildContext context,
-                                                    Animation<double> animation,
-                                                    Animation<double>
-                                                        secondaryAnimation,
-                                                    Widget child) {
-                                              return Align(
-                                                child: SlideTransition(
-                                                  position: Tween(
-                                                          begin:
-                                                              Offset(1.0, 0.0),
-                                                          end: Offset(0.0, 0.0))
-                                                      .animate(animation),
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 400),
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return ChooseUserPage();
+                              },
+                              transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return Align(
+                                  child: SlideTransition(
+                                    position: Tween(
+                                            begin: Offset(1.0, 0.0),
+                                            end: Offset(0.0, 0.0))
+                                        .animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
                         },
                         child: Center(
                             child: Text(
@@ -248,7 +260,6 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                         ))),
                   ),
                 ),
-
 
 //Register School Code
 
@@ -304,9 +315,7 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                 //                       decoration: TextDecoration.underline))
                 //             ])))),
 
-
 //End of register school code
-
 
                 Expanded(
                   child: ClipPath(

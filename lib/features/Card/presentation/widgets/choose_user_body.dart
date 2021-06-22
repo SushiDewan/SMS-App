@@ -1,4 +1,5 @@
 
+import 'package:smsapp/core/api/api_constants.dart';
 import 'package:smsapp/features/Login/loginAdmin.dart';
 import 'package:smsapp/features/Parent/loginParent.dart';
 import 'package:smsapp/features/SchoolCode/data/models/school_id_models.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/animation.dart';
-import 'package:smsapp/core/api/api_constants.dart';
 
 class ChooseUserBody extends StatefulWidget {
   @override
@@ -20,13 +20,11 @@ class _ChooseUserBodyState extends State<ChooseUserBody>
   AnimationController _controller;
   Animation<double> _animation;
 
-  SchoolIdModel _schoolId;
-  bool _loading;
+ 
   @override
 
   void initState(){
     super.initState();
-    _loading= true;
     
      _controller = AnimationController(
       duration: const Duration(seconds: 2),
@@ -38,22 +36,21 @@ class _ChooseUserBodyState extends State<ChooseUserBody>
     );
     _controller.forward();
 
-    ApiConstants().getData().then((sclId){
-      setState(() {
-         _schoolId = sclId;
-      _loading = false;
-      });
+    // ApiConstants().getData().then((_data1){
+    //   setState(() {
+    //      _data1 = data;
+    //   });
      
-    });
+    // });
   
   }
-    
+     Future<SchoolIdModel> getData() async {
+    return await ApiConstants().getData().then((sclId) {
+      return sclId;
+    });
+     }
   
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +98,21 @@ class _ChooseUserBodyState extends State<ChooseUserBody>
                       top: 10,
                     ),
                     child: FutureBuilder(
-                      future: getData(),
-                                          child: Text(school,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: 'Varela',
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ))),
+                    future: getData(),
+                    builder: (BuildContext context, AsyncSnapshot<SchoolIdModel> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: Text('Please wait its loading...'));
+                      } else {
+                        if (snapshot.hasError)
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        else
+                          return Center(
+                            child: new Text('${snapshot.data.school}'),
+                          ); // snapshot.data  :- get your object which is pass from your downloadData() function
+                      }
+                    },
+                  ),
+                    )),
             SizedBox(height: 20),
             Expanded(
                 child: GridView.count(
