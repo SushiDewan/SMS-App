@@ -3,6 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
 import 'package:smsapp/features/ForgetSchoolCode/presentation/widgets/forget_sclcode_body.dart';
+import 'package:smsapp/features/SchoolCode/data/models/school_id_models.dart';
+import 'package:http/http.dart' as http;
+import 'package:smsapp/core/api/strings.dart';
+import 'dart:convert';
 
 class SchoolCodeBody extends StatefulWidget {
   @override
@@ -12,6 +16,24 @@ class SchoolCodeBody extends StatefulWidget {
 class _SchoolCodeBodyState extends State<SchoolCodeBody> {
   FocusNode currentFocus = FocusNode();
   final _myController = TextEditingController();
+
+///////////////////
+//////
+/////
+  Future<SchoolIdModel> getId(String id) async {
+    final response =
+        await http.post(Uri.parse(Strings.School_ID_API_KEY), body: {"Id": id});
+    if (response.statusCode == 201) {
+      return SchoolIdModel.fromJson(jsonDecode(response.body));
+    } else {
+      return null;
+    }
+  }
+////
+//////////
+/////////////////
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,6 +102,7 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                       ),
                     ),
                   ),
+
                   Padding(
                     padding: EdgeInsets.only(right: 10.0),
                     child: Align(
@@ -105,14 +128,175 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                                 ),
                               );
                             },
+
+                ]),
+                // SizedBox(height: 5),
+//                 Padding(
+//                   padding: EdgeInsets.only(right: 10.0),
+//                   child: Align(
+//                       alignment: Alignment.bottomRight,
+//                       child: TextButton(
+//                           onPressed: () {
+//                             Navigator.push(
+//                               context,
+//                               PageRouteBuilder(
+//                                 transitionDuration: Duration(milliseconds: 400),
+//                                 pageBuilder: (BuildContext context,
+//                                     Animation<double> animation,
+//                                     Animation<double> secondaryAnimation) {
+//                                   return ForgetSchoolCode();
+//                                 },
+//                                 transitionsBuilder: (BuildContext context,
+//                                     Animation<double> animation,
+//                                     Animation<double> secondaryAnimation,
+//                                     Widget child) {
+//                                   return Align(
+//                                     child: SlideTransition(
+//                                       position: Tween(
+//                                               begin: Offset(1.0, 0.0),
+//                                               end: Offset(0.0, 0.0))
+//                                           .animate(animation),
+//                                       child: child,
+//                                     ),
+//                                   );
+//                                 },
+//                               ),
+//                             );
+//                           },
+//                           child: Text(
+//                             "Forget Your Code?",
+//                             style: TextStyle(color: HexColor("#F7A529")),
+//                           ))),
+//                 ),
+                SizedBox(height: 40),
+                // Container(
+                //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                // Container(
+                //   height: 50,
+                //   width: MediaQuery.of(context).size.width / 1.7,
+                //   child: RaisedButton(
+                //       onPressed: () {
+                //         Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => RegisterAdmin()));
+                //       },
+                //       color: HexColor("#B9E2DA"),
+                //       shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(25),
+                //           side: BorderSide(color: HexColor("#B9E2DA"))),
+                //       child: Text("Register Your School")),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(left: 120, right: 20),
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width / 2.0,
+                    decoration: ShapeDecoration(
+                      color: HexColor('#B9E2DA'),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 400),
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return ChooseUserPage();
+                              },
+                              transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return Align(
+                                  child: SlideTransition(
+                                    position: Tween(
+                                            begin: Offset(1.0, 0.0),
+                                            end: Offset(0.0, 0.0))
+                                        .animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: Center(
                             child: Text(
                               "Forget Your Code?",
                               style: TextStyle(color: HexColor("#F7A529")),
                             ))),
                   ),
+
                   SizedBox(height: 40),
                   Padding(
-                    padding: EdgeInsets.only(left: 120, right: 20),
+                    padding: EdgeInsets.only(left: 120, right: 20)
+                ),
+
+//Register School Code
+
+                // SizedBox(height: 10),
+                // Padding(
+                //     padding: EdgeInsets.only(left: 120, right: 20),
+                //     child: TextButton(
+                //         onPressed: () {
+                //           Navigator.push(
+                //                           context,
+                //                           PageRouteBuilder(
+                //                             transitionDuration:
+                //                                 Duration(milliseconds: 400),
+                //                             pageBuilder: (BuildContext context,
+                //                                 Animation<double> animation,
+                //                                 Animation<double>
+                //                                     secondaryAnimation) {
+                //                               return RegisterAdmin();
+                //                             },
+                //                             transitionsBuilder:
+                //                                 (BuildContext context,
+                //                                     Animation<double> animation,
+                //                                     Animation<double>
+                //                                         secondaryAnimation,
+                //                                     Widget child) {
+                //                               return Align(
+                //                                 child: SlideTransition(
+                //                                   position: Tween(
+                //                                           begin:
+                //                                               Offset(1.0, 0.0),
+                //                                           end: Offset(0.0, 0.0))
+                //                                       .animate(animation),
+                //                                   child: child,
+                //                                 ),
+                //                               );
+                //                             },
+                //                           ),
+                //                         );
+                //         },
+                //         child: RichText(
+                //             text: TextSpan(
+                //                 text: "Don't have Code? ",
+                //                 style: TextStyle(
+                //                     color: Colors.black,
+                //                     fontWeight: FontWeight.w500,
+                //                     fontSize: 15),
+                //                 children: [
+                //               TextSpan(
+                //                   text: "Register",
+                //                   style: TextStyle(
+                //                       color: HexColor("#F7A529"),
+                //                       fontSize: 18,
+                //                       decoration: TextDecoration.underline))
+                //             ])))),
+
+//End of register school code
+
+                Expanded(
+                  child: ClipPath(
+                    clipper: FooterWaveClipper(),
+
                     child: Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width / 2.0,
