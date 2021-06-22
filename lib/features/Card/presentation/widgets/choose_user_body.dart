@@ -10,6 +10,8 @@ import 'package:flutter/animation.dart';
 import 'package:smsapp/core/api/api_constants.dart';
 
 class ChooseUserBody extends StatefulWidget {
+  String id;
+  ChooseUserBody(this.id);
   @override
   _ChooseUserBodyState createState() => _ChooseUserBodyState();
 }
@@ -37,7 +39,7 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
   }
 
   Future<SchoolIdModel> getData() async {
-    return await ApiConstants().getData().then((sclId) {
+    return await ApiConstants().getData(widget.id).then((sclId) {
       return sclId;
     });
   }

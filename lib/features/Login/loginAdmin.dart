@@ -41,10 +41,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                               gradient: LinearGradient(
                                   begin: Alignment.topLeft, end: Alignment.centerRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
                           width: MediaQuery.of(context).size.width,
-                          // decoration: BoxDecoration(
-                          //   color: HexColor("#B9E2DA"),
-                          //   //  HexColor("")
-                          // ),
                           height: MediaQuery.of(context).size.height / 2,
                         ),
                       ),

@@ -4,12 +4,13 @@ import 'strings.dart';
 import 'dart:convert';
 
 class ApiConstants {
-  Future<SchoolIdModel> getData() async {
+  Future<SchoolIdModel> getData(id) async {
     var client = http.Client();
     var welcome = null;
     try {
       var url = Uri.parse(Strings.School_ID_API_KEY);
-      var response = await client.post(url, body: {'id': '1'});
+      print(id);
+      var response = await client.post(url, body: {'id': id});
       print(response.body);
       if (response.statusCode == 200) {
         var jsonString = response.body;

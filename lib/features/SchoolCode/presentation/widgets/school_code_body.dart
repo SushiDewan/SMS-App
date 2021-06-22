@@ -16,6 +16,7 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      height: MediaQuery.of(context).size.height,
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
@@ -38,6 +39,23 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
               height: MediaQuery.of(context).size.height / 2.5,
             ),
           ),
+          Container(
+            child: ClipPath(
+              clipper: FooterWaveClipper(),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      HexColor("#F7A529"),
+                      HexColor("#FFCC00"),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
@@ -45,46 +63,50 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
-            body: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-              child: Column(
-                children: [
-                  SizedBox(height: 260),
-                  Container(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "School Code",
-                          style: TextStyle(fontSize: 22, fontFamily: 'Varela', fontWeight: FontWeight.w600, color: Colors.black),
-                        ),
-                      )),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Material(
-                      color: Colors.transparent,
-                      // elevation: 10,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        cursorColor: Colors.black,
-                        controller: _myController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(vertical: 10),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(10)),
+            body: SingleChildScrollView(
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(new FocusNode());
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView(
+                    children: [
+                      SizedBox(height: 260),
+                      Container(
+                        padding: EdgeInsets.only(left: 30),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "School Code",
+                            style: TextStyle(fontSize: 22, fontFamily: 'Varela', fontWeight: FontWeight.w600, color: Colors.black),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 10.0),
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Material(
+                          color: Colors.transparent,
+                          // elevation: 10,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            cursorColor: Colors.black,
+                            controller: _myController,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(vertical: 10),
+                              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -108,57 +130,54 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                             child: Text(
                               "Forget Your Code?",
                               style: TextStyle(color: HexColor("#F7A529")),
-                            ))),
-                  ),
-                  SizedBox(height: 40),
-                  Padding(
-                    padding: EdgeInsets.only(left: 120, right: 20),
-                    child: Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 2.0,
-                      decoration: ShapeDecoration(
-                        color: HexColor('#B9E2DA'),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionDuration: Duration(milliseconds: 400),
-                                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                                  return ChooseUserPage();
-                                },
-                                transitionsBuilder:
-                                    (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                                  return Align(
-                                    child: SlideTransition(
-                                      position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
-                                      child: child,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                          child: Center(
+                      SizedBox(height: 40),
+                      Padding(
+                        padding: EdgeInsets.only(left: 120, right: 20),
+                        child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width / 2.0,
+                          decoration: ShapeDecoration(
+                            color: HexColor('#B9E2DA'),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  transitionDuration: Duration(milliseconds: 400),
+                                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                    print(_myController.text);
+                                    return ChooseUserPage(id: _myController.text);
+                                  },
+                                  transitionsBuilder:
+                                      (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                                    return Align(
+                                      child: SlideTransition(
+                                        position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Center(
                               child: Text(
-                            "SUBMIT",
-                            style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
-                          ))),
-                    ),
-                  ),
-                  Expanded(
-                    child: ClipPath(
-                      clipper: FooterWaveClipper(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.centerLeft, end: Alignment.bottomRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
+                                "SUBMIT",
+                                style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
