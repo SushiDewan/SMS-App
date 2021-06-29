@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class TeacherSubjects extends StatefulWidget {
+class TeacherSubjectBody extends StatefulWidget {
   @override
-  _TeacherSubjectsState createState() => _TeacherSubjectsState();
+  _TeacherSubjectBodyState createState() => _TeacherSubjectBodyState();
 }
 
-class _TeacherSubjectsState extends State<TeacherSubjects> {
+class _TeacherSubjectBodyState extends State<TeacherSubjectBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

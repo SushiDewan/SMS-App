@@ -28,6 +28,9 @@ dependencies:
   table_calendar: ^2.3.3
   hexcolor: ^2.0.3
   http: ^0.13.3
+  fluttertoast: ^8.0.7
+  rxdart: ^0.27.1
+  provider: ^5.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

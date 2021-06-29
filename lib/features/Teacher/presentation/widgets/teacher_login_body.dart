@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_dashboard_page.dart';
 import 'dart:math';
-import 'package:smsapp/features/Teacher/teacherDashboard.dart';
 
 
-class LoginTeacher extends StatefulWidget {
+
+class TeacherLoginBody extends StatefulWidget {
   @override
-  _LoginTeacherState createState() => _LoginTeacherState();
+  _TeacherLoginBodyState createState() => _TeacherLoginBodyState();
 }
 
-class _LoginTeacherState extends State<LoginTeacher> {
+class _TeacherLoginBodyState extends State<TeacherLoginBody> {
   // final _formController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,7 @@ class _LoginTeacherState extends State<LoginTeacher> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return TeacherDashboard();
+                                              return TeacherDashboardPage();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,

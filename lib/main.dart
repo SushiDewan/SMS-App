@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_login_bloc.dart';
+import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_register_bloc.dart';
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/presentation/pages/school_code_page.dart';
+import 'package:provider/provider.dart';
 
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  statusBarBrightness: Brightness.light,
-  statusBarIconBrightness: Brightness.light,
-));
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+  ));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      theme: new ThemeData(
-
-        backgroundColor: Colors.red,
-        textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 20
-            )
+    return MultiProvider(
+      providers: [
+        Provider<AdminLoginBloc>(
+          create: (context) => AdminLoginBloc(),
         ),
+        Provider<AdminRegisterBloc>(create: (context) => AdminRegisterBloc(),)
+      ],
+      child: MaterialApp(
+        theme: new ThemeData(
+          backgroundColor: Colors.red,
+          textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
         ),
-      home: Home(),
-      debugShowCheckedModeBanner: false,
+        home: Home(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
@@ -55,11 +60,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       body: Container(
-          decoration: BoxDecoration(
-            color: Colors.red
+          decoration: BoxDecoration(color: Colors.red
               // gradient: LinearGradient(
               //     begin: Alignment.bottomLeft,
               //     end: Alignment.topRight,
@@ -119,8 +122,8 @@ class _IndicatorState extends State<Indicator> {
     super.initState();
     Timer(
         Duration(milliseconds: 4000),
-        () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SchoolCodePage())));
+        () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SchoolCodePage())));
   }
 
   @override

@@ -2,29 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherAttendance.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherEvent.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherExam.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherHomework.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherLeave.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherPayment.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherProfile.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherSubjects.dart';
-// import 'package:smsapp/features/Parent/ParentPages/parentEvent.dart';
-// import 'package:smsapp/features/Parent/ParentPages/parentExam.dart';
-// import 'package:smsapp/features/Parent/ParentPages/parentLeave.dart';
-// import 'package:smsapp/features/Parent/ParentPages/parentProfile.dart';
-// import 'package:smsapp/features/Parent/ParentPages/studentAttendance.dart';
-// import 'package:smsapp/features/Parent/ParentPages/studentComplaint.dart';
-// import 'package:smsapp/features/Parent/ParentPages/studentHomework.dart';
-// // import 'package:smsapp/features/OTP Code/otpCode.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_attendance_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_event_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_exam_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_homework_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_leave_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_payment_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_profile_page.dart';
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_subject_page.dart';
 
-class TeacherDashboard extends StatefulWidget {
+class TeacherDashboardBody extends StatefulWidget {
   @override
-  _TeacherDashboardState createState() => _TeacherDashboardState();
+  _TeacherDashboardBodyState createState() => _TeacherDashboardBodyState();
 }
 
-class _TeacherDashboardState extends State<TeacherDashboard> {
+class _TeacherDashboardBodyState extends State<TeacherDashboardBody> {
   bool value = false;
   createAlertDialog(BuildContext context) {
     return showDialog(
@@ -234,7 +226,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherProfile();
+                                        return TeacherProfilePage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -301,7 +293,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherEvent();
+                                        return TeacherEventPage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -368,7 +360,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherAttendance();
+                                        return TeacherAttendancePage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -438,7 +430,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherHomework();
+                                        return TeacherHomeworkpage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -512,7 +504,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                               Animation<double> animation,
                                               Animation<double>
                                                   secondaryAnimation) {
-                                            return TeacherPayment();
+                                            return TeacherPaymentPage();
                                           },
                                           transitionsBuilder:
                                               (BuildContext context,
@@ -573,7 +565,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherSubjects();
+                                        return TeacherSubjectPage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -643,7 +635,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherExam();
+                                        return TeacherExamPage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,
@@ -781,7 +773,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                                           Animation<double> animation,
                                           Animation<double>
                                               secondaryAnimation) {
-                                        return TeacherLeave();
+                                        return TeacherLeavePage();
                                       },
                                       transitionsBuilder: (BuildContext context,
                                           Animation<double> animation,

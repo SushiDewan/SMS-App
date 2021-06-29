@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class TeacherAttendance extends StatefulWidget {
+class TeacherAttendanceBody extends StatefulWidget {
   @override
-  _TeacherAttendanceState createState() => _TeacherAttendanceState();
+  _TeacherAttendanceBodyState createState() => _TeacherAttendanceBodyState();
 }
 
-class _TeacherAttendanceState extends State<TeacherAttendance> {
+class _TeacherAttendanceBodyState extends State<TeacherAttendanceBody> {
   CalendarController _controller;
   @override
   void initState() {

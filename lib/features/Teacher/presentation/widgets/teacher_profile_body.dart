@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class TeacherProfile extends StatefulWidget {
+class TeacherProfileBody extends StatefulWidget {
   @override
-  _TeacherProfileState createState() => _TeacherProfileState();
+  _TeacherProfileBodyState createState() => _TeacherProfileBodyState();
 }
 
-class _TeacherProfileState extends State<TeacherProfile>{
+class _TeacherProfileBodyState extends State<TeacherProfileBody>{
   
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/Login/loginAdmin.dart';
+import 'package:smsapp/features/LoginAdmin/presentation/pages/login_admin_page.dart';
 
 class NewSchoolCode extends StatefulWidget {
   @override
@@ -99,7 +99,7 @@ class _NewSchoolCodeState extends State<NewSchoolCode> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return LoginAdmin();
+                                              return LoginPage();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,

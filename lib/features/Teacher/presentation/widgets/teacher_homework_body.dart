@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class TeacherHomework extends StatefulWidget {
+class TeacherHomeworkBody extends StatefulWidget {
   @override
-  _TeacherHomeworkState createState() => _TeacherHomeworkState();
+  _TeacherHomeworkBodyState createState() => _TeacherHomeworkBodyState();
 }
 
-class _TeacherHomeworkState extends State<TeacherHomework>
+class _TeacherHomeworkBodyState extends State<TeacherHomeworkBody>
     with TickerProviderStateMixin {
   TabController _tabController;
   @override

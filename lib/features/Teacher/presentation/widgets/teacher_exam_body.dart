@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class TeacherExam extends StatefulWidget {
+class TeacherExamBody extends StatefulWidget {
   @override
-  _TeacherExamState createState() => _TeacherExamState();
+  _TeacherExamBodyState createState() => _TeacherExamBodyState();
 }
 
-class _TeacherExamState extends State<TeacherExam> {
+class _TeacherExamBodyState extends State<TeacherExamBody> {
   String chooseStudent;
   List stuList = ["sushila", "Aadesh", "Supiya"];
   @override
