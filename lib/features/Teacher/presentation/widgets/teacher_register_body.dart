@@ -7,15 +7,15 @@ import 'package:smsapp/core/api/strings.dart';
 import 'package:smsapp/core/widgets/build_button.dart';
 import 'package:smsapp/core/widgets/build_text_form_field.dart';
 import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_register_bloc.dart';
-import 'package:smsapp/features/LoginAdmin/presentation/pages/login_admin_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_login_page.dart';
 
-class RegisterAdminBody extends StatefulWidget {
+class TeacherRegisterBody extends StatefulWidget {
   @override
-  _RegisterAdminBodyState createState() => _RegisterAdminBodyState();
+  _TeacherRegisterBodyState createState() => _TeacherRegisterBodyState();
 }
 
-class _RegisterAdminBodyState extends State<RegisterAdminBody> {
+class _TeacherRegisterBodyState extends State<TeacherRegisterBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _firstname = TextEditingController();
@@ -161,19 +161,6 @@ class _RegisterAdminBodyState extends State<RegisterAdminBody> {
                         }),
                     SizedBox(height: 30),
 
-                    //Role
-                    // StreamBuilder<Object>(
-                    //     stream: bloc.role,
-                    //     builder: (context, snapshot) {
-                    //       return BuildTextFormField(
-                    //         hintText: "Role",
-                    //          errorText: snapshot.error,
-                    //         onChanged: bloc.changerole,
-                    //       );
-                    //     }),
-                    // SizedBox(height: 30),
-
-                    //Edn number
                     StreamBuilder<Object>(
                         stream: bloc.edn,
                         builder: (context, snapshot) {
@@ -246,7 +233,7 @@ class _RegisterAdminBodyState extends State<RegisterAdminBody> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginAdminPage()));
+                                    builder: (context) => TeacherLoginPage()));
                           }),
                     )
                   ]),

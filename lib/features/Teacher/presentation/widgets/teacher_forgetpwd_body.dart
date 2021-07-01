@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/widgets/forget_password1_body.dart';
+import 'package:smsapp/features/Teacher/presentation/widgets/teacher_forgetpwd1_body.dart';
 // import 'package:hexcolor/hexcolor.dart';
 
 
-class ForgetPasswordBody extends StatefulWidget {
+class TeacherForgetPwdBody extends StatefulWidget {
   @override
-  _ForgetPasswordBodyState createState() => _ForgetPasswordBodyState();
+  _TeacherForgetPwdBodyState createState() => _TeacherForgetPwdBodyState();
 }
 
-class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
+class _TeacherForgetPwdBodyState extends State<TeacherForgetPwdBody> {
   @override
   Widget build(BuildContext context) {
     // final height = MediaQuery.of(context).size.height;
@@ -158,7 +158,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return ForgetPassword1Body();
+                                              return TeacherForgetPwd1Body();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,

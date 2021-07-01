@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+// import 'package:HexColor/HexColor.dart';
+import 'package:pinput/pin_put/pin_put.dart';
+import 'package:smsapp/features/Parent/loginParent.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/widgets/verifi_code_body.dart';
-
-
-class ForgetPassword1Body extends StatefulWidget {
+class SponsorVeriCodeBody extends StatefulWidget {
   @override
-  _ForgetPassword1BodyState createState() => _ForgetPassword1BodyState();
+  _SponsorVeriCodeBodyState createState() => _SponsorVeriCodeBodyState();
 }
 
-class _ForgetPassword1BodyState extends State<ForgetPassword1Body> {
+class _SponsorVeriCodeBodyState extends State<SponsorVeriCodeBody> {
   @override
   Widget build(BuildContext context) {
     // final height = MediaQuery.of(context).size.height;
@@ -78,70 +76,52 @@ class _ForgetPassword1BodyState extends State<ForgetPassword1Body> {
                     child: Column(
                       children: [
                         Text(
-                          "Please enter a new Password",
+                          "Please enter Your Verification Code",
                           // textAlign: TextAlign.center,
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                       
+                        SizedBox(height: 40),
+                        Text(
+                          "We have sent a verification code to your registered Email ID",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontSize: 13),
+                        ),
                         SizedBox(height: 40),
                         Padding(
-                          padding: EdgeInsets.only(left:30.0, right: 30),
-                          child: Material(
-                            color: Colors.transparent,
-                            // elevation: 10,
-                            child: TextField(
-                              obscureText: true,
-                              keyboardType: TextInputType.number,
-                              // textAlign: TextAlign.center,
-                              cursorColor: Colors.black,
-                              // controller: _myController,
-                              decoration: InputDecoration(
-                                hintText: 'New Password',
-                              
-                                hintStyle: TextStyle(fontSize: 13),
-                                prefixIcon: Icon(
-                                  FontAwesomeIcons.key,
-                                  color: Colors.deepPurple,
-                                ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 10),
-                              ),
+                          padding: EdgeInsets.only(left:60.0, right: 60),
+                          child: PinPut(
+                            textStyle: TextStyle(color: Colors.deepPurple),
+                            fieldsCount: 4,
+                            eachFieldHeight: 40,
+                            eachFieldWidth: 40,
+                            pinAnimationType: PinAnimationType.fade,
+                            selectedFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
                             ),
-                          ),
-                        ),
-                        SizedBox(height:20),
-                        Padding(
-                          padding: EdgeInsets.only(left:30.0, right: 30),
-                          child: Material(
-                            color: Colors.transparent,
-                            // elevation: 10,
-                            child: TextField(
-                              obscureText: true,
-                              keyboardType: TextInputType.number,
-                              
-                              cursorColor: Colors.black,
-                              // controller: _myController,
-                              decoration: InputDecoration(
-                                
-                                hintText: 'Confirm Password',
-                                hintStyle: TextStyle(fontSize: 13),
-                                prefixIcon: Icon(
-                                  FontAwesomeIcons.key,
-                                  color: Colors.deepPurple,
-                                ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 10),
-                              ),
+                             submittedFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
                             ),
-                          ),
+                             followingFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
+                            ),
+                          )
                         ),
+                        
                         SizedBox(height: 70),
                         MaterialButton(
                           height: 50,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           onPressed: () {
-                           Navigator.push(
+                            Navigator.push(
                                           context,
                                           PageRouteBuilder(
                                             transitionDuration:
@@ -150,7 +130,7 @@ class _ForgetPassword1BodyState extends State<ForgetPassword1Body> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return VerificationCode();
+                                              return LoginParent();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,
@@ -173,7 +153,7 @@ class _ForgetPassword1BodyState extends State<ForgetPassword1Body> {
                                         );
                           },
                           elevation: 10,
-                          // color: Hexcolor('#B9E2DA'),
+                          // color: HexColor('#B9E2DA'),
                           color: Colors.deepPurple,
                           child: Padding(
                             padding: EdgeInsets.only(left: 80, right: 80),

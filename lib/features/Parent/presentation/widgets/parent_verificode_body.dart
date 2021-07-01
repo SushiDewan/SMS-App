@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+// import 'package:HexColor/HexColor.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/ForgetSchoolCode/presentation/widgets/new_sclcode_body.dart';
+import 'package:smsapp/features/Parent/loginParent.dart';
 
-class ForgetSchoolCode1 extends StatefulWidget {
+class ParentVeriCodeBody extends StatefulWidget {
   @override
-  _ForgetSchoolCode1State createState() => _ForgetSchoolCode1State();
+  _ParentVeriCodeBodyState createState() => _ParentVeriCodeBodyState();
 }
 
-class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
+class _ParentVeriCodeBodyState extends State<ParentVeriCodeBody> {
   @override
   Widget build(BuildContext context) {
-    
+    // final height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -21,29 +21,56 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              
-                  Column(children: [
-                    Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: [Align(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              color: Colors.black,
-                              iconSize: 25,
-                            ),
+              Stack(children: [
+                ClipRRect(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                   
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: IconButton(
+                            color: Colors.black,
+                            icon: Icon(Icons.arrow_back_ios),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          Text("Forget Your Code",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600, fontFamily: 'Varela')),
-                          ]),
                         ),
-                         SizedBox(height: 120),
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Forget Password",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                    child: Padding(
+                      padding: EdgeInsets.only(top:50, left: 50),
+                                          child: Container(
+                        height: 300,
+                        width: 300,
+                        // child: Icon(Icons.l, size: 100,),
+                  decoration: BoxDecoration(
+                    
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/test.png'), fit: BoxFit.fill)),
+                ),
+                    ))
+              ]),
+
+              SizedBox(height: 50),
               Container(
+                
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
@@ -63,33 +90,38 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
                         ),
                         SizedBox(height: 40),
                         Padding(
-                            padding: EdgeInsets.only(left: 60.0, right: 60),
-                            child: PinPut(
-                              textStyle: TextStyle(color: Colors.orange),
-                              fieldsCount: 4,
-                              eachFieldHeight: 40,
-                              eachFieldWidth: 40,
-                              pinAnimationType: PinAnimationType.fade,
-                              selectedFieldDecoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.orange)),
-                              submittedFieldDecoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.orange)),
-                              followingFieldDecoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.orange)),
-                            )),
+                          padding: EdgeInsets.only(left:60.0, right: 60),
+                          child: PinPut(
+                            textStyle: TextStyle(color: Colors.deepPurple),
+                            fieldsCount: 4,
+                            eachFieldHeight: 40,
+                            eachFieldWidth: 40,
+                            pinAnimationType: PinAnimationType.fade,
+                            selectedFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
+                            ),
+                             submittedFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
+                            ),
+                             followingFieldDecoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color:Colors.deepPurple)
+                            ),
+                          )
+                        ),
+                        
                         SizedBox(height: 70),
                         MaterialButton(
                           height: 50,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           onPressed: () {
-                             Navigator.push(
+                            Navigator.push(
                                           context,
                                           PageRouteBuilder(
                                             transitionDuration:
@@ -98,7 +130,7 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return NewSchoolCode();
+                                              return LoginParent();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,
@@ -122,7 +154,7 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
                           },
                           elevation: 10,
                           // color: HexColor('#B9E2DA'),
-                          color: HexColor('#B9E2DA'),
+                          color: Colors.deepPurple,
                           child: Padding(
                             padding: EdgeInsets.only(left: 80, right: 80),
                             child: Text(
@@ -137,11 +169,6 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
                       ],
                     )),
               ),
-                  ],)
-                ]),
-              ),
-
-             
               // SizedBox(height:30),
               // Expanded(
               //         child: ClipPath(
@@ -153,7 +180,29 @@ class _ForgetSchoolCode1State extends State<ForgetSchoolCode1> {
               //         ),
 
               // )
-          
-    ));
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
+
+// class ForgotClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     var path = Path();
+//     path.moveTo(size.width - (size.width / 2), size.height);
+
+//     path.lineTo(size.width, size.height);
+//     path.quadraticBezierTo(
+//         size.width / 2, size.height - 20, size.width / 4, size.height);
+//     path.lineTo(size.width, 0);
+//     path.close();
+
+//     return path;
+//   }
+
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }

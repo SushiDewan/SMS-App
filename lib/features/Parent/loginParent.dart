@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
 import 'dart:math';
 import 'package:smsapp/features/Parent/parentDashboard.dart';
+import 'package:smsapp/features/Parent/presentation/pages/parent_forgetpwd_page.dart';
 
 class LoginParent extends StatefulWidget {
   @override
@@ -161,7 +161,7 @@ class _LoginParentState extends State<LoginParent> {
                                     PageRouteBuilder(
                                       transitionDuration: Duration(milliseconds: 400),
                                       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                                        return ForgetPasswordPage();
+                                        return ParentForgetPwdPage();
                                       },
                                       transitionsBuilder:
                                           (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {

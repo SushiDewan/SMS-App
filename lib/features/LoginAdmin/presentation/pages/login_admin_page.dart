@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:smsapp/features/LoginAdmin/presentation/widgets/login_admin_main.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginAdminPage extends StatefulWidget {
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginAdminPageState createState() => _LoginAdminPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginAdminPageState extends State<LoginAdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

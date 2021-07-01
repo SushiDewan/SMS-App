@@ -1,4 +1,5 @@
-import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
+
+import 'package:smsapp/features/Sponsor/presentatation/pages/sponsor_forgetpwd_page.dart';
 import 'package:smsapp/features/Sponsor/sponsorDashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -194,7 +195,7 @@ class _LoginSponsorState extends State<LoginSponsor> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return ForgetPasswordPage();
+                                              return SponsorForgetPwdPage();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,

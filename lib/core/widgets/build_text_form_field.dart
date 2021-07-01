@@ -20,7 +20,7 @@ final TextEditingController controller;
 
   const BuildTextFormField({
     Key key,
-    @required this.hintText,
+    this.hintText,
     this.onSaved,
     this.onChanged,
     this.validator,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smsapp/core/widgets/build_button.dart';
+import 'package:smsapp/core/widgets/build_text_form_field.dart';
 import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
 
 class SchoolCodeBody extends StatefulWidget {
@@ -49,77 +50,61 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
               elevation: 0,
             ),
             body: Column(
-              children: [
-                SizedBox(height: 260),
-                Container(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "School Code",
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontFamily: 'Varela',
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                      ),
-                    )),
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    // elevation: 10,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      cursorColor: Colors.black,
-                      controller: id,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
+                children: [
+                  SizedBox(height: 260),
+                  Container(
+                      padding: EdgeInsets.only(left: 30),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+            "School Code",
+            style: TextStyle(
+                fontSize: 22,
+                fontFamily: 'Varela',
+                fontWeight: FontWeight.w600,
+                color: Colors.black),
+                        ),
+                      )),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: BuildTextFormField(keyboardType: TextInputType.number, controller: id, )
                   ),
+                  SizedBox(height: 40),
+                  BuildButton(
+                    color: Colors.blue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 400),
+            pageBuilder: (BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              print(id.text);
+              return ChooseUserPage(id: id.text);
+            },
+            transitionsBuilder: (BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                Widget child) {
+              return Align(
+                child: SlideTransition(
+                  position: Tween(
+                          begin: Offset(1.0, 0.0),
+                          end: Offset(0.0, 0.0))
+                      .animate(animation),
+                  child: child,
                 ),
-                SizedBox(height: 40),
-                BuildButton(
-                  color: Colors.blue,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        transitionDuration: Duration(milliseconds: 400),
-                        pageBuilder: (BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation) {
-                          print(id.text);
-                          return ChooseUserPage(id: id.text);
-                        },
-                        transitionsBuilder: (BuildContext context,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                            Widget child) {
-                          return Align(
-                            child: SlideTransition(
-                              position: Tween(
-                                      begin: Offset(1.0, 0.0),
-                                      end: Offset(0.0, 0.0))
-                                  .animate(animation),
-                              child: child,
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  title: "submit",
-                )
-              ],
-            ),
+              );
+            },
+                        ),
+                      );
+                    },
+                    title: "submit",
+                  )
+                ],
+              ),
           )
         ]));
   }

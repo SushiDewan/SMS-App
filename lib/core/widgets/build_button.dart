@@ -9,7 +9,7 @@ class BuildButton extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.onTap,
-    @required this.color,
+    this.color,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BuildButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: color,
+      color: Theme.of(context).accentColor,
       height: 50,
       onPressed: onTap,
       child: Text(

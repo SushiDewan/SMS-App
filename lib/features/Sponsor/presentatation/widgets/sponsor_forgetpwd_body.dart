@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:HexColor/HexColor.dart';
-import 'package:pinput/pin_put/pin_put.dart';
-import 'package:smsapp/features/Parent/loginParent.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smsapp/features/Sponsor/presentatation/widgets/sponsor_forgetpwd1_body.dart';
+// import 'package:hexcolor/hexcolor.dart';
 
-class VerificationCode extends StatefulWidget {
+
+class SponsorForgetPwdBody extends StatefulWidget {
   @override
-  _VerificationCodeState createState() => _VerificationCodeState();
+  _SponsorForgetPwdBodyState createState() => _SponsorForgetPwdBodyState();
 }
 
-class _VerificationCodeState extends State<VerificationCode> {
+class _SponsorForgetPwdBodyState extends State<SponsorForgetPwdBody> {
   @override
   Widget build(BuildContext context) {
     // final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
@@ -21,11 +21,23 @@ class _VerificationCodeState extends State<VerificationCode> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 48.0),
               Stack(children: [
                 ClipRRect(
                   child: Container(
                     height: MediaQuery.of(context).size.height / 4,
-                   
+                    // decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.only(
+                    //         bottomLeft: Radius.circular(40),
+                    //         bottomRight: Radius.circular(40)),
+                    //     gradient: LinearGradient(
+                    //         begin: Alignment.centerLeft,
+                    //         end: Alignment.bottomRight,
+                    //         colors: [
+                    //           Hexcolor("#F7A529"),
+                    //           Hexcolor("#FFCC00")
+                    //         ])),
                     child: Row(
                       children: [
                         Align(
@@ -70,58 +82,56 @@ class _VerificationCodeState extends State<VerificationCode> {
 
               SizedBox(height: 50),
               Container(
-                
+
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
                       children: [
                         Text(
-                          "Please enter Your Verification Code",
+                          "Please enter Your registered Email ID/Phone",
                           // textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                          style: TextStyle(fontWeight: FontWeight.w600, fontFamily: "Varela", fontSize: 13),
                         ),
                         SizedBox(height: 40),
                         Text(
-                          "We have sent a verification code to your registered Email ID",
+                          "We'll send a verification code to your registerd email Id/Phone",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.5),
-                              fontSize: 13),
+                              fontFamily: 'Varela',
+                              fontSize: 12),
                         ),
                         SizedBox(height: 40),
                         Padding(
-                          padding: EdgeInsets.only(left:60.0, right: 60),
-                          child: PinPut(
-                            textStyle: TextStyle(color: Colors.deepPurple),
-                            fieldsCount: 4,
-                            eachFieldHeight: 40,
-                            eachFieldWidth: 40,
-                            pinAnimationType: PinAnimationType.fade,
-                            selectedFieldDecoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color:Colors.deepPurple)
+                          padding: EdgeInsets.only(left:10.0, right: 10),
+                          child: Material(
+                            color: Colors.transparent,
+                            // elevation: 10,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              // textAlign: TextAlign.center,
+                              cursorColor: Colors.black,
+                              // controller: _myController,
+                              decoration: InputDecoration(
+                                hintText: 'Email/Phone',
+                                hintStyle: TextStyle(fontSize: 12, fontFamily: 'Varela'),
+                                prefixIcon: Icon(
+                                  FontAwesomeIcons.userAlt,
+                                  color: Colors.deepPurple,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
                             ),
-                             submittedFieldDecoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color:Colors.deepPurple)
-                            ),
-                             followingFieldDecoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color:Colors.deepPurple)
-                            ),
-                          )
+                          ),
                         ),
-                        
                         SizedBox(height: 70),
                         MaterialButton(
                           height: 50,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           onPressed: () {
-                            Navigator.push(
+                           Navigator.push(
                                           context,
                                           PageRouteBuilder(
                                             transitionDuration:
@@ -130,7 +140,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                                                 Animation<double> animation,
                                                 Animation<double>
                                                     secondaryAnimation) {
-                                              return LoginParent();
+                                              return SponsorForgetPwd1Body();
                                             },
                                             transitionsBuilder:
                                                 (BuildContext context,
@@ -153,7 +163,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                                         );
                           },
                           elevation: 10,
-                          // color: HexColor('#B9E2DA'),
+                          // color: Hexcolor('#B9E2DA'),
                           color: Colors.deepPurple,
                           child: Padding(
                             padding: EdgeInsets.only(left: 80, right: 80),
@@ -169,17 +179,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                       ],
                     )),
               ),
-              // SizedBox(height:30),
-              // Expanded(
-              //         child: ClipPath(
-              //           clipper: ForgotClipper(),
-              //           child: Container(
-
-              //             color: Colors.red,
-              //           ),
-              //         ),
-
-              // )
+              
             ],
           ),
         ),
@@ -187,22 +187,3 @@ class _VerificationCodeState extends State<VerificationCode> {
     );
   }
 }
-
-// class ForgotClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     var path = Path();
-//     path.moveTo(size.width - (size.width / 2), size.height);
-
-//     path.lineTo(size.width, size.height);
-//     path.quadraticBezierTo(
-//         size.width / 2, size.height - 20, size.width / 4, size.height);
-//     path.lineTo(size.width, 0);
-//     path.close();
-
-//     return path;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-// }

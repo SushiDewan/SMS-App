@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
+import 'package:provider/provider.dart';
+import 'package:smsapp/core/widgets/build_button.dart';
+import 'package:smsapp/core/widgets/build_text_form_field.dart';
+import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_login_bloc.dart';
 import 'package:smsapp/features/Teacher/presentation/pages/teacher_dashboard_page.dart';
-import 'dart:math';
-
-
+import 'package:smsapp/features/Teacher/presentation/pages/teacher_forgetpwd_page.dart';
+import 'package:smsapp/features/Teacher/presentation/widgets/teacher_register_body.dart';
 
 class TeacherLoginBody extends StatefulWidget {
   @override
@@ -13,264 +14,157 @@ class TeacherLoginBody extends StatefulWidget {
 }
 
 class _TeacherLoginBodyState extends State<TeacherLoginBody> {
-  // final _formController = TextEditingController();
+  var newFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: GestureDetector(
-         onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-              child: Container(
-            height: double.infinity,
-            width: MediaQuery.of(context).size.width,
+    final bloc = Provider.of<AdminLoginBloc>(context, listen: false);
 
-            child: Column(
-              children: [
-               Expanded(
-                    child: Stack(children: [
-                      Positioned(
-                        top: -height * .18,
-                        right: -MediaQuery.of(context).size.width * .4,
-                        child: Transform.rotate(
-                          angle: -pi / 3.5,
-                          child: ClipPath(
-                            clipper: TopClipper(),
-                            child: Container(
-                              decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.centerRight,
-                              colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
-                              width: MediaQuery.of(context).size.width,
-                              // decoration: BoxDecoration(
-                              //   color: HexColor("#B9E2DA"),
-                              //   //  HexColor("")
-                              // ),
-                              height: MediaQuery.of(context).size.height/2,
-                              
-                            ),
-                          ),
-                        ),
-                      ),
-                      Column(children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Container(
-                                    child: (Align(
-                                      alignment: Alignment.topLeft,
-                                      child: IconButton(
-                                        icon: Icon(Icons.arrow_back),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        color: Colors.black,
-                                        iconSize: 40,
-                                      ),
-                                    )),
-                                  ),
-                                ),
-                                SizedBox(height: 70),
-                                Center(
-                                    child: Text("Hello!",
-                                        style: TextStyle(
-                                            fontSize: 60,
-                                            fontWeight: FontWeight.w600))),
-                                // SizedBox(height:10),
-                                Center(
-                                    child: Text(
-                                  "Sign in to your account",
-                                  style: TextStyle(
-                                      fontSize: 15, fontWeight: FontWeight.w500),
-                                )),
-                         SizedBox(height:180),       
-            Container(
-            
-              padding: EdgeInsets.only(left: 40, right: 40),
-              child: Column(
-                children: [
-                  Material(
-                      elevation: 10,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 40, right: 20),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                suffixIcon: Icon(FontAwesomeIcons.userAlt),
-                                border: InputBorder.none,
-                                hintText: "Username",
-                                hintStyle: TextStyle(
-                                    color: Color(0xFFE1E1E1), fontSize: 14)),
-                          ))),
-                  SizedBox(height: 30),
-                  Material(
-                      elevation: 10,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 40, right: 20),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                suffixIcon: Icon(FontAwesomeIcons.lock),
-                                border: InputBorder.none,
-                                hintText: "Password",
-                                hintStyle: TextStyle(
-                                    color: Color(0xFFE1E1E1), fontSize: 14)),
-                          ))),
-                  SizedBox(height: 50),
-                  Padding(
-                    padding: EdgeInsets.only(left: 120, right: 10),
-                    child: MaterialButton(
-                        height: 50,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        onPressed: () {
-                          Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration:
-                                                Duration(milliseconds: 400),
-                                            pageBuilder: (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double>
-                                                    secondaryAnimation) {
-                                              return TeacherDashboardPage();
-                                            },
-                                            transitionsBuilder:
-                                                (BuildContext context,
-                                                    Animation<double> animation,
-                                                    Animation<double>
-                                                        secondaryAnimation,
-                                                    Widget child) {
-                                              return Align(
-                                                child: SlideTransition(
-                                                  position: Tween(
-                                                          begin:
-                                                              Offset(1.0, 0.0),
-                                                          end: Offset(0.0, 0.0))
-                                                      .animate(animation),
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
-                        },
-                        elevation: 10,
-                        color: HexColor('#B9E2DA'),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "SUBMIT",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Varela",
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                size: 30,
-                                color: Colors.white,
-                              )
-                            ])),
-                  ),
-                  SizedBox(height:10),
-                  Align(
-                      alignment: Alignment.bottomRight,
-                      child: TextButton(child: Text("Forget Password?"), onPressed: (){
-
-                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration:
-                                                Duration(milliseconds: 400),
-                                            pageBuilder: (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double>
-                                                    secondaryAnimation) {
-                                              return ForgetPasswordPage();
-                                            },
-                                            transitionsBuilder:
-                                                (BuildContext context,
-                                                    Animation<double> animation,
-                                                    Animation<double>
-                                                        secondaryAnimation,
-                                                    Widget child) {
-                                              return Align(
-                                                child: SlideTransition(
-                                                  position: Tween(
-                                                          begin:
-                                                              Offset(1.0, 0.0),
-                                                          end: Offset(0.0, 0.0))
-                                                      .animate(animation),
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
-                      })),
-                      
-                      ]),
-                      
-                      )
-                              ]),
-                    ]),
-                  ),
-    
-              ],
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+            HexColor('#F2B5FA'),
+            HexColor('#EC8DAB'),
+          ])),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(newFocus);
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Column(
+              children: [],
             ),
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Column(children: [
+              SizedBox(height: 40),
+              Center(
+                  child: Text("Hello!",
+                      style: TextStyle(
+                          fontSize: 60, fontWeight: FontWeight.w600))),
+              // SizedBox(height:10),
+              Center(
+                  child: Text(
+                "Sign in to your account",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              )),
+              SizedBox(height: 50),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: HexColor('#F2B5FA'),
+                  boxShadow: [
+                    BoxShadow(
+                        color: HexColor('#F2B5FA').withOpacity(0.2),
+                        offset: Offset(0, 10),
+                        blurRadius: 20)
+                  ],
+                ),
+                child: Column(children: [
+                  StreamBuilder<Object>(
+                      stream: bloc.loginUsername,
+                      builder: (context, AsyncSnapshot snapshot) =>
+                          BuildTextFormField(
+                            hintText: "Username",
+                            errorText: snapshot.error,
+                            onChanged: bloc.changeloginUsername,
+                          )),
+                  SizedBox(height: 30),
+                  StreamBuilder<Object>(
+                      stream: bloc.loginPassword,
+                      builder: (context, AsyncSnapshot snapshot) {
+                        return BuildTextFormField(
+                          hintText: "Password",
+                          errorText: snapshot.error,
+                          onChanged: bloc.changeloginPassword,
+                        );
+                      }),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        StreamBuilder<Object>(
+                            stream: bloc.isValid,
+                            builder: (context, AsyncSnapshot snapshot) {
+                              return BuildButton(
+                                  color: snapshot.hasError || !snapshot.hasData
+                                      ? Colors.red
+                                      : Colors.green,
+                                  title: "Login",
+                                  onTap: snapshot.hasError || !snapshot.hasData
+                                      ? null
+                                      : () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TeacherDashboardPage()));
+                                        }
+
+                              
+                                  );
+                            }),
+                        TextButton(
+                            child: Text(
+                              "Forget Password?",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: "Varela"),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TeacherForgetPwdPage()));
+                            }),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextButton(
+                      child: RichText(
+                        text: TextSpan(
+                            text: "Haven't registered Yet? ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontFamily: "Varela"),
+                            children: [
+                              TextSpan(
+                                  text: "Register",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ))
+                            ]),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TeacherRegisterBody()));
+                      }),
+                ]),
+              )
+            ]),
           ),
         ),
-
+      ),
     );
-  }
-}
-
-class TopClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var height = size.height;
-    var width = size.width;
-    var path = new Path();
-
-    path.lineTo(0, size.height);
-    path.lineTo(size.width, height);
-    path.lineTo(size.width, 0);
-
-    /// [Top Left corner]
-    var secondControlPoint = Offset(0, 0);
-    var secondEndPoint = Offset(width * .2, height * .3);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
-
-    /// [Left Middle]
-    var fifthControlPoint = Offset(width * .3, height * .5);
-    var fiftEndPoint = Offset(width * .23, height * .6);
-    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
-        fiftEndPoint.dx, fiftEndPoint.dy);
-
-    /// [Bottom Left corner]
-    var thirdControlPoint = Offset(0, height);
-    var thirdEndPoint = Offset(width, height);
-    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
-        thirdEndPoint.dx, thirdEndPoint.dy);
-
-    path.lineTo(0, size.height);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

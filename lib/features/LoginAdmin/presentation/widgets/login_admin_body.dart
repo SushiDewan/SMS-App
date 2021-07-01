@@ -3,7 +3,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:smsapp/core/widgets/build_button.dart';
 import 'package:smsapp/core/widgets/build_text_form_field.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
+import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
+import 'package:smsapp/features/Admin/presentation/pages/admin_forgetpwd_page.dart';
 import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_login_bloc.dart';
 import 'package:smsapp/features/LoginAdmin/presentation/widgets/register_admin_body.dart';
 
@@ -15,12 +16,11 @@ class LoginAdminBody extends StatefulWidget {
 class _LoginAdminBodyState extends State<LoginAdminBody> {
   var newFocus = FocusNode();
 
-
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<AdminLoginBloc>(context, listen: false);
 
-    return Container(   
+    return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -28,14 +28,13 @@ class _LoginAdminBodyState extends State<LoginAdminBody> {
               colors: [
             HexColor('#F2B5FA'),
             HexColor('#EC8DAB'),
-          ])
-          ),
+          ])),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).requestFocus(newFocus);
         },
-              child: Scaffold(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
@@ -49,8 +48,8 @@ class _LoginAdminBodyState extends State<LoginAdminBody> {
               SizedBox(height: 40),
               Center(
                   child: Text("Hello!",
-                      style:
-                          TextStyle(fontSize: 60, fontWeight: FontWeight.w600))),
+                      style: TextStyle(
+                          fontSize: 60, fontWeight: FontWeight.w600))),
               // SizedBox(height:10),
               Center(
                   child: Text(
@@ -108,7 +107,13 @@ class _LoginAdminBodyState extends State<LoginAdminBody> {
                                   onTap: snapshot.hasError || !snapshot.hasData
                                       ? null
                                       : () {
-                                          bloc.submit();
+                                          print(bloc.loginUsername);
+                                          print(bloc.loginPassword);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AdminDashboardPage()));
                                         }
 
                                   // Navigator.push(
@@ -131,7 +136,7 @@ class _LoginAdminBodyState extends State<LoginAdminBody> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ForgetPasswordPage()));
+                                          AdminForgetPwdPage()));
                             }),
                       ],
                     ),
