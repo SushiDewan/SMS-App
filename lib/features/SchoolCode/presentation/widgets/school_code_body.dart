@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart';
+import 'package:smsapp/BLoc/UserInformation.dart';
+import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
 import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
 import 'package:smsapp/features/ForgetSchoolCode/presentation/widgets/forget_sclcode_body.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SchoolCodeBody extends StatefulWidget {
   @override
@@ -12,6 +19,52 @@ class SchoolCodeBody extends StatefulWidget {
 class _SchoolCodeBodyState extends State<SchoolCodeBody> {
   FocusNode currentFocus = FocusNode();
   final _myController = TextEditingController();
+
+  bool isLoading = false;
+
+  Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    final SchoolBloc schoolBloc = BlocProvider.of<SchoolBloc>(context);
+    print(schoolBloc.state.schoolCode);
+    String id = _myController.text;
+    APIwithoutAuthentication apiCall = new APIwithoutAuthentication();
+    apiCall.post("", {'id': id}, (Response response) {
+      setState(() {
+        isLoading = false;
+      });
+      if (response.statusCode == 200) {
+        Map body = jsonDecode(response.body);
+        print(body['school']);
+        context.read<SchoolBloc>().setCode(_myController.text, body['school']);
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 400),
+            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+              print(_myController.text);
+              return ChooseUserPage();
+            },
+            transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+              return Align(
+                child: SlideTransition(
+                  position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                  child: child,
+                ),
+              );
+            },
+          ),
+        );
+      }
+    }, (error) {
+      setState(() {
+        isLoading = false;
+      });
+      print(error);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,10 +112,6 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
           Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
             body: SingleChildScrollView(
               child: GestureDetector(
                 onTap: () {
@@ -88,7 +137,6 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                         padding: EdgeInsets.only(left: 30.0, right: 30.0),
                         child: Material(
                           color: Colors.transparent,
-                          // elevation: 10,
                           child: TextField(
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
@@ -145,32 +193,18 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                           ),
                           child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  transitionDuration: Duration(milliseconds: 400),
-                                  pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                                    print(_myController.text);
-                                    return ChooseUserPage(id: _myController.text);
-                                  },
-                                  transitionsBuilder:
-                                      (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                                    return Align(
-                                      child: SlideTransition(
-                                        position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
-                                        child: child,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
+                            onTap: isLoading ? null : getData,
                             child: Center(
-                              child: Text(
-                                "SUBMIT",
-                                style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
-                              ),
+                              child: isLoading
+                                  ? SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : Text(
+                                      "SUBMIT",
+                                      style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                    ),
                             ),
                           ),
                         ),

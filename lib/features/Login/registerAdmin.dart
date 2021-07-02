@@ -1,6 +1,17 @@
+import 'dart:convert';
+
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart';
+import 'package:smsapp/BLoc/UserInformation.dart';
+import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
+import 'package:smsapp/core/api/AdminApi.dart';
+import 'package:smsapp/features/Login/Widgets/TextField.dart';
 import 'dart:math';
 
 import 'package:smsapp/features/Login/loginAdmin.dart';
@@ -12,6 +23,99 @@ class RegisterAdmin extends StatefulWidget {
 
 class _RegisterAdminState extends State<RegisterAdmin> {
   // final _formController = TextEditingController();
+
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _contactController = TextEditingController();
+  final _ednController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  bool isLoading = false;
+
+  doSignUp() {
+    if (!_formKey.currentState.validate()) return;
+    print("one");
+    setState(() {
+      isLoading = true;
+    });
+    String first_name = _firstNameController.text;
+    String last_name = _lastNameController.text;
+    String email = _emailController.text;
+    String contact = _contactController.text;
+    String address = _addressController.text;
+    int role = 1;
+    String edn_number = _ednController.text;
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    APIwithoutAuthentication api = APIwithoutAuthentication();
+    final SchoolBloc schoolBloc = BlocProvider.of<SchoolBloc>(context);
+    print({
+      "user": jsonEncode({
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "contact_number": int.parse(contact, radix: 10),
+        "address": address,
+        "role": role,
+        "edn_number": edn_number,
+        "username": username,
+        "password": password,
+      }),
+      "school_id": schoolBloc.state.schoolCode,
+    });
+    api.post(
+      "school/user/register/admin/",
+      {
+        "user": jsonEncode({
+          "first_name": first_name,
+          "last_name": last_name,
+          "email": email,
+          "contact_number": int.parse(contact, radix: 10),
+          "address": address,
+          "role": role,
+          "edn_number": edn_number,
+          "username": username,
+          "password": password,
+        }),
+        "school_id": schoolBloc.state.schoolCode,
+      },
+      (Response response) {
+        setState(() {
+          isLoading = false;
+        });
+        print("response");
+        print(response.body.toString());
+        // Fluttertoast.showToast(
+        //   msg: response.headers[],
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.CENTER,
+        //   timeInSecForIosWeb: 1,
+        //   backgroundColor: response.statusCode == 200 ? Colors.green : Colors.red,
+        //   textColor: Colors.white,
+        // );
+        // if (response.statusCode == 200) {
+        //   Admin admin = Admin();
+        //   admin.setToken(response.body, response.refresh);
+        //   admin.savetoken();
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAdmin()));
+        // }
+        // print(response.body);
+      },
+      (error) {
+        setState(() {
+          isLoading = false;
+        });
+        print(error);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -21,265 +125,203 @@ class _RegisterAdminState extends State<RegisterAdmin> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child:  Container(
-            height: double.infinity,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Stack(children: [
-                    Positioned(
-                      top: -height * .18,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: Transform.rotate(
-                        angle: -pi / 3.5,
-                        child: ClipPath(
-                          clipper: TopClipper(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                  HexColor("#F7A529"),
-                                  HexColor("#FFCC00")
-                                ])),
-                            width: MediaQuery.of(context).size.width,
-                            // decoration: BoxDecoration(
-                            //   color: HexColor("#B9E2DA"),
-                            //   //  HexColor("")
-                            // ),
-                            height: MediaQuery.of(context).size.height / 2,
+        child: Container(
+          height: double.infinity,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Expanded(
+                child: Stack(children: [
+                  Positioned(
+                    top: -height * .18,
+                    right: -MediaQuery.of(context).size.width * .4,
+                    child: Transform.rotate(
+                      angle: -pi / 3.5,
+                      child: ClipPath(
+                        clipper: TopClipper(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft, end: Alignment.centerRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Scaffold(
+                    backgroundColor: Colors.transparent,
+                    appBar: AppBar(
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      foregroundColor: Colors.black,
+                      title: Text("Register", style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600, fontFamily: 'Varela')),
+                    ),
+                    body: SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.only(left: 40, right: 40),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "First name",
+                                icon: Icons.face,
+                                controller: _firstNameController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'First name cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Last name",
+                                icon: Icons.group,
+                                controller: _lastNameController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'Last name cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Email",
+                                icon: FontAwesomeIcons.at,
+                                controller: _emailController,
+                                validator: (value) {
+                                  return (value == null || value == '')
+                                      ? 'Email cannot be empty'
+                                      : (!EmailValidator.validate(value))
+                                          ? "Enter valid email"
+                                          : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Username",
+                                icon: FontAwesomeIcons.userAlt,
+                                controller: _usernameController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'Username cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Address",
+                                icon: Icons.location_city,
+                                controller: _addressController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'Address cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Contact number",
+                                icon: Icons.contact_phone,
+                                controller: _contactController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'Contact number cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "EDN number",
+                                icon: Icons.format_list_numbered,
+                                controller: _ednController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'EDN number cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Password",
+                                icon: FontAwesomeIcons.lock,
+                                controller: _passwordController,
+                                validator: (value) {
+                                  return (value == null || value == '') ? 'Password cannot be empty' : null;
+                                },
+                              ),
+                              SizedBox(height: 30),
+                              FormInputField(
+                                hintText: "Re-enter password",
+                                icon: FontAwesomeIcons.lock,
+                                controller: null,
+                                validator: (value) {
+                                  return (value != _passwordController.text) ? 'Password doesnot match ' : null;
+                                },
+                              ),
+                              SizedBox(height: 50),
+                              Padding(
+                                padding: EdgeInsets.only(left: 120, right: 10),
+                                child: MaterialButton(
+                                  height: 50,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                  disabledColor: HexColor('#B9E2DA'),
+                                  onPressed: isLoading ? null : doSignUp,
+                                  elevation: 10,
+                                  color: HexColor('#B9E2DA'),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "REGISTER",
+                                        style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                      ),
+                                      isLoading
+                                          ? SizedBox(
+                                              height: 20,
+                                              width: 20,
+                                              child: CircularProgressIndicator(),
+                                            )
+                                          : Icon(
+                                              Icons.arrow_forward,
+                                              size: 30,
+                                              color: Colors.white,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                child: TextButton(
+                                    child: RichText(
+                                      text: TextSpan(
+                                          text: "Already have an Account? ",
+                                          style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
+                                          children: [
+                                            TextSpan(
+                                                text: "Login",
+                                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: HexColor('#F7A529')))
+                                          ]),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAdmin()));
+                                    }),
+                              ),
+                              SizedBox(height: 30),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                    Column(children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 40),
-                        child: Row(
-                          children: [Align(
-                            alignment: Alignment.topLeft,
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              color: Colors.black,
-                              iconSize: 25,
-                            ),
-                          ),
-                          Text("Register",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600, fontFamily: 'Varela')),
-                          ]),
-                        ),
-                      
-                    
-                      // SizedBox(height:10),
-                      // Center(
-                      //     child: Text(
-                      //   "Sign in to your account",
-                      //   style: TextStyle(
-                      //       fontSize: 15, fontWeight: FontWeight.w500),
-                      // )),
-                      SizedBox(height: 120),
-                      Container(
-                          padding: EdgeInsets.only(left: 40, right: 40),
-                          child: Column(children: [
-                            Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          // labelText: "Username",
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.userAlt),
-                                          border: InputBorder.none,
-                                          hintText: "Username",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                            SizedBox(height: 30),
-
-                            Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          // labelText: "Username",
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.userAlt),
-                                          border: InputBorder.none,
-                                          hintText: "School Name",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                            SizedBox(height: 30),
-                            Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          // labelText: "Username",
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.userAlt),
-                                          border: InputBorder.none,
-                                          hintText: "School Code",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                            SizedBox(height: 30),
-                            Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          // labelText: "Username",
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.userAlt),
-                                          border: InputBorder.none,
-                                          hintText: "Password",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                            SizedBox(height: 30),
-                            Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.lock),
-                                          border: InputBorder.none,
-                                          hintText: "Re-Enter Password",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                                     SizedBox(height: 30),
-                                    Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 40, right: 20),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          // labelText: "Username",
-                                          suffixIcon:
-                                              Icon(FontAwesomeIcons.userAlt),
-                                          border: InputBorder.none,
-                                          hintText: "Username",
-                                          hintStyle: TextStyle(
-                                              color: Color(0xFFE1E1E1),
-                                              fontSize: 14)),
-                                    ))),
-                           
-                            SizedBox(height: 50),
-                            Padding(
-                              padding: EdgeInsets.only(left: 120, right: 10),
-                              child: MaterialButton(
-                                  height: 50,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginAdmin()));
-                                  },
-                                  elevation: 10,
-                                  color: HexColor('#B9E2DA'),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "REGISTER",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: "Varela",
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          size: 30,
-                                          color: Colors.white,
-                                        )
-                                      ])),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              child: TextButton(
-                                  child: RichText(
-                                    text: TextSpan(
-                                        text: "Already have an Account? ",
-                                        style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
-                                        children: [
-                                          TextSpan(
-                                            text:"Login",
-                                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: HexColor('#F7A529'))
-                                          )
-                                        ]),
-                                      
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginAdmin()));
-                                  }),
-                            )
-                          ]))
-                    ]),
-                  ]),
-                ),
-              ],
-            ),
+                  ),
+                  SizedBox(height: 120),
+                ]),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
@@ -298,20 +340,17 @@ class TopClipper extends CustomClipper<Path> {
     /// [Top Left corner]
     var secondControlPoint = Offset(0, 0);
     var secondEndPoint = Offset(width * .2, height * .3);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
 
     /// [Left Middle]
     var fifthControlPoint = Offset(width * .3, height * .5);
     var fiftEndPoint = Offset(width * .23, height * .6);
-    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
-        fiftEndPoint.dx, fiftEndPoint.dy);
+    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy, fiftEndPoint.dx, fiftEndPoint.dy);
 
     /// [Bottom Left corner]
     var thirdControlPoint = Offset(0, height);
     var thirdEndPoint = Offset(width, height);
-    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
-        thirdEndPoint.dx, thirdEndPoint.dy);
+    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy, thirdEndPoint.dx, thirdEndPoint.dy);
 
     path.lineTo(0, size.height);
     path.close();

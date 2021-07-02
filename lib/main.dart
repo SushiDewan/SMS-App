@@ -1,35 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smsapp/BLoc/UserInformation.dart';
+import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/presentation/pages/school_code_page.dart';
 
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 
-void main() {
+class SchoolBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(bloc, error, stackTrace);
+  }
+}
+
+Future<void> main() async {
+  Bloc.observer = SchoolBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  statusBarBrightness: Brightness.light,
-  statusBarIconBrightness: Brightness.light,
-));
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+  ));
+  await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      theme: new ThemeData(
-
-        backgroundColor: Colors.red,
-        textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 20
-            )
-        ),
-        ),
-      home: Home(),
-      debugShowCheckedModeBanner: false,
+    return BlocProvider(
+      create: (_) => SchoolBloc(),
+      child: BlocBuilder<SchoolBloc, UserInformation>(
+        builder: (_, theme) {
+          return MaterialApp(
+            theme: new ThemeData(
+              backgroundColor: Colors.red,
+              textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
+            ),
+            home: Home(),
+          );
+        },
+      ),
     );
   }
 }
@@ -45,31 +71,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   initState() {
     super.initState();
-    controller = AnimationController(
-        duration: const Duration(milliseconds: 4000), vsync: this);
+    controller = AnimationController(duration: const Duration(milliseconds: 4000), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
-
     controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       body: Container(
-          decoration: BoxDecoration(
-            color: Colors.red
-              // gradient: LinearGradient(
-              //     begin: Alignment.bottomLeft,
-              //     end: Alignment.topRight,
-              //     colors: [
-              //   HexColor("#95429C").withOpacity(0.8),
-              //   HexColor('#A93E68'),
-              //   HexColor("#BB3A35").withOpacity(0.9)
-              // ])
-              ),
-          child: Column(children: [
+        decoration: BoxDecoration(color: Colors.red),
+        child: Column(
+          children: [
             Padding(
                 padding: EdgeInsets.only(top: 250),
                 child: Center(
@@ -80,30 +94,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         child: Icon(
                           FontAwesomeIcons.bookOpen,
                           size: 130,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 25),
                       Text(
                         "School",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: "Varela",
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 25, fontFamily: "Varela", color: Colors.white),
                       ),
                       SizedBox(height: 5),
                       Text(
                         "Management System",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "Varela",
-                            color: Colors.white),
+                        style: TextStyle(fontSize: 20, fontFamily: "Varela", color: Colors.white),
                       ),
                     ],
                   ),
                 )),
             Padding(padding: EdgeInsets.only(top: 200.0), child: Indicator())
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -117,10 +127,14 @@ class _IndicatorState extends State<Indicator> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(milliseconds: 4000),
-        () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SchoolCodePage())));
+    navigationIfSeesionExist();
+  }
+
+  navigationIfSeesionExist() async {
+    if (await context.read<SchoolBloc>().isLogin()) {
+      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage())));
+    } else
+      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolCodePage())));
   }
 
   @override
