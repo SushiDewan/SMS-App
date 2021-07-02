@@ -3,7 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:smsapp/core/widgets/build_button.dart';
 import 'package:smsapp/core/widgets/build_text_form_field.dart';
-import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_login_bloc.dart';
+import 'package:smsapp/features/Teacher/presentation/bloc/teacher_login_bloc.dart';
 import 'package:smsapp/features/Teacher/presentation/pages/teacher_dashboard_page.dart';
 import 'package:smsapp/features/Teacher/presentation/pages/teacher_forgetpwd_page.dart';
 import 'package:smsapp/features/Teacher/presentation/widgets/teacher_register_body.dart';
@@ -18,7 +18,7 @@ class _TeacherLoginBodyState extends State<TeacherLoginBody> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<AdminLoginBloc>(context, listen: false);
+    final bloc = Provider.of<TeacherLoginBloc>(context, listen: false);
 
     return Container(
       decoration: BoxDecoration(
@@ -73,21 +73,21 @@ class _TeacherLoginBodyState extends State<TeacherLoginBody> {
                 ),
                 child: Column(children: [
                   StreamBuilder<Object>(
-                      stream: bloc.loginUsername,
+                      stream: bloc.teacherUsername,
                       builder: (context, AsyncSnapshot snapshot) =>
                           BuildTextFormField(
                             hintText: "Username",
                             errorText: snapshot.error,
-                            onChanged: bloc.changeloginUsername,
+                            onChanged: bloc.changeteacherUsername,
                           )),
                   SizedBox(height: 30),
                   StreamBuilder<Object>(
-                      stream: bloc.loginPassword,
+                      stream: bloc.teacherPassword,
                       builder: (context, AsyncSnapshot snapshot) {
                         return BuildTextFormField(
                           hintText: "Password",
                           errorText: snapshot.error,
-                          onChanged: bloc.changeloginPassword,
+                          onChanged: bloc.changeteacherPassword,
                         );
                       }),
                   SizedBox(height: 40),

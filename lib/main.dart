@@ -6,6 +6,8 @@ import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_register_bloc
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/presentation/pages/school_code_page.dart';
 import 'package:provider/provider.dart';
+import 'package:smsapp/features/Teacher/presentation/bloc/teacher_login_bloc.dart';
+import 'package:smsapp/features/Teacher/presentation/bloc/teacher_register_bloc.dart';
 
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 
@@ -25,7 +27,9 @@ class MyApp extends StatelessWidget {
         Provider<AdminLoginBloc>(
           create: (context) => AdminLoginBloc(),
         ),
-        Provider<AdminRegisterBloc>(create: (context) => AdminRegisterBloc(),)
+        Provider<AdminRegisterBloc>(create: (context) => AdminRegisterBloc(),),
+        Provider<TeacherLoginBloc>(create: (context) => TeacherLoginBloc(),),
+        Provider<TeacherRegisterBloc>(create: (context) => TeacherRegisterBloc(),)
       ],
       child: MaterialApp(
         theme: new ThemeData(

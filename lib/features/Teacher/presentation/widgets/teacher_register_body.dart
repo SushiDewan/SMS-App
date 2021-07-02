@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:smsapp/core/api/strings.dart';
 import 'package:smsapp/core/widgets/build_button.dart';
 import 'package:smsapp/core/widgets/build_text_form_field.dart';
-import 'package:smsapp/features/LoginAdmin/presentation/bloc/admin_register_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:smsapp/features/Teacher/presentation/bloc/teacher_register_bloc.dart';
 import 'package:smsapp/features/Teacher/presentation/pages/teacher_login_page.dart';
 
 class TeacherRegisterBody extends StatefulWidget {
@@ -17,6 +17,9 @@ class TeacherRegisterBody extends StatefulWidget {
 
 class _TeacherRegisterBodyState extends State<TeacherRegisterBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String chooseStaff;
+  List staffList = ["Non-Teaching", "Teaching"];
 
   TextEditingController _firstname = TextEditingController();
   TextEditingController _lastname = TextEditingController();
@@ -48,12 +51,11 @@ class _TeacherRegisterBodyState extends State<TeacherRegisterBody> {
     print('Response status: ${response.statusCode}');
     var data = jsonDecode(response.body);
     print("data : $data");
-    
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<AdminRegisterBloc>(context, listen: false);
+    final bloc = Provider.of<TeacherRegisterBloc>(context, listen: false);
     final newFocus = FocusNode();
 
     return GestureDetector(
@@ -102,96 +104,124 @@ class _TeacherRegisterBodyState extends State<TeacherRegisterBody> {
                   child: Column(children: [
                     //firstName
                     StreamBuilder<Object>(
-                        stream: bloc.firstname,
+                        stream: bloc.teacherFirstname,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                             hintText: "FirstName",
                             keyboardType: TextInputType.name,
                             errorText: snapshot.error,
-                            onChanged: bloc.changefirstname,
+                            onChanged: bloc.changeteacherfirst,
                           );
                         }),
                     SizedBox(height: 30),
 
                     //Lastname
                     StreamBuilder<Object>(
-                        stream: bloc.lastname,
+                        stream: bloc.teacherLastname,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               keyboardType: TextInputType.name,
                               hintText: "LastName",
                               errorText: snapshot.error,
-                              onChanged: bloc.changelastname);
+                              onChanged: bloc.changeteacherlast);
                         }),
                     SizedBox(height: 30),
 
                     //Email
                     StreamBuilder<Object>(
-                        stream: bloc.email,
+                        stream: bloc.teacherEmail,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               keyboardType: TextInputType.emailAddress,
                               hintText: "Email",
                               errorText: snapshot.error,
-                              onChanged: bloc.changeemail);
+                              onChanged: bloc.changeteacheremail);
                         }),
                     SizedBox(height: 30),
 
                     //Contact num
                     StreamBuilder<Object>(
-                        stream: bloc.contactnum,
+                        stream: bloc.teacherContact,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               hintText: "Contact Number",
                               keyboardType: TextInputType.phone,
                               errorText: snapshot.error,
-                              onChanged: bloc.changecontactnum);
+                              onChanged: bloc.changeteachercontact);
                         }),
                     SizedBox(height: 30),
 
                     //Address
                     StreamBuilder<Object>(
-                        stream: bloc.address,
+                        stream: bloc.teacherAddress,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               hintText: "Address",
                               keyboardType: TextInputType.text,
                               errorText: snapshot.error,
-                              onChanged: bloc.changeaddress);
+                              onChanged: bloc.changeteacheraddress);
                         }),
                     SizedBox(height: 30),
 
                     StreamBuilder<Object>(
-                        stream: bloc.edn,
+                        stream: bloc.teacherEdn,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               hintText: "EDN Number",
                               keyboardType: TextInputType.number,
                               errorText: snapshot.error,
-                              onChanged: bloc.changeedn);
+                              onChanged: bloc.changeteacheredn);
                         }),
                     SizedBox(height: 30),
 
                     //username
                     StreamBuilder<Object>(
-                        stream: bloc.username,
+                        stream: bloc.teacherUsername,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               hintText: "Username",
                               errorText: snapshot.error,
-                              onChanged: bloc.changeusername);
+                              onChanged: bloc.changeteacherusername);
                         }),
                     SizedBox(height: 30),
 
                     //password
                     StreamBuilder<Object>(
-                        stream: bloc.password,
+                        stream: bloc.teacherPassword,
                         builder: (context, snapshot) {
                           return BuildTextFormField(
                               hintText: "Password",
                               errorText: snapshot.error,
-                              onChanged: bloc.changepassword);
+                              onChanged: bloc.changeteacherpassword);
                         }),
+                    SizedBox(height: 30),
+
+//Staff type
+                   Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey),
+                        // color: Colors.black,
+                      ),
+                      height: 45,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: chooseStaff,
+                        onChanged: (_newValue) {
+                          setState(() {
+                            chooseStaff = _newValue;
+                          });
+                        },
+                        items: staffList.map((valueItem) {
+                          return DropdownMenuItem(
+                            value: valueItem,
+                            child: Text(valueItem),
+                          );
+                        }).toList(),
+                        underline: SizedBox(),
+                      ),
+                    ),
                     SizedBox(height: 30),
 
                     //Register button
