@@ -1,36 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FormInputField extends StatelessWidget {
-  String hintText;
+  String hintText, errorText;
   IconData icon;
   TextEditingController controller;
   Function validator;
-  FormInputField({this.hintText, this.icon, this.controller, this.validator});
+  Widget suffix;
+  bool obscureText;
+  FormInputField({this.hintText, this.icon, this.controller, this.validator, this.errorText, this.suffix, this.obscureText = false});
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 10,
-      // color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-      child: Padding(
-        padding: EdgeInsets.only(left: 40, right: 20, bottom: 10, top: 10),
-        child: TextFormField(
-          controller: this.controller,
-          decoration: InputDecoration(
-            suffixIcon: Icon(
-              this.icon,
-              size: 20,
-            ),
-            border: InputBorder.none,
-            hintText: this.hintText,
-            hintStyle: TextStyle(color: Color(0xFFE1E1E1), fontSize: 14),
-            // contentPadding: EdgeInsets.symmetric(vertical: 5),
+    return TextFormField(
+      controller: this.controller,
+      decoration: InputDecoration(
+          prefixIconConstraints: BoxConstraints(minWidth: 50),
+          prefixIcon: Icon(
+            this.icon,
+            size: 16,
           ),
-          scrollPadding: EdgeInsets.all(0),
-          validator: this.validator,
-        ),
-      ),
+          border: OutlineInputBorder(
+            gapPadding: 1,
+            borderRadius: BorderRadius.circular(60),
+          ),
+          hintText: this.hintText,
+          hintStyle: TextStyle(color: Color(0xFFE1E1E1), fontSize: 12),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+          focusColor: Color(0xffF7A529),
+          fillColor: Color(0xffF7A529),
+          errorText: this.errorText,
+          errorStyle: TextStyle(fontSize: 10),
+          suffix: this.suffix,
+          suffixIconConstraints: BoxConstraints(maxWidth: 10, maxHeight: 10)),
+      obscureText: this.obscureText,
+      scrollPadding: EdgeInsets.all(0),
+      validator: this.validator,
     );
   }
 }

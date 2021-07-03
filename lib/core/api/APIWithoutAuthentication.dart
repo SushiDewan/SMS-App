@@ -4,12 +4,14 @@ import 'package:http/http.dart' as http;
 class APIwithoutAuthentication {
   String api_url = dotenv.env['API_URL'];
   Future<void> post(endpoint, body, onSuccess, onError) async {
+    print(body.toString());
     var client = http.Client();
     try {
       var url = Uri.parse(this.api_url + endpoint);
       var response = await client.post(
         url,
         body: body,
+        headers: {"Content-Type": "application/json"},
       );
       onSuccess(response);
     } catch (e) {
