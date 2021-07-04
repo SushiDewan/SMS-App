@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/features/ForgotPassword/presentation/widgets/forget_password1_body.dart';
 // import 'package:hexcolor/hexcolor.dart';
 
-
 class ForgetPasswordBody extends StatefulWidget {
   @override
   _ForgetPasswordBodyState createState() => _ForgetPasswordBodyState();
@@ -21,23 +20,10 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 48.0),
               Stack(children: [
                 ClipRRect(
                   child: Container(
                     height: MediaQuery.of(context).size.height / 4,
-                    // decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.only(
-                    //         bottomLeft: Radius.circular(40),
-                    //         bottomRight: Radius.circular(40)),
-                    //     gradient: LinearGradient(
-                    //         begin: Alignment.centerLeft,
-                    //         end: Alignment.bottomRight,
-                    //         colors: [
-                    //           Hexcolor("#F7A529"),
-                    //           Hexcolor("#FFCC00")
-                    //         ])),
                     child: Row(
                       children: [
                         Align(
@@ -54,11 +40,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                           padding: EdgeInsets.only(top: 10),
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: Text("Forget Password",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18)),
+                            child: Text("Forget Password", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 18)),
                           ),
                         )
                       ],
@@ -67,40 +49,18 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                 ),
                 ClipRRect(
                     child: Padding(
-                      padding: EdgeInsets.only(top:50, left: 50),
-                                          child: Container(
-                        height: 300,
-                        width: 300,
-                        // child: Icon(Icons.l, size: 100,),
-                  decoration: BoxDecoration(
-                    
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/test.png'), fit: BoxFit.fill)),
-                ),
-                    ))
+                  padding: EdgeInsets.only(top: 50, left: 50),
+                  child: Container(
+                    height: 300,
+                    width: 300,
+                    // child: Icon(Icons.l, size: 100,),
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/test.png'), fit: BoxFit.fill)),
+                  ),
+                ))
               ]),
 
               SizedBox(height: 50),
               Container(
-                // height: MediaQuery.of(context).size.height * 0.8,
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.only(
-                //     topLeft:Radius.circular(30),
-                //     topRight:Radius.circular(30)
-                //   ),
-                //     gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.bottomRight,
-                //         colors: [Hexcolor("#F7A529"), Hexcolor("#FFCC00")])),
-
-                // child: Center(
-                //   child:Icon(Icons.settings)
-                // ),
-                // decoration: BoxDecoration(
-                //     color: Colors.red,
-                //     image: DecorationImage(
-                //         image: AssetImage("assets/images/forgotPass.png")))
-
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Column(
@@ -114,14 +74,11 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                         Text(
                           "We'll send a verification code to your registerd email Id/Phone",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontFamily: 'Varela',
-                              fontSize: 12),
+                          style: TextStyle(color: Colors.black.withOpacity(0.5), fontFamily: 'Varela', fontSize: 12),
                         ),
                         SizedBox(height: 40),
                         Padding(
-                          padding: EdgeInsets.only(left:10.0, right: 10),
+                          padding: EdgeInsets.only(left: 10.0, right: 10),
                           child: Material(
                             color: Colors.transparent,
                             // elevation: 10,
@@ -137,8 +94,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                                   FontAwesomeIcons.userAlt,
                                   color: Colors.deepPurple,
                                 ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(vertical: 10),
                               ),
                             ),
                           ),
@@ -146,39 +102,26 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                         SizedBox(height: 70),
                         MaterialButton(
                           height: 50,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           onPressed: () {
-                           Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration:
-                                                Duration(milliseconds: 400),
-                                            pageBuilder: (BuildContext context,
-                                                Animation<double> animation,
-                                                Animation<double>
-                                                    secondaryAnimation) {
-                                              return ForgetPassword1Body();
-                                            },
-                                            transitionsBuilder:
-                                                (BuildContext context,
-                                                    Animation<double> animation,
-                                                    Animation<double>
-                                                        secondaryAnimation,
-                                                    Widget child) {
-                                              return Align(
-                                                child: SlideTransition(
-                                                  position: Tween(
-                                                          begin:
-                                                              Offset(1.0, 0.0),
-                                                          end: Offset(0.0, 0.0))
-                                                      .animate(animation),
-                                                  child: child,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionDuration: Duration(milliseconds: 400),
+                                pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                  return ForgetPassword1Body();
+                                },
+                                transitionsBuilder:
+                                    (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                                  return Align(
+                                    child: SlideTransition(
+                                      position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
                           },
                           elevation: 10,
                           // color: Hexcolor('#B9E2DA'),
@@ -187,10 +130,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                             padding: EdgeInsets.only(left: 80, right: 80),
                             child: Text(
                               "Next",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Varela",
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),

@@ -350,6 +350,153 @@ class _ChooseUserBodyState extends State<ChooseUserBody> with TickerProviderStat
                       ),
                     ),
                   ),
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    margin: EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 5),
+                    elevation: 10,
+                    semanticContainer: true,
+                    color: HexColor('#203656'),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 300),
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                              return LoginTeacher();
+                            },
+                            transitionsBuilder:
+                                (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                              return Align(
+                                child: SlideTransition(
+                                  position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                  child: child,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Center(
+                            child: SizedBox(
+                                height: 75,
+                                width: 85,
+                                child: Icon(
+                                  FontAwesomeIcons.penNib,
+                                  size: 35,
+                                  color: Colors.white,
+                                )),
+                          ),
+                          Container(
+                              child: Center(
+                                  child: Text(
+                            "Teacher",
+                            style: TextStyle(fontFamily: 'Varela', color: Colors.white),
+                          )))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    margin: EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 5),
+                    elevation: 10,
+                    semanticContainer: true,
+                    color: HexColor('#64CE88'),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 400),
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                              return LoginParent();
+                            },
+                            transitionsBuilder:
+                                (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                              return Align(
+                                child: SlideTransition(
+                                  position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                  child: child,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Center(
+                            child: SizedBox(
+                                height: 75,
+                                width: 85,
+                                child: Icon(
+                                  FontAwesomeIcons.userFriends,
+                                  size: 35,
+                                  color: Colors.white,
+                                )),
+                          ),
+                          Container(
+                              child: Center(
+                            child: Text(
+                              "Parent",
+                              style: TextStyle(fontFamily: 'Varela', color: Colors.white),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    margin: EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 5),
+                    elevation: 10,
+                    semanticContainer: true,
+                    color: HexColor('#DC7840'),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 400),
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                              return LoginSponsor();
+                            },
+                            transitionsBuilder:
+                                (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                              return Align(
+                                child: SlideTransition(
+                                  position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                  child: child,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Center(
+                              child: SizedBox(
+                                  height: 75,
+                                  width: 85,
+                                  child: Icon(
+                                    FontAwesomeIcons.handsHelping,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ))),
+                          Container(
+                              child: Center(
+                                  child: Text(
+                            "Sponsor",
+                            style: TextStyle(color: Colors.white, fontFamily: 'Varela'),
+                          )))
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

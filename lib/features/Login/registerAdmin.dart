@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,6 +40,8 @@ class _RegisterAdminState extends State<RegisterAdmin> {
   String errorusername;
   String errorcontactnumber;
   String errorednnumber;
+  String role = "1";
+  String staffType = "1";
 
   bool isLoading = false;
   Future<void> deleteCacheDir() async {
@@ -69,7 +70,7 @@ class _RegisterAdminState extends State<RegisterAdmin> {
     String email = _emailController.text;
     String contact = _contactController.text;
     String address = _addressController.text;
-    int role = 1;
+    int role1 = int.parse(role);
     String edn_number = _ednController.text;
     String username = _usernameController.text;
     String password = _passwordController.text;
@@ -85,7 +86,8 @@ class _RegisterAdminState extends State<RegisterAdmin> {
           "email": email,
           "contact_number": int.parse(contact, radix: 10),
           "address": address,
-          "role": role,
+          "role": role1,
+          "staff_type": staffType,
           "edn_number": edn_number,
           "username": username,
           "password": password,
@@ -103,7 +105,7 @@ class _RegisterAdminState extends State<RegisterAdmin> {
           Fluttertoast.showToast(
             msg: result['message'],
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
+            gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.green,
             textColor: Colors.white,
@@ -154,7 +156,9 @@ class _RegisterAdminState extends State<RegisterAdmin> {
                         child: Container(
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                  begin: Alignment.topLeft, end: Alignment.centerRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")])),
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [Theme.of(context).primaryColor, Theme.of(context).accentColor])),
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height / 2,
                         ),
@@ -164,199 +168,254 @@ class _RegisterAdminState extends State<RegisterAdmin> {
                   Scaffold(
                     backgroundColor: Colors.transparent,
                     appBar: AppBar(
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
+                      iconTheme: IconThemeData(color: Colors.black),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
-                      foregroundColor: Colors.black,
                       title: Text("Register", style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600, fontFamily: 'Varela')),
                     ),
-                    body: Container(
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 40, right: 40),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(height: 30),
-                                      FormInputField(
-                                        hintText: "First name",
-                                        icon: Icons.face,
-                                        controller: _firstNameController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'First name cannot be empty' : null;
-                                        },
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Last name",
-                                        icon: Icons.group,
-                                        controller: _lastNameController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'Last name cannot be empty' : null;
-                                        },
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Email",
-                                        icon: FontAwesomeIcons.at,
-                                        controller: _emailController,
-                                        validator: (value) {
-                                          return (value == null || value == '')
-                                              ? 'Email cannot be empty'
-                                              : (!EmailValidator.validate(value))
-                                                  ? "Enter valid email"
-                                                  : null;
-                                        },
-                                        errorText: erroremail,
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Username",
-                                        icon: FontAwesomeIcons.userAlt,
-                                        controller: _usernameController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'Username cannot be empty' : null;
-                                        },
-                                        errorText: errorusername,
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Address",
-                                        icon: Icons.location_city,
-                                        controller: _addressController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'Address cannot be empty' : null;
-                                        },
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Contact number",
-                                        icon: Icons.contact_phone,
-                                        controller: _contactController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'Contact number cannot be empty' : null;
-                                        },
-                                        errorText: errorcontactnumber,
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "EDN number",
-                                        icon: Icons.format_list_numbered,
-                                        controller: _ednController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'EDN number cannot be empty' : null;
-                                        },
-                                        errorText: errorednnumber,
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Password",
-                                        icon: FontAwesomeIcons.lock,
-                                        controller: _passwordController,
-                                        validator: (value) {
-                                          return (value == null || value == '') ? 'Password cannot be empty' : null;
-                                        },
-                                        obscureText: !isVisiblePassword,
-                                        suffix: IconButton(
-                                          iconSize: 18,
-                                          icon: isVisiblePassword ? Icon(CupertinoIcons.eye_slash) : Icon(CupertinoIcons.eye),
-                                          onPressed: () {
-                                            setState(() {
-                                              isVisiblePassword = !isVisiblePassword;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      FormInputField(
-                                        hintText: "Re-enter password",
-                                        icon: FontAwesomeIcons.lock,
-                                        controller: null,
-                                        validator: (value) {
-                                          return (value != _passwordController.text) ? 'Password doesnot match ' : null;
-                                        },
-                                        obscureText: !isVisiblePassword,
-                                        suffix: IconButton(
-                                          iconSize: 18,
-                                          icon: isVisiblePassword ? Icon(CupertinoIcons.eye_slash) : Icon(CupertinoIcons.eye),
-                                          onPressed: () {
-                                            setState(() {
-                                              isVisiblePassword = !isVisiblePassword;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              margin: EdgeInsets.only(left: 40, right: 40),
-                              padding: EdgeInsets.only(left: 120, right: 10),
-                              child: MaterialButton(
-                                height: 50,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                                disabledColor: HexColor('#B9E2DA'),
-                                onPressed: isLoading ? null : doSignUp,
-                                elevation: 10,
-                                color: HexColor('#B9E2DA'),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                    body: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                width: 300,
+                                child: Column(
                                   children: [
-                                    Text(
-                                      "REGISTER",
-                                      style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                    SizedBox(height: 30),
+                                    FormInputField(
+                                      hintText: "First name",
+                                      icon: Icons.face,
+                                      controller: _firstNameController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'First name cannot be empty' : null;
+                                      },
                                     ),
-                                    isLoading
-                                        ? SizedBox(
-                                            height: 20,
-                                            width: 20,
-                                            child: CircularProgressIndicator(),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Last name",
+                                      icon: Icons.group,
+                                      controller: _lastNameController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'Last name cannot be empty' : null;
+                                      },
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Email",
+                                      icon: FontAwesomeIcons.at,
+                                      controller: _emailController,
+                                      validator: (value) {
+                                        return (value == null || value == '')
+                                            ? 'Email cannot be empty'
+                                            : (!EmailValidator.validate(value))
+                                                ? "Enter valid email"
+                                                : null;
+                                      },
+                                      errorText: erroremail,
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Username",
+                                      icon: FontAwesomeIcons.userAlt,
+                                      controller: _usernameController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'Username cannot be empty' : null;
+                                      },
+                                      errorText: errorusername,
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Address",
+                                      icon: Icons.location_city,
+                                      controller: _addressController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'Address cannot be empty' : null;
+                                      },
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Contact number",
+                                      icon: Icons.contact_phone,
+                                      controller: _contactController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'Contact number cannot be empty' : null;
+                                      },
+                                      errorText: errorcontactnumber,
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "EDN number",
+                                      icon: Icons.format_list_numbered,
+                                      controller: _ednController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'EDN number cannot be empty' : null;
+                                      },
+                                      errorText: errorednnumber,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Text("You are?"),
+                                        Spacer(),
+                                        DropdownButton<String>(
+                                          items: <Map>[
+                                            {"name": "Admin", "value": 1},
+                                            {"name": "Staff", "value": 2},
+                                            {"name": "Parent", "value": 3},
+                                            {"name": "Sponser", "value": 4},
+                                            {"name": "Student", "value": 5},
+                                          ].map((Map value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value['value'].toString(),
+                                              child: new Text(value['name']),
+                                            );
+                                          }).toList(),
+                                          value: role,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              role = value;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    (role == "2")
+                                        ? Row(
+                                            children: [
+                                              Text("Please select staff type"),
+                                              Spacer(),
+                                              DropdownButton<String>(
+                                                items: <Map>[
+                                                  {"name": "Teaching", "value": 1},
+                                                  {"name": "Non-Teaching", "value": 2},
+                                                ].map((Map value) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: value['value'].toString(),
+                                                    child: new Text(value['name']),
+                                                  );
+                                                }).toList(),
+                                                value: staffType,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    staffType = value;
+                                                  });
+                                                },
+                                              ),
+                                            ],
                                           )
-                                        : Icon(
-                                            Icons.arrow_forward,
-                                            size: 30,
-                                            color: Colors.white,
-                                          )
+                                        : SizedBox(),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Password",
+                                      icon: FontAwesomeIcons.lock,
+                                      controller: _passwordController,
+                                      validator: (value) {
+                                        return (value == null || value == '') ? 'Password cannot be empty' : null;
+                                      },
+                                      obscureText: !isVisiblePassword,
+                                      suffix: isVisiblePassword ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                                      onSuffixPressed: () {
+                                        setState(() {
+                                          isVisiblePassword = !isVisiblePassword;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(height: 10),
+                                    FormInputField(
+                                      hintText: "Re-enter password",
+                                      icon: FontAwesomeIcons.lock,
+                                      controller: null,
+                                      validator: (value) {
+                                        return (value != _passwordController.text) ? 'Password doesnot match ' : null;
+                                      },
+                                      obscureText: !isVisiblePassword,
+                                      suffix: isVisiblePassword ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                                      onSuffixPressed: () {
+                                        setState(() {
+                                          isVisiblePassword = !isVisiblePassword;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(height: 20),
                                   ],
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              child: TextButton(
-                                  child: RichText(
-                                    text: TextSpan(
-                                        text: "Already have an Account? ",
-                                        style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
-                                        children: [
-                                          TextSpan(
-                                              text: "Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: HexColor('#F7A529')))
-                                        ]),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            margin: EdgeInsets.only(left: 40, right: 40),
+                            padding: EdgeInsets.only(left: 120, right: 10),
+                            child: false
+                                ? TextButton(
+                                    onPressed: isLoading ? null : doSignUp(),
+                                    child: Center(
+                                      child: isLoading
+                                          ? SizedBox(
+                                              width: 17,
+                                              height: 17,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2,
+                                              ),
+                                            )
+                                          : Text(
+                                              "Register",
+                                              style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                            ),
+                                    ),
+                                  )
+                                : MaterialButton(
+                                    height: 50,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                                    disabledColor: HexColor('#B9E2DA'),
+                                    onPressed: isLoading ? null : doSignUp,
+                                    elevation: 10,
+                                    color: HexColor('#B9E2DA'),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "REGISTER",
+                                          style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                        ),
+                                        isLoading
+                                            ? SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: CircularProgressIndicator(),
+                                              )
+                                            : Icon(
+                                                Icons.arrow_forward,
+                                                size: 30,
+                                                color: Colors.white,
+                                              )
+                                      ],
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAdmin()));
-                                  }),
-                            ),
-                            SizedBox(height: 30),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            child: InkWell(
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: "Already have an Account? ",
+                                      style: TextStyle(color: Colors.black, fontSize: 12, fontFamily: "Varela"),
+                                      children: [
+                                        TextSpan(
+                                            text: "Login", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: HexColor('#F7A529')))
+                                      ]),
+                                ),
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAdmin()));
+                                }),
+                          ),
+                          SizedBox(height: 30),
+                        ],
                       ),
                     ),
                   ),

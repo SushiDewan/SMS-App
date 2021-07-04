@@ -16,29 +16,31 @@ class _AdminProfileBodyState extends State<AdminProfileBody> {
         Stack(
           children: <Widget>[
             ClipRRect(
-                child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), color: HexColor("#B9E2DA")),
-              height: 200,
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 50.0),
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      iconSize: 30,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                    color: Theme.of(context).primaryColor),
+                height: 200,
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 50.0),
+                      child: IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        iconSize: 30,
+                      ),
                     ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(left: 110, bottom: 20), child: Text("Profile", style: TextStyle(fontSize: 25, color: Colors.white))),
-                ],
+                    Padding(
+                        padding: EdgeInsets.only(left: 110, bottom: 20), child: Text("Profile", style: TextStyle(fontSize: 25, color: Colors.white))),
+                  ],
+                ),
               ),
-            )),
+            ),
             Align(
               alignment: Alignment.center,
               child: Padding(

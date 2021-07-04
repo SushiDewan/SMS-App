@@ -30,7 +30,7 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
     print(schoolBloc.state.schoolCode);
     String id = _myController.text;
     APIwithoutAuthentication apiCall = new APIwithoutAuthentication();
-    apiCall.post("", {'id': id}, (Response response) {
+    apiCall.post("", jsonEncode({'id': id}), (Response response) {
       setState(() {
         isLoading = false;
       });
@@ -87,7 +87,14 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.bottomRight, colors: [HexColor("#F7A529"), HexColor("#FFCC00")]),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).accentColor,
+                  ],
+                ),
               ),
               height: MediaQuery.of(context).size.height / 2.5,
             ),
@@ -101,8 +108,8 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                     begin: Alignment.centerLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      HexColor("#F7A529"),
-                      HexColor("#FFCC00"),
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).accentColor,
                     ],
                   ),
                 ),
@@ -117,45 +124,44 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                 onTap: () {
                   FocusScope.of(context).requestFocus(new FocusNode());
                 },
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    children: [
-                      SizedBox(height: 260),
-                      Container(
-                        padding: EdgeInsets.only(left: 30),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "School Code",
-                            style: TextStyle(fontSize: 22, fontFamily: 'Varela', fontWeight: FontWeight.w600, color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            cursorColor: Colors.black,
-                            controller: _myController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 10),
-                              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(10)),
+                child: Center(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: 300,
+                    child: ListView(
+                      children: [
+                        SizedBox(height: 260),
+                        Container(
+                          padding: EdgeInsets.only(left: 30),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "School Code",
+                              style: TextStyle(fontSize: 18, fontFamily: 'Varela', fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 10.0),
-                        child: Align(
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              cursorColor: Colors.black,
+                              controller: _myController,
+                              decoration: InputDecoration(
+                                hintText: "School Code",
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Align(
                           alignment: Alignment.bottomRight,
-                          child: TextButton(
-                            onPressed: () {
+                          child: InkWell(
+                            onTap: () {
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
@@ -177,29 +183,45 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                             },
                             child: Text(
                               "Forget Your Code?",
-                              style: TextStyle(color: HexColor("#F7A529")),
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.white,
+                                    offset: Offset.zero,
+                                    blurRadius: 4,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 40),
-                      Padding(
-                        padding: EdgeInsets.only(left: 120, right: 20),
-                        child: Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width / 2.0,
-                          decoration: ShapeDecoration(
-                            color: HexColor('#B9E2DA'),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                          ),
-                          child: InkWell(
-                            onTap: isLoading ? null : getData,
+                        SizedBox(height: 40),
+                        Padding(
+                          padding: EdgeInsets.only(left: 120, right: 20),
+                          child: TextButton(
+                            onPressed: isLoading ? null : getData,
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                              elevation: MaterialStateProperty.all(2.0),
+                              padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(vertical: 16),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(35.0),
+                                ),
+                              ),
+                            ),
                             child: Center(
                               child: isLoading
                                   ? SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(),
+                                      width: 17,
+                                      height: 17,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
                                     )
                                   : Text(
                                       "SUBMIT",
@@ -208,8 +230,8 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -224,7 +246,6 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
 class Clipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    // This is where we decide what part of our image is going to be visible.
     var path = Path();
     path.lineTo(0.0, size.height);
 
@@ -241,10 +262,8 @@ class Clipper extends CustomClipper<Path> {
     var thirdEndPoint = Offset(size.width, 0.0);
     path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy, thirdEndPoint.dx, thirdEndPoint.dy);
 
-    ///move from bottom right to top
     path.lineTo(size.width, 0.0);
 
-    ///finally close the path by reaching start point from top right corner
     path.close();
     return path;
   }
@@ -273,87 +292,3 @@ class FooterWaveClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-//       resizeToAvoidBottomInset: false,
-//       body: GestureDetector(
-//         onTap: () {
-//           FocusScope.of(context).requestFocus(new FocusNode());
-//         },
-//         child: Container(
-//           height: double.infinity,
-//               width: MediaQuery.of(context).size.width,
-//               // color: Colors.white,
-//           // decoration: BoxDecoration(
-//           //     image: DecorationImage(
-//           //   image: AssetImage("assets/images/loginBack.jpg"),
-//           //   fit: BoxFit.cover,
-//           // )
-//           // ),
-//           child: Column(
-//             children: [
-//               Row(
-//                 children: [
-//                   Align(
-//                     alignment: Alignment.topLeft,
-//                     child: IconButton(
-//                       icon: Icon(Icons.arrow_back),
-//                       onPressed: () {
-//                         Navigator.pop(context);
-//                       },
-//                       color: Colors.white,
-//                       iconSize: 40,
-//                     ),
-//                   ),
-//                   Container(
-//                       padding: EdgeInsets.only(left: 135, top: 10),
-//                       child: Align(
-//                         child: FlatButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                                 context,
-//                                 MaterialPageRoute(
-//                                     builder: (context) => RegisterAdmin()));
-//                           },
-//                           child: Text(
-//                             "Register Your School",
-//                             style: TextStyle(
-//                                 color: Colors.red,
-//                                 fontWeight: FontWeight.bold,
-//                                 fontFamily: "Raleway"),
-//                           ),
-//                         ),
-//                       )),
-//                 ],
-//               ),
-//               Container(
-//                   padding: EdgeInsets.only(top: 250),
-//                   child: Text(
-//                     "Enter Your School Code",
-//                     style: TextStyle(
-//                         fontSize: 22,
-//                         fontFamily: 'Varela ',
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.white),
-//                   )),
-//               Padding(
-//                 padding: const EdgeInsets.only(top: 25, left: 65, right: 65),
-//                 child: TextField(
-//                   keyboardType: TextInputType.number,
-//                   textAlign: TextAlign.center,
-//                   cursorColor: Colors.white,
-//                   controller: _myController,
-//                   decoration: InputDecoration(
-//                     border: OutlineInputBorder(),
-//                     contentPadding: EdgeInsets.symmetric(vertical: 10),
-//                     enabledBorder: OutlineInputBorder(
-//                         borderSide: BorderSide(color: Colors.white),
-//                         borderRadius: BorderRadius.circular(10)),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         )),
-
-//     );
-//   }
-// }

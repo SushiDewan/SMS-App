@@ -4,35 +4,36 @@ class FormInputField extends StatelessWidget {
   String hintText, errorText;
   IconData icon;
   TextEditingController controller;
-  Function validator;
-  Widget suffix;
+  Function validator, onSuffixPressed;
+  IconData suffix;
   bool obscureText;
-  FormInputField({this.hintText, this.icon, this.controller, this.validator, this.errorText, this.suffix, this.obscureText = false});
+  FormInputField(
+      {this.hintText, this.icon, this.controller, this.validator, this.errorText, this.suffix, this.obscureText = false, this.onSuffixPressed});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: this.controller,
       decoration: InputDecoration(
-          prefixIconConstraints: BoxConstraints(minWidth: 50),
-          prefixIcon: Icon(
-            this.icon,
-            size: 16,
-          ),
-          border: OutlineInputBorder(
-            gapPadding: 1,
-            borderRadius: BorderRadius.circular(60),
-          ),
-          hintText: this.hintText,
-          hintStyle: TextStyle(color: Color(0xFFE1E1E1), fontSize: 12),
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-          focusColor: Color(0xffF7A529),
-          fillColor: Color(0xffF7A529),
-          errorText: this.errorText,
-          errorStyle: TextStyle(fontSize: 10),
-          suffix: this.suffix,
-          suffixIconConstraints: BoxConstraints(maxWidth: 10, maxHeight: 10)),
+        prefixIcon: Icon(
+          this.icon,
+          size: 14,
+          color: Theme.of(context).primaryColor,
+        ),
+        hintText: this.hintText,
+        errorText: this.errorText,
+        errorStyle: TextStyle(fontSize: 10),
+        suffix: this.suffix != null
+            ? IconButton(
+                icon: Icon(
+                  this.suffix,
+                  size: 18,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: this.onSuffixPressed,
+              )
+            : null,
+      ),
       obscureText: this.obscureText,
-      scrollPadding: EdgeInsets.all(0),
       validator: this.validator,
     );
   }
