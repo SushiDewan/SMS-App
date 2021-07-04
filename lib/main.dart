@@ -6,32 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
 import 'dart:async';
-import 'package:smsapp/features/SchoolCode/presentation/pages/school_code_page.dart';
-
-// import 'package:animated_splash_screen/animated_splash_screen.dart';
-
-class SchoolBlocObserver extends BlocObserver {
-  @override
-  void onEvent(Bloc bloc, Object event) {
-    super.onEvent(bloc, event);
-    print(event);
-  }
-
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
-  }
-
-  @override
-  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print(error);
-    super.onError(bloc, error, stackTrace);
-  }
-}
+import 'package:smsapp/features/SchoolCode/presentation/widgets/school_code_body.dart';
 
 Future<void> main() async {
-  Bloc.observer = SchoolBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.light,
@@ -49,7 +26,42 @@ class MyApp extends StatelessWidget {
         builder: (_, theme) {
           return MaterialApp(
             theme: new ThemeData(
-              backgroundColor: Colors.red,
+              primaryColor: Colors.deepPurple,
+              accentColor: Colors.deepPurpleAccent,
+              backgroundColor: Colors.white,
+              inputDecorationTheme: InputDecorationTheme(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1.2,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                hintStyle: TextStyle(
+                  fontSize: 13,
+                  color: Colors.deepPurple,
+                ),
+                contentPadding: EdgeInsets.all(10),
+                suffixStyle: TextStyle(
+                  fontSize: 13,
+                  color: Colors.deepPurple,
+                ),
+              ),
+              buttonTheme: ButtonThemeData(),
+              textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                  elevation: MaterialStateProperty.all(2.0),
+                  padding: MaterialStateProperty.all(
+                    EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35.0),
+                    ),
+                  ),
+                  textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600)),
+                ),
+              ),
               textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
             ),
             home: Home(),
@@ -80,8 +92,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Theme.of(context).primaryColor,
       body: Container(
-        decoration: BoxDecoration(color: Colors.red),
         child: Column(
           children: [
             Padding(
@@ -99,13 +111,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       ),
                       SizedBox(height: 25),
                       Text(
-                        "School",
-                        style: TextStyle(fontSize: 25, fontFamily: "Varela", color: Colors.white),
+                        "SMEGP",
+                        style: TextStyle(fontSize: 30, fontFamily: "Varela", color: Colors.white),
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Management System",
-                        style: TextStyle(fontSize: 20, fontFamily: "Varela", color: Colors.white),
+                        "School Management System",
+                        style: TextStyle(fontSize: 12, fontFamily: "Varela", color: Colors.white),
                       ),
                     ],
                   ),
@@ -134,7 +146,7 @@ class _IndicatorState extends State<Indicator> {
     if (await context.read<SchoolBloc>().isLogin()) {
       Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage())));
     } else
-      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolCodePage())));
+      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolCodeBody())));
   }
 
   @override
