@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
-import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
+import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
 import 'dart:async';
-import 'package:smsapp/features/SchoolCode/presentation/widgets/school_code_body.dart';
+import 'package:smsapp/features/SchoolCode/school_code_body.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<SchoolBloc, UserInformation>(
         builder: (_, theme) {
           return MaterialApp(
+            
             theme: new ThemeData(
               primaryColor: Colors.deepPurple,
               accentColor: Colors.deepPurpleAccent,
@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
               ),
               textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
             ),
+            debugShowCheckedModeBanner: false,
             home: Home(),
           );
         },
@@ -103,11 +104,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     children: [
                       FadeTransition(
                         opacity: animation,
-                        child: Icon(
-                          FontAwesomeIcons.bookOpen,
-                          size: 130,
-                          color: Colors.white,
-                        ),
+                        child: Image.asset("assets/images/book.png", height: 120,)
                       ),
                       SizedBox(height: 25),
                       Text(
@@ -144,7 +141,7 @@ class _IndicatorState extends State<Indicator> {
 
   navigationIfSeesionExist() async {
     if (await context.read<SchoolBloc>().isLogin()) {
-      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage())));
+      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardBody())));
     } else
       Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolCodeBody())));
   }
