@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:smsapp/features/Card/presentation/pages/choose_user_page.dart';
+import 'package:smsapp/features/Card/choose_user_body.dart';
 import 'package:smsapp/features/Parent/ParentPages/parentEvent.dart';
 import 'package:smsapp/features/Parent/ParentPages/parentExam.dart';
 import 'package:smsapp/features/Parent/ParentPages/parentFeepage.dart';
@@ -49,7 +49,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
                                 pageBuilder: (BuildContext context,
                                     Animation<double> animation,
                                     Animation<double> secondaryAnimation) {
-                                  return ChooseUserPage();
+                                  return ChooseUserBody();
                                 },
                                 transitionsBuilder: (BuildContext context,
                                     Animation<double> animation,
