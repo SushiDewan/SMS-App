@@ -1,14 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherProfile.dart';
+import 'package:smsapp/features/Teacher/TeacherPages/editProfile.dart';
 
-class AdminProfileBody extends StatefulWidget {
+class ProfileBody extends StatefulWidget {
   @override
-  _AdminProfileBodyState createState() => _AdminProfileBodyState();
+  _ProfileBodyState createState() => _ProfileBodyState();
 }
 
-class _AdminProfileBodyState extends State<AdminProfileBody> {
+class _ProfileBodyState extends State<ProfileBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +84,7 @@ class _AdminProfileBodyState extends State<AdminProfileBody> {
         InkWell(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TeacherProfile()));
+                MaterialPageRoute(builder: (context) => EditProfile()));
           },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),

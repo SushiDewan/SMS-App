@@ -5,7 +5,7 @@ import 'package:smsapp/CustomWidget/TileButton.dart';
 import 'package:smsapp/features/Admin/admin_event_body.dart';
 import 'package:smsapp/features/Admin/admin_exam_body.dart';
 import 'package:smsapp/features/Admin/admin_fee_body.dart';
-import 'package:smsapp/features/Admin/admin_profile_body.dart';
+import 'package:smsapp/features/Admin/profile_body.dart';
 import 'package:smsapp/features/Admin/admin_staff_body.dart';
 import 'package:smsapp/features/Admin/admin_student_body.dart';
 import 'package:smsapp/features/Admin/admin_subject_body.dart';
@@ -16,7 +16,6 @@ import 'package:smsapp/features/Teacher/TeacherPages/teacherAttendance.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherEvent.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherHomework.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherLeave.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherProfile.dart';
 
 class AdminDashboardBody extends StatefulWidget {
   @override
@@ -111,16 +110,11 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
   }
 
   var tileBtns = [
+    
     {
       "title": "Profile",
       "icon": FontAwesomeIcons.user,
-      "page": TeacherProfile(),
-      "access": [0, 1],
-    },
-    {
-      "title": "Profile",
-      "icon": FontAwesomeIcons.user,
-      "page": AdminProfileBody(),
+      "page": ProfileBody(),
       "access": [0, 2],
     },
     {
@@ -221,7 +215,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             children: tileBtns.where((i) {
               // int role = int.parse(data.role);
-              int role = 2;
+              int role = 1;
               List access = i['access'];
               return access.contains(role);
             }).map((tile) {
@@ -314,32 +308,5 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
             ]),
       ),
     );
-  }
-}
-
-class TopClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-    path.lineTo(0.0, size.height);
-
-    path.quadraticBezierTo(
-        size.width / 6, size.height - 50, size.width / 4, size.height - 20);
-    // path.quadraticBezierTo(
-    //     size.width / 4, size.height, size.width / 1.5, size.height + 20);
-    path.quadraticBezierTo(
-        size.width * 0.25, size.height + 10, size.width * .5, size.height - 30);
-    path.lineTo(size.width / 2, size.height - 30);
-    path.quadraticBezierTo(size.width - (size.width / 5), size.height,
-        size.width, size.height - 50);
-
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

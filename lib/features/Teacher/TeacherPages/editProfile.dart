@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smsapp/CustomWidget/profileBox.dart';
-import 'package:smsapp/CustomWidget/profileBox.dart';
 
-class TeacherProfile extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   @override
-  _TeacherProfileState createState() => _TeacherProfileState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _TeacherProfileState extends State<TeacherProfile> {
+class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +31,29 @@ class _TeacherProfileState extends State<TeacherProfile> {
            title: "Name",
          ),
           ProfileBox(
-           title: "Name",
+           title: "Username",
          ),
           ProfileBox(
-           title: "Name",
-         )
+           title: "Father's Name",
+         ),
+          ProfileBox(
+           title: "Mother's Name",
+         ),
+         
+          ProfileBox(
+           title: "EDN Number",
+         ),
+         
+          ProfileBox(
+           title: "Email-id",
+         ),
+          ProfileBox(
+           title: "Contact Number",
+         ),
+          ProfileBox(
+           title: "Address",
+         ),
+         
          ],
 
          
