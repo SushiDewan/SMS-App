@@ -1,27 +1,34 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smsapp/core/api/apis.dart';
 
+enum UserRole {
+  admin,
+  staff,
+  teacher,
+  student,
+}
+
 class User {
   String name, role, id;
+  UserRole userRole;
   String _firstname, _lastname, _email, _role, _contactnumber, _address, _ednnumber, _username, _password, _schoolId;
   String _accesstoken, _refreshtoken;
   APINoToken api = new APINoToken();
   void register({
-    String firstname,
-    String lastname,
-    String email,
-    String role,
-    String contactnumber,
-    String address,
-    String ednnumber,
-    String username,
-    String password,
-    String schoolId,
-    Function onSuccess,
+    @required String firstname,
+    @required String lastname,
+    @required String email,
+    @required String role,
+    @required String contactnumber,
+    @required String address,
+    @required String ednnumber,
+    @required String username,
+    @required String password,
+    @required String schoolId,
+    @required Function onSuccess,
     Function onFailure,
     Function onError,
   }) {
@@ -84,9 +91,9 @@ class User {
   }
 
   void login({
-    String username,
-    String password,
-    Function onSuccess,
+    @required String username,
+    @required String password,
+    @required Function onSuccess,
     Function onFailure,
     Function onError,
   }) {
@@ -96,20 +103,20 @@ class User {
     this._username = username;
     this._password = password;
     //API called
-    this.api.post('school/user/register/admin/', {
+    this.api.post('school/user/login/admin/', {
       "username": this._username,
       "password": this._password,
     }, (Response response) {
       Map result = jsonDecode(response.body);
+      print(result);
       if (response.statusCode == 200) {
         this._accesstoken = result['access'];
         this._refreshtoken = result['refresh'];
-
         this._saveTokens();
         onSuccess(result['message']);
       } else {
         Map errors = {
-          'message': result['non_field_errors'][0],
+          'message': result['non_field_errors'],
         };
         onFailure(errors);
       }

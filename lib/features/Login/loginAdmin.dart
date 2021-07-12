@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
+import 'package:smsapp/Classes/User.dart';
 import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
 import 'package:smsapp/core/api/AdminApi.dart';
 import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
@@ -36,43 +37,82 @@ class _LoginAdminState extends State<LoginAdmin> {
     setState(() {
       isLoading = true;
     });
+
+    User user = new User();
+
     String username = _usernameController.text;
     String password = _passwordController.text;
-    APIwithoutAuthentication api = APIwithoutAuthentication();
-    api.post(
-      "school/user/login/admin/",
-      jsonEncode({"username": username, "password": password}),
-      (Response response) {
-        setState(() {
-          isLoading = false;
-        });
-        Map data = jsonDecode(response.body);
-        print(response.body);
-        Fluttertoast.showToast(
-          msg: data['message'].toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: data['statusCode'] == 200 ? Colors.green : Colors.red,
-          textColor: Colors.white,
-        );
-        if (data['statusCode'] == 200) {
-          context.read<SchoolBloc>().setUserInfo(
-                data['access'].toString(),
-                data['refresh'].toString(),
-                data['authenticatedUser']['admin_id'].toString(),
-                data['authenticatedUser']['username'].toString(),
-                data['authenticatedUser']['role'].toString(),
-              );
+
+    user.login(
+        username: username,
+        password: password,
+        onSuccess: (message) {
+          setState(() {
+            isLoading = false;
+          });
+
+          Fluttertoast.showToast(
+            msg: message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+          );
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage()));
-        }
-      },
-      (error) {
-        setState(() {
-          isLoading = false;
+        },
+        onFailure: (error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: error['message'].toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        },
+        onError: (error) {
+          setState(() {
+            isLoading = false;
+          });
+          print("error");
+          print(error);
         });
-      },
-    );
+
+    // APIwithoutAuthentication api = APIwithoutAuthentication();
+    // api.post(
+    //   "school/user/login/admin/",
+    //   jsonEncode({"username": username, "password": password}),
+    //   (Response response) {
+    //     setState(() {
+    //       isLoading = false;
+    //     });
+    //     Map data = jsonDecode(response.body);
+    //     print(response.body);
+    //     Fluttertoast.showToast(
+    //       msg: data['message'].toString(),
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM,
+    //       timeInSecForIosWeb: 1,
+    //       backgroundColor: data['statusCode'] == 200 ? Colors.green : Colors.red,
+    //       textColor: Colors.white,
+    //     );
+    //     if (data['statusCode'] == 200) {
+    //       context.read<SchoolBloc>().setUserInfo(
+    //             data['access'].toString(),
+    //             data['refresh'].toString(),
+    //             data['authenticatedUser']['admin_id'].toString(),
+    //             data['authenticatedUser']['username'].toString(),
+    //             data['authenticatedUser']['role'].toString(),
+    //           );
+    //       Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage()));
+    //     }
+    //   },
+    //   (error) {},
+    // );
   }
 
   @override
