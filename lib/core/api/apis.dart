@@ -20,3 +20,35 @@ class APINoToken {
     }
   }
 }
+
+class APIToken {
+  String apiurl = dotenv.env['API_URL'];
+  Future<void> post(endpoint, body, onSuccess, onError) async {
+    var client = http.Client();
+    try {
+      var url = Uri.parse(this.apiurl + endpoint);
+      var response = await client.post(
+        url,
+        body: jsonEncode(body),
+        headers: {"Content-Type": "application/json", "Authentication": "Basic "},
+      );
+      onSuccess(response);
+    } catch (e) {
+      onError(e);
+    }
+  }
+
+  Future<void> get(endpoint, onSuccess, onError) async {
+    var client = http.Client();
+    try {
+      var url = Uri.parse(this.apiurl + endpoint);
+      var response = await client.post(
+        url,
+        headers: {"Content-Type": "application/json", "Authentication": "Basic "},
+      );
+      onSuccess(response);
+    } catch (e) {
+      onError(e);
+    }
+  }
+}

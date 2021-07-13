@@ -1,8 +1,6 @@
 import 'dart:convert';
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
-=======
->>>>>>> 620ad8037b6e79d9bccac5a948ea8ec64e3360cb
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smsapp/core/api/apis.dart';
@@ -111,7 +109,7 @@ class User {
       "password": this._password,
     }, (Response response) {
       Map result = jsonDecode(response.body);
-      print(result);
+      print(result['non_field_errors'][0]);
       if (response.statusCode == 200) {
         this._accesstoken = result['access'];
         this._refreshtoken = result['refresh'];
@@ -119,9 +117,39 @@ class User {
         onSuccess(result['message']);
       } else {
         Map errors = {
-          'message': result['non_field_errors'],
+          'message': result['non_field_errors'][0] ?? "Error",
         };
         onFailure(errors);
+      }
+    }, (error) {
+      onError(error);
+    });
+  }
+
+  void forgetEmailConfirm(String email) {
+    this._email = email;
+    this.api.post('api/reset_password/', {"email": this._email}, (Response response) {
+      print(response.statusCode);
+
+      Map result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "Email Sent!");
+      } else {
+        Fluttertoast.showToast(msg: result['email'][0] ?? "Error");
+      }
+    }, (error) {});
+  }
+
+  void forgetPassword({String password, String token, Function onSuccess, Function onFailure, Function onError}) {
+    this.api.post('api/reset_password/confirm/', {"password": password, "token": token}, (Response response) {
+      Map result = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        onSuccess(result);
+      } else {
+        print(result);
+        var message = {"detail": result.containsKey("detail") ? "Code doesnot match" : "Password not changed"};
+
+        onFailure(message);
       }
     }, (error) {
       onError(error);

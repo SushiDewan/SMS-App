@@ -1,3 +1,4 @@
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
@@ -10,6 +11,10 @@ class ForgetPasswordBody extends StatefulWidget {
 }
 
 class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
+  var emailController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,12 +37,8 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
           Container(
             height: 300,
             width: 300,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/test.png'),
-                    fit: BoxFit.fill)),
+            decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/test.png'), fit: BoxFit.fill)),
           ),
-
           SizedBox(height: 50),
           Container(
             child: Padding(
@@ -46,60 +47,52 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                   children: [
                     Text(
                       "Please enter Your registered Email ID/Phone",
-                      // textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Varela",
-                          fontSize: 13),
+                      style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontFamily: "Varela", fontSize: 13),
                     ),
                     SizedBox(height: 40),
                     Text(
                       "We'll send a verification code to your registerd email Id/Phone",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontFamily: 'Varela',
-                          fontSize: 12),
+                      style: TextStyle(color: Theme.of(context).accentColor, fontFamily: 'Varela', fontSize: 12),
                     ),
                     SizedBox(height: 40),
-                    
-                    FormInputField(
-                      icon: FontAwesomeIcons.userAlt,
-                      
-                      hintText: "Email/Phone",
+                    Form(
+                      key: _formKey,
+                      child: FormInputField(
+                          controller: emailController,
+                          icon: FontAwesomeIcons.userAlt,
+                          hintText: "Email/Phone",
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "Please enter email"),
+                            EmailValidator(errorText: 'Enter a valid email address'),
+                          ])),
                     ),
                     SizedBox(height: 70),
                     MaterialButton(
                       height: 50,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 400),
-                            pageBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation) {
-                              return ForgetPassword1Body();
-                            },
-                            transitionsBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation,
-                                Widget child) {
-                              return Align(
-                                child: SlideTransition(
-                                  position: Tween(
-                                          begin: Offset(1.0, 0.0),
-                                          end: Offset(0.0, 0.0))
-                                      .animate(animation),
-                                  child: child,
-                                ),
-                              );
-                            },
-                          ),
-                        );
+                        if (_formKey.currentState.validate())
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 400),
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                                return ForgetPassword1Body(
+                                  email: emailController.text,
+                                );
+                              },
+                              transitionsBuilder:
+                                  (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+                                return Align(
+                                  child: SlideTransition(
+                                    position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
                       },
                       elevation: 10,
                       color: Colors.deepPurple,
@@ -107,27 +100,13 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                         padding: EdgeInsets.only(left: 80, right: 80),
                         child: Text(
                           "Next",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Varela",
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
                   ],
                 )),
           ),
-          // SizedBox(height:30),
-          // Expanded(
-          //         child: ClipPath(
-          //           clipper: ForgotClipper(),
-          //           child: Container(
-
-          //             color: Colors.red,
-          //           ),
-          //         ),
-
-          // )
         ],
       ),
     );

@@ -9,14 +9,15 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/Classes/User.dart';
+import 'package:smsapp/CustomWidget/TextField.dart';
 import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
 import 'package:smsapp/core/api/AdminApi.dart';
-import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
-import 'package:smsapp/features/ForgotPassword/presentation/pages/forget_password_page.dart';
+import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
+import 'package:smsapp/features/ForgotPassword/forget_password1_body.dart';
 import 'package:smsapp/features/Login/Classes/Admin.dart';
-import 'package:smsapp/features/Login/Widgets/TextField.dart';
 import 'dart:math';
-import 'package:smsapp/features/Login/registerAdmin.dart';
+
+import 'package:smsapp/features/Login/registerPage.dart';
 
 class LoginAdmin extends StatefulWidget {
   @override
@@ -59,7 +60,7 @@ class _LoginAdminState extends State<LoginAdmin> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
           );
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardBody()));
         },
         onFailure: (error) {
           setState(() {
@@ -236,7 +237,7 @@ class _LoginAdminState extends State<LoginAdmin> {
                                           style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Varela"),
                                         ),
                                         onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword1Body()));
                                         },
                                       ),
                                     ),
@@ -254,7 +255,7 @@ class _LoginAdminState extends State<LoginAdmin> {
                                               ]),
                                         ),
                                         onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterAdmin()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
                                         },
                                       ),
                                     ),
