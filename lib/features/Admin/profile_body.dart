@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/editProfile.dart';
+import 'package:smsapp/features/Admin/editProfile.dart';
 
 class ProfileBody extends StatefulWidget {
   @override

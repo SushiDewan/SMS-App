@@ -29,14 +29,12 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Container(
-            height: 300,
-            width: 300,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/test.png'),
-                    fit: BoxFit.fill)),
-          ),
+           Image.asset(
+              'assets/images/test.png',
+              width: 300,
+              height: 300,
+              fit: BoxFit.cover,
+            ),
 
           SizedBox(height: 50),
           Container(

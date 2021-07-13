@@ -13,7 +13,7 @@ import 'package:smsapp/features/Admin/admin_timetable_body.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smsapp/features/Card/choose_user_body.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherAttendance.dart';
-import 'package:smsapp/features/Teacher/TeacherPages/teacherEvent.dart';
+import 'package:smsapp/features/Admin/eventBody.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherHomework.dart';
 import 'package:smsapp/features/Teacher/TeacherPages/teacherLeave.dart';
 
@@ -31,71 +31,68 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
           return AlertDialog(
             content: Container(
               height: 120,
-              width: 30,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [
-                  Text("Do you really want to Log out?"),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextButton(
-                          child: Text("yes"),
-                          onPressed: () {
-                            context.read<SchoolBloc>().logout();
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionDuration: Duration(milliseconds: 400),
-                                pageBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secondaryAnimation) {
-                                  return ChooseUserBody();
-                                },
-                                transitionsBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secondaryAnimation,
-                                    Widget child) {
-                                  return Align(
-                                    child: SlideTransition(
-                                      position: Tween(
-                                              begin: Offset(0.0, 1.0),
-                                              end: Offset(0.0, 0.0))
-                                          .animate(animation),
-                                      child: child,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            primary: Colors.white,
-                            // shadowColor: Colors.red,
-                            elevation: 5,
-                          ),
-                          // color: Colors.red,
+                  Text(
+                    "Do you really want to Log out?",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600, fontFamily: "Varela"),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        child: Text("Yes"),
+                        onPressed: () {
+                          context.read<SchoolBloc>().logout();
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 400),
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return ChooseUserBody();
+                              },
+                              transitionsBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation,
+                                  Widget child) {
+                                return Align(
+                                  child: SlideTransition(
+                                    position: Tween(
+                                            begin: Offset(0.0, 1.0),
+                                            end: Offset(0.0, 0.0))
+                                        .animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          primary: Colors.white,
                         ),
-                        TextButton(
-                          child: Text("No"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            primary: Colors.white,
-                            // shadowColor: Colors.red,
-                            elevation: 5,
-                          ),
-                          // color: Colors.greenAccent,
-                        )
-                      ],
-                    ),
+                      ),
+                      TextButton(
+                        child: Text("No"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          primary: Colors.white,
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -110,12 +107,11 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
   }
 
   var tileBtns = [
-    
     {
       "title": "Profile",
       "icon": FontAwesomeIcons.user,
       "page": ProfileBody(),
-      "access": [0, 2],
+      "access": [0, 1],
     },
     {
       "title": "Event",
@@ -195,6 +191,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
           child: Text(
             "Dashboard",
             style: TextStyle(
+              letterSpacing: 0.9,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -207,7 +204,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
       backgroundColor: Colors.white,
       body: BlocBuilder<SchoolBloc, UserInformation>(builder: (_, data) {
         return Container(
-         padding: EdgeInsets.symmetric(vertical: 30),
+          padding: EdgeInsets.symmetric(vertical: 30),
           child: GridView.count(
             crossAxisCount: 3,
             crossAxisSpacing: 20,
@@ -263,7 +260,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
                   Text(
                     "Notification",
                     style: TextStyle(
-                        color:Theme.of(context).primaryColor,
+                        color: Theme.of(context).primaryColor,
                         fontFamily: 'Varela',
                         fontSize: 11),
                   )
@@ -274,7 +271,12 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
                 children: [
                   IconButton(
                       icon: Icon(FontAwesomeIcons.userAlt),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileBody()));
+                      },
                       iconSize: 30,
                       color: Theme.of(context).primaryColor),
                   Text("Profile",

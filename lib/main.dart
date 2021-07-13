@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
-import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
+import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/school_code_body.dart';
 
