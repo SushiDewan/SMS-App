@@ -395,26 +395,29 @@ class _RegisterPageState extends State<RegisterPage> {
                               height: 30,
                             ),
                             Padding(
-                                      padding: EdgeInsets.only(left: 120, right: 0),
-                                      child: TextButton(
-                                        onPressed: isLoading ? null :doSignUp,
-                                        child: Center(
-                                          child: isLoading
-                                              ? SizedBox(
-                                                  width: 17,
-                                                  height: 17,
-                                                  child: CircularProgressIndicator(
-                                                    color: Colors.white,
-                                                    strokeWidth: 2,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  "Register",
-                                                  style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
-                                                ),
+                              padding: EdgeInsets.only(left: 120, right: 0),
+                              child: TextButton(
+                                onPressed: isLoading ? null : doSignUp,
+                                child: Center(
+                                  child: isLoading
+                                      ? SizedBox(
+                                          width: 17,
+                                          height: 17,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : Text(
+                                          "Register",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "Varela",
+                                              fontWeight: FontWeight.w600),
                                         ),
-                                      ),
-                                    ),
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 10),
                             Container(
                               child: InkWell(
@@ -441,8 +444,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginPage()));
+                                            builder: (context) => LoginPage()));
                                   }),
                             ),
                           ],

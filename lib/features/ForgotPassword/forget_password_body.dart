@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
@@ -10,6 +11,8 @@ class ForgetPasswordBody extends StatefulWidget {
 }
 
 class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
+ final _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +32,12 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-           Image.asset(
-              'assets/images/test.png',
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
+          Image.asset(
+            'assets/images/test.png',
+            width: 300,
+            height: 300,
+            fit: BoxFit.cover,
+          ),
 
           SizedBox(height: 50),
           Container(
@@ -46,7 +49,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                       "Please enter Your registered Email ID/Phone",
                       // textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w600,
                           fontFamily: "Varela",
                           fontSize: 13),
@@ -61,10 +64,16 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                           fontSize: 12),
                     ),
                     SizedBox(height: 40),
-                    
                     FormInputField(
                       icon: FontAwesomeIcons.userAlt,
-                      
+                      controller:_emailController,
+                      validator: (value) {
+                        return (value == null || value == '')
+                            ? 'Email cannot be empty'
+                            : (!EmailValidator.validate(value))
+                                ? "Enter valid email"
+                                : null;
+                      },
                       hintText: "Email/Phone",
                     ),
                     SizedBox(height: 70),
