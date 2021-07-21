@@ -1,4 +1,4 @@
-import 'package:form_field_validator/form_field_validator.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
@@ -11,8 +11,7 @@ class ForgetPasswordBody extends StatefulWidget {
 }
 
 class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
-  var emailController = TextEditingController();
-
+  final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,10 +33,11 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Container(
-            height: 300,
+          Image.asset(
+            'assets/images/test.png',
             width: 300,
-            decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/test.png'), fit: BoxFit.fill)),
+            height: 300,
+            fit: BoxFit.cover,
           ),
           SizedBox(height: 50),
           Container(
@@ -47,6 +47,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                   children: [
                     Text(
                       "Please enter Your registered Email ID/Phone",
+                      // textAlign: TextAlign.center,
                       style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontFamily: "Varela", fontSize: 13),
                     ),
                     SizedBox(height: 40),
@@ -56,16 +57,17 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                       style: TextStyle(color: Theme.of(context).accentColor, fontFamily: 'Varela', fontSize: 12),
                     ),
                     SizedBox(height: 40),
-                    Form(
-                      key: _formKey,
-                      child: FormInputField(
-                          controller: emailController,
-                          icon: FontAwesomeIcons.userAlt,
-                          hintText: "Email/Phone",
-                          validator: MultiValidator([
-                            RequiredValidator(errorText: "Please enter email"),
-                            EmailValidator(errorText: 'Enter a valid email address'),
-                          ])),
+                    FormInputField(
+                      icon: FontAwesomeIcons.userAlt,
+                      controller: _emailController,
+                      validator: (value) {
+                        return (value == null || value == '')
+                            ? 'Email cannot be empty'
+                            : (!EmailValidator.validate(value))
+                                ? "Enter valid email"
+                                : null;
+                      },
+                      hintText: "Email/Phone",
                     ),
                     SizedBox(height: 70),
                     MaterialButton(
@@ -79,7 +81,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                               transitionDuration: Duration(milliseconds: 400),
                               pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                                 return ForgetPassword1Body(
-                                  email: emailController.text,
+                                  email: _emailController.text,
                                 );
                               },
                               transitionsBuilder:

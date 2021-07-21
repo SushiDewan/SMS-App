@@ -1,14 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smsapp/Classes/Exam.dart';
 
 class UserInformation {
   String schoolCode = "";
   String schoolName = "";
-  String access = '';
+  String access =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2MjA2NzA5LCJqdGkiOiI5N2M5ZGYxNmRhMmQ0ODYzYmEwODJjMjJmMTE4MjY2NCIsInVzZXJfaWQiOjIyfQ.IHfWKsyPZvjwlaWSYI4gqf-Wuc9HoXZ7HBwebamB0U0';
   String refresh = '';
   String adminId = '';
   String username = '';
   String role = '';
+  Exam exam = Exam();
+
+  UserInformation() {
+    exam.getExamOptions(onSuccess: () {});
+  }
 
   loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,12 +43,9 @@ class UserInformation {
     this.schoolName = name;
   }
 
-  setUserInformation(access, refresh, adminId, username, role) {
+  setUserInformation(access, refresh) {
     this.access = access;
     this.refresh = refresh;
-    this.adminId = adminId;
-    this.username = username;
-    this.role = role;
 
     Future<void> saveData() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,9 +53,6 @@ class UserInformation {
       prefs.setString("schoolname", this.schoolName);
       prefs.setString('accesstoken', this.access);
       prefs.setString('refreshtoken', this.refresh);
-      prefs.setString('adminid', this.adminId);
-      prefs.setString('username', this.username);
-      prefs.setString('role', this.role);
     }
 
     saveData();
@@ -76,8 +77,8 @@ class SchoolBloc extends Cubit<UserInformation> {
     return emit(state);
   }
 
-  void setUserInfo(access, refresh, adminId, username, role) {
-    state.setUserInformation(access, refresh, adminId, username, role);
+  void setUserInfo(access, refresh) {
+    state.setUserInformation(access, refresh);
   }
 
   void logout() {

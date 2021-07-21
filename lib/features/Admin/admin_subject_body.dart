@@ -1,5 +1,6 @@
-import 'package:hexcolor/hexcolor.dart';
+
 import 'package:flutter/material.dart';
+import 'package:smsapp/CustomWidget/TextField.dart';
 
 class AdminSubjectBody extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _AdminSubjectBodyState extends State<AdminSubjectBody>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 2, vsync: this);
   }
 
   @override
@@ -23,148 +24,68 @@ class _AdminSubjectBodyState extends State<AdminSubjectBody>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      height: double.infinity,
-      child: Column(
-        children: [
-          Expanded(
-            child: Stack(children: [
-              ClipRRect(
-                child: Container(
-                  height: 230,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                          color: HexColor("#B9E2DA")
-                      // gradient: LinearGradient(
-                      //     begin: Alignment.topLeft,
-                      //     end: Alignment.bottomRight,
-                      //     colors: [
-                      //       HexColor("#FF8A00").withOpacity(0.8),
-                      //       HexColor("#FF8A00")
-                      //     ])
-                      ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 30.0),
-                            child: IconButton(
-                              color: Colors.black,
-                              icon: Icon(Icons.arrow_back),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              iconSize: 30,
-                            ),
-                          ),
-                          // Container(
-                          //     padding: EdgeInsets.only(left: 280, top: 30),
-                          //     child: IconButton(
-                          //       icon: Icon(Icons.menu),
-                          //       onPressed: () {},
-                          //       color: Colors.black,
-                          //     ))
-                        ],
-                      ),
-                      Container(
-                        // padding: EdgeInsets.only(left: 0),
-                        child: RichText(
-                          text: TextSpan(
-                              text: "Manage",
-                              style: TextStyle(
-                                  color: HexColor("#F7A529"),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 23,
-                                  fontFamily: "Varela"),
-                              children: [
-                                TextSpan(
-                                    text: "Subject",
-                                    style: TextStyle(
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w200,
-                                        color: HexColor("#F7A529")))
-                              ]),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 120,
+          title: Center(
+            child: Text(
+              "Subject",
+              style: TextStyle(
+                fontSize: 20,
+                letterSpacing: 0.95,
+                fontFamily: "Varela",
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
               ),
-              DefaultTabController(
-                length: 3,
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 190.0),
-                        child: Container(
-                            height: 40,
-                            margin: EdgeInsets.only(left: 20, right: 20),
-                            child: TabBar(
-                              indicatorColor: Colors.black,
-                              tabs: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: RichText(
-                                    text: TextSpan(
-                                        text: "Create",
-                                        style: TextStyle(fontSize: 13),
-                                        children: [TextSpan(text: " Subject")]),
-                                  ),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: RichText(
-                                    text: TextSpan(
-                                        text: "Assign",
-                                        style: TextStyle(fontSize: 13),
-                                        children: [TextSpan(text: " Subject")]),
-                                  ),
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "Subject",
-                                          style: TextStyle(fontSize: 13),
-                                          children: [TextSpan(text: " List")]),
-                                    ),
-                                  ),
-                                )
-                              ],
-                              controller: _tabController,
-                            )),
-                      ),
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                          controller: _tabController,
-                          children: <Widget>[
-                            CreateSubject(),
-                            AssignSubject(),
-                            Container(
-                              child: Text(""),
-                            )
-                          ]),
-                    )
-                  ],
-                ),
-              ),
-            ]),
+            ),
           ),
-        ],
+          elevation: 0,
+          bottom: TabBar(
+            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                color: Colors.white),
+            tabs: [
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  "Create subject".toUpperCase(),
+                  style: TextStyle(
+                      fontFamily: "Varela",
+                      letterSpacing: 0.9,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  "Assign subject".toUpperCase(),
+                  style: TextStyle(
+                      fontFamily: "Varela",
+                      letterSpacing: 0.9,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+            controller: _tabController,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        body: TabBarView(controller: _tabController, children: <Widget>[
+          CreateSubject(),
+          AssignSubject(),
+         
+        ]),
       ),
-    ));
+    );
   }
 }
 
@@ -179,16 +100,29 @@ class _CreateSubjectState extends State<CreateSubject> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Subject Name"),
-            content: Container(
-                child: TextFormField(
-              decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                hintText: "title",
-              ),
-            )),
-          );
+              
+              content: Container(
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    FormInputField(
+                      hintText: "Subject Name",
+                    ),
+                    SizedBox(height: 10,),
+                    TextButton(
+                      onPressed: () {},
+                      child: Center(
+                        child: Text(
+                          "CREATE",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Varela",
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
+              ));
         });
   }
 
@@ -211,9 +145,10 @@ class _CreateSubjectState extends State<CreateSubject> {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.centerRight,
-                  colors: [HexColor("#FF8A00"), HexColor("#C34332")])),
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.center,
+                  colors: [Theme.of(context).primaryColor,
+                        Theme.of(context).accentColor,])),
           child: Icon(
             Icons.add,
           ),
@@ -229,59 +164,154 @@ class AssignSubject extends StatefulWidget {
 }
 
 class _AssignSubjectState extends State<AssignSubject> {
-   String chooseValue;
-
+  String chooseValue;
+  String chooseStudent;
+  List stuList = ["sushila", "Aadesh", "Supiya"];
   List dropList = ["Class 1", "Class 2", "Class 3"];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child:Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top:20.0),
-            child: Center(
-              child: Container(
-                          decoration: BoxDecoration(
-                            
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: HexColor("#C34332").withOpacity(0.2)
-                            ),
-                            // color: Colors.black,
-                          ),
-                          height: 45,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Container(
-                            padding: EdgeInsets.only(left: 20),
-                            child: DropdownButton(
-                              isExpanded: true,
-                              value: chooseValue,
-                              onChanged: (_newValue) {
-                                setState(() {
-                                  chooseValue = _newValue;
-                                });
-                              },
-                              items: dropList.map((valueItem) {
-                                return DropdownMenuItem(
-                                  value: valueItem,
-                                  child: Text(valueItem),
-                                );
-                              }).toList(),
-                              hint: Padding(
-                                padding: EdgeInsets.only(left: 8.0),
-                                child: Text("Select Class"),
-                              ),
-                              icon: Icon(Icons.arrow_drop_down),
-                              iconSize: 40,
-                              underline: SizedBox(),
-                              iconEnabledColor: HexColor("#FF8A00"),
-                            ),
-                          ),
-                        ),
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Select Class:",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Varela",
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Container(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: chooseStudent,
+                        onChanged: (_newValue) {
+                          setState(() {
+                            chooseStudent = _newValue;
+                          });
+                        },
+                        items: stuList.map((valueItem) {
+                          return DropdownMenuItem(
+                            value: valueItem,
+                            child: Text(valueItem),
+                          );
+                        }).toList(),
+                        underline: SizedBox(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Select Subject:",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Varela",
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Container(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: chooseStudent,
+                        onChanged: (_newValue) {
+                          setState(() {
+                            chooseStudent = _newValue;
+                          });
+                        },
+                        items: stuList.map((valueItem) {
+                          return DropdownMenuItem(
+                            value: valueItem,
+                            child: Text(valueItem),
+                          );
+                        }).toList(),
+                        underline: SizedBox(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Select Staff:",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Varela",
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor),
+                    ),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Container(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: chooseStudent,
+                        onChanged: (_newValue) {
+                          setState(() {
+                            chooseStudent = _newValue;
+                          });
+                        },
+                        items: stuList.map((valueItem) {
+                          return DropdownMenuItem(
+                            value: valueItem,
+                            child: Text(valueItem),
+                          );
+                        }).toList(),
+                       
+                        underline: SizedBox(),
+                        
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 40),
+             TextButton(
+              onPressed: (){},
+              child: Center(
+                child:Text(
+                        "CREATE",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Varela",
+                            fontWeight: FontWeight.w600),
+                      ),
+              ),
             ),
-          )
-        ],)
-      ),
-    );
+            ],
+          ),
+        ));
   }
 }

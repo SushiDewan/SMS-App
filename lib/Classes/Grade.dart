@@ -5,6 +5,7 @@ import 'package:smsapp/core/api/apis.dart';
 
 class Grade {
   int schoolid;
+  BuildContext context;
   List<Map> grades = [];
   var _api = APIToken();
   void createGrade({
@@ -15,6 +16,7 @@ class Grade {
     Function onError,
   }) {
     this._api.post(
+      this.context,
       "/school/grade/",
       {
         "school_id": "1",
@@ -42,6 +44,7 @@ class Grade {
     Function onError,
   }) {
     this._api.get(
+      this.context,
       "/school/exam/",
       (response) {
         Map result = jsonDecode(response);

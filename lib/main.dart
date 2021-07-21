@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
-import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
+import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/school_code_body.dart';
 
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<SchoolBloc, UserInformation>(
         builder: (_, theme) {
           return MaterialApp(
-            
             theme: new ThemeData(
               primaryColor: Colors.deepPurple,
               accentColor: Colors.deepPurpleAccent,
@@ -86,6 +85,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.initState();
     controller = AnimationController(duration: const Duration(milliseconds: 4000), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
     controller.forward();
   }
 
@@ -103,9 +103,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   child: Column(
                     children: [
                       FadeTransition(
-                        opacity: animation,
-                        child: Image.asset("assets/images/book.png", height: 120,)
-                      ),
+                          opacity: animation,
+                          child: Image.asset(
+                            "assets/images/book.png",
+                            height: 120,
+                          )),
                       SizedBox(height: 25),
                       Text(
                         "SMEGP",

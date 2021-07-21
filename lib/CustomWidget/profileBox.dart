@@ -23,7 +23,7 @@ class ProfileBox extends StatelessWidget {
               style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   fontFamily: "Varela"),
             ),
             Container(width: 200, child: FormInputField())

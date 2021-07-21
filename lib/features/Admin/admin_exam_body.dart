@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:smsapp/Classes/Exam.dart';
+import 'package:smsapp/CustomWidget/TextField.dart';
 
 class AdminExamBody extends StatefulWidget {
   @override
   _AdminExamBodyState createState() => _AdminExamBodyState();
 }
 
-class _AdminExamBodyState extends State<AdminExamBody>
-    with TickerProviderStateMixin {
+class _AdminExamBodyState extends State<AdminExamBody> with TickerProviderStateMixin {
   TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -23,64 +24,48 @@ class _AdminExamBodyState extends State<AdminExamBody>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Manage Exam",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Exam",
+            style: TextStyle(
+              fontSize: 20,
+              letterSpacing: 0.9,
+              fontFamily: "Varela",
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
           ),
-        ),
-        
-        elevation: 0,
-      ),
-      body: Container(
-        color: Colors.white,
-        alignment: Alignment.center,
-        child: DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
+          elevation: 0,
+          bottom: TabBar(
+            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(color: Colors.white),
+            tabs: [
               Container(
-                  height: 40,
-                  child: TabBar(
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: Colors.black,
-                    tabs: [
-                      Container(
-                        child: RichText(
-                          text: TextSpan(
-                              text: "Create",
-                              style: TextStyle(fontSize: 13),
-                              children: [
-                                TextSpan(
-                                    text: " Exam",
-                                    )
-                              ]),
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: RichText(
-                          text: TextSpan(
-                              text: "Exam",
-                              style: TextStyle(fontSize: 13),
-                              children: [TextSpan(text: " List")]),
-                        ),
-                      ),
-                    ],
-                    controller: _tabController,
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Create Exam",
+                    style: TextStyle(fontFamily: "Varela", letterSpacing: 0.9, fontWeight: FontWeight.w600),
                   )),
-              Expanded(
-                child: TabBarView(
-                    controller: _tabController,
-                    children: <Widget>[CreateExam(), ExamList()]),
-              )
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  "Exam List",
+                  style: TextStyle(fontFamily: "Varela", letterSpacing: 0.9, fontWeight: FontWeight.w600),
+                ),
+              ),
             ],
+            controller: _tabController,
           ),
         ),
+        backgroundColor: Colors.white,
+        body: TabBarView(controller: _tabController, children: <Widget>[CreateExam(), ExamList()]),
       ),
     );
   }
@@ -101,28 +86,20 @@ class _CreateExamState extends State<CreateExam> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30, top: 50),
-            child: Row(
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Select Class:",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: "Varela",
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 15, fontFamily: "Varela", fontWeight: FontWeight.w600),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey),
-                    // color: Colors.black,
-                  ),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Theme.of(context).primaryColor)),
                   height: 45,
                   width: 145,
                   child: Container(
@@ -140,38 +117,24 @@ class _CreateExamState extends State<CreateExam> {
                           child: Text(valueItem),
                         );
                       }).toList(),
-                      // hint: Padding(
-                      //   padding: EdgeInsets.only(left: 8.0),
-                      //   child: Text("Select Student"),
-                      // ),
-                      // icon: Icon(Icons.arrow_drop_down),
-                      // iconSize: 40,
                       underline: SizedBox(),
-                      // iconEnabledColor: HexColor("#FF8A00"),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30),
-            child: Row(
+            SizedBox(height: 20),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Exam Type:",
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: "Varela",
-                      fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 15, fontFamily: "Varela", fontWeight: FontWeight.w600),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey),
-                    // color: Colors.black,
+                    border: Border.all(color: Theme.of(context).primaryColor),
                   ),
                   height: 45,
                   width: 145,
@@ -190,94 +153,52 @@ class _CreateExamState extends State<CreateExam> {
                           child: Text(valueItem),
                         );
                       }).toList(),
-                      // hint: Padding(
-                      //   padding: EdgeInsets.only(left: 8.0),
-                      //   child: Text("Select Student"),
-                      // ),
-                      // icon: Icon(Icons.arrow_drop_down),
-                      // iconSize: 40,
                       underline: SizedBox(),
-                      // iconEnabledColor: HexColor("#FF8A00"),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30),
-            child: Container(
+            SizedBox(height: 20),
+            Container(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Date From :",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Varela'),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: 'Varela'),
                 ),
-                Container(
-                  width: 145,
-                  height: 40,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                )
+                Container(width: 145, height: 40, child: FormInputField())
               ],
             )),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30),
-            child: Container(
+            SizedBox(height: 20),
+            Container(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Date To :",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Varela"),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: "Varela"),
                 ),
                 Container(
                   width: 145,
                   height: 40,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
+                  child: FormInputField(),
                 )
               ],
             )),
-          ),
-          SizedBox(height: 40),
-          Container(
-            height: 50,
-            width: 180,
-            child: MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                color: HexColor("#F7A529"),
-                onPressed: () {},
+            SizedBox(height: 40),
+            TextButton(
+              onPressed: () {},
+              child: Center(
                 child: Text(
-                  "Add",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "Varela",
-                      fontWeight: FontWeight.w600),
-                )),
-          )
-        ],
-      )),
-    );
+                  "CREATE",
+                  style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ],
+        )));
   }
 }
 
@@ -290,42 +211,102 @@ class ExamList extends StatefulWidget {
 
 class _ExamListState extends State<ExamList> {
   String chooseValue;
+
+  Exam exam = new Exam();
+
   List dropList = ["Class 1", "Class 2", "Class 3"];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    exam.setContext(context);
+    exam.getExamOptions(onSuccess: () {
+      setState(() {
+        exam = exam;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Theme.of(context).accentColor),
+              ),
+              height: 40,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: DropdownButton(
+                isExpanded: false,
+                value: chooseValue,
+                onChanged: (_newValue) {
+                  setState(() {
+                    chooseValue = _newValue;
+                  });
+                },
+                items: exam.examoptions.map((valueItem) {
+                  return DropdownMenuItem(
+                    value: valueItem['id'],
+                    child: Text(valueItem['grade']),
+                  );
+                }).toList(),
+                hint: Text(
+                  "Select Class",
+                  style: TextStyle(color: Theme.of(context).accentColor),
+                ),
+                icon: Icon(Icons.arrow_drop_down),
+                underline: SizedBox(),
+                iconEnabledColor: Theme.of(context).primaryColor,
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(5),
+              onLongPress: () {},
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Column(
+                  children: [
+                    ExamDetail("Exam Type", "Final Exam"),
+                    ExamDetail("Start Date", "14th Jan 2020"),
+                    ExamDetail("End Date", "18th Jan 2020"),
+                    ExamDetail("Start Time", "8:00 AM"),
+                    ExamDetail("End Time", "10:00 AM"),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ExamDetail extends StatelessWidget {
+  String title, value;
+  ExamDetail(this.title, this.value);
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: Column(
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: 50,
-            width: MediaQuery.of(context).size.width * 0.5,
-            color: Colors.grey.withOpacity(0.2),
-            padding: EdgeInsets.only(left: 20),
-            child: DropdownButton(
-              isExpanded: true,
-              value: chooseValue,
-              onChanged: (_newValue) {
-                setState(() {
-                  chooseValue = _newValue;
-                });
-              },
-              items: dropList.map((valueItem) {
-                return DropdownMenuItem(
-                  value: valueItem,
-                  child: Text(valueItem),
-                );
-              }).toList(),
-              hint: Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text("Select Class"),
-              ),
-              underline: SizedBox(),
-            ),
+          Text(
+            this.title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          ),
+          Text(
+            this.value,
+            style: TextStyle(fontWeight: FontWeight.normal, color: Color(0xff707070), fontSize: 12),
           ),
         ],
       ),
-    ));
+    );
   }
 }

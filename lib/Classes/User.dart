@@ -85,12 +85,6 @@ class User {
     prefs.setString("@refreshToken", this._refreshtoken);
   }
 
-  Future<void> _getTokens() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    this._accesstoken = prefs.getString("@accessToken");
-    this._refreshtoken = prefs.getString("@refreshToken");
-  }
-
   void login({
     @required String username,
     @required String password,
@@ -110,11 +104,16 @@ class User {
     }, (Response response) {
       Map result = jsonDecode(response.body);
       print(result['non_field_errors'][0]);
+
       if (response.statusCode == 200) {
         this._accesstoken = result['access'];
         this._refreshtoken = result['refresh'];
         this._saveTokens();
-        onSuccess(result['message']);
+        var data = {
+          'access': result['access'],
+          'refresh': result['refresh'],
+        };
+        onSuccess(result['message'], data);
       } else {
         Map errors = {
           'message': result['non_field_errors'][0] ?? "Error",

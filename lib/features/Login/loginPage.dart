@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
-import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
+import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'package:smsapp/features/ForgotPassword/forget_password_body.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
 import 'dart:math';
@@ -50,20 +50,12 @@ class _LoginPageState extends State<LoginPage> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor:
-              data['statusCode'] == 200 ? Colors.green : Colors.red,
+          backgroundColor: data['statusCode'] == 200 ? Colors.green : Colors.red,
           textColor: Colors.white,
         );
         if (data['statusCode'] == 200) {
-          context.read<SchoolBloc>().setUserInfo(
-                data['access'].toString(),
-                data['refresh'].toString(),
-                data['authenticatedUser']['admin_id'].toString(),
-                data['authenticatedUser']['username'].toString(),
-                data['authenticatedUser']['role'].toString(),
-              );
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminDashboardBody()));
+          context.read<SchoolBloc>().setUserInfo(data['access'].toString(), data['refresh'].toString());
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardBody()));
         }
       },
       (error) {
@@ -91,13 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                 clipper: TopClipper(),
                 child: Container(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                        Theme.of(context).primaryColor,
-                        Theme.of(context).accentColor,
-                      ])),
+                      gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.centerRight, colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).accentColor,
+                  ])),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 2,
                 ),
@@ -121,137 +110,105 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10),
-                      Text("Hello!",
-                          style: TextStyle(
-                              fontFamily: "Varela",
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).primaryColor)),
-                      Text(
-                        "Sign in to your account",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Varela",
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).accentColor),
-                      ),
-                      SizedBox(height: 60),
-                      Expanded(
-                          child: SingleChildScrollView(
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              FormInputField(
-                                controller: _usernameController,
-                                hintText: "Username",
-                                icon: FontAwesomeIcons.userAlt,
-                                validator: (value) {
-                                  if (value == '' || value == null)
-                                    return "Username cannot be empty";
-                                  return null;
-                                },
-                                errorText: null,
-                              ),
-                              SizedBox(height: 20),
-                              FormInputField(
-                                controller: _passwordController,
-                                hintText: "Password",
-                                icon: Icons.lock,
-                                validator: (value) {
-                                  if (value == '' || value == null)
-                                    return "Password cannot be empty";
-                                  return null;
-                                },
-                                errorText: null,
-                                obscureText: !isVisiblePassword,
-                                suffix: !isVisiblePassword
-                                    ? CupertinoIcons.eye
-                                    : CupertinoIcons.eye_slash,
-                                onSuffixPressed: () {
-                                  setState(() {
-                                    isVisiblePassword = !isVisiblePassword;
-                                  });
-                                },
-                              ),
-                              SizedBox(height: 40),
-                              Padding(
-                                      padding: EdgeInsets.only(left: 120, right: 0),
-                                      child: TextButton(
-                                        onPressed: isLoading ? null : doLogin,
-                                        child: Center(
-                                          child: isLoading
-                                              ? SizedBox(
-                                                  width: 17,
-                                                  height: 17,
-                                                  child: CircularProgressIndicator(
-                                                    color: Colors.white,
-                                                    strokeWidth: 2,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  "SUBMIT",
-                                                  style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
-                                                ),
-                                        ),
-                                      ),
-                                    ),
-                              SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: InkWell(
-                                  child: Text(
-                                    "Forget Password?",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 15,
-                                        fontFamily: "Varela"),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ForgetPasswordBody()));
-                                  },
-                                ),
-                              ),
-                              SizedBox(height: 40),
-                              InkWell(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Haven't registered Yet? ",
-                                      style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontSize: 14,
-                                          fontFamily: "Varela"),
-                                      children: [
-                                        TextSpan(
-                                            text: "Register",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w600,
-                                                color: Theme.of(context)
-                                                    .primaryColor))
-                                      ]),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              RegisterPage()));
-                                },
-                              ),
-                            ],
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  SizedBox(height: 10),
+                  Text("Hello!",
+                      style: TextStyle(fontFamily: "Varela", fontSize: 30, fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor)),
+                  Text(
+                    "Sign in to your account",
+                    style: TextStyle(fontSize: 16, fontFamily: "Varela", fontWeight: FontWeight.w500, color: Theme.of(context).accentColor),
+                  ),
+                  SizedBox(height: 60),
+                  Expanded(
+                      child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          FormInputField(
+                            controller: _usernameController,
+                            hintText: "Username",
+                            icon: FontAwesomeIcons.userAlt,
+                            validator: (value) {
+                              if (value == '' || value == null) return "Username cannot be empty";
+                              return null;
+                            },
+                            errorText: null,
                           ),
-                        ),
-                      ))
-                    ]),
+                          SizedBox(height: 20),
+                          FormInputField(
+                            controller: _passwordController,
+                            hintText: "Password",
+                            icon: Icons.lock,
+                            validator: (value) {
+                              if (value == '' || value == null) return "Password cannot be empty";
+                              return null;
+                            },
+                            errorText: null,
+                            obscureText: !isVisiblePassword,
+                            suffix: !isVisiblePassword ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+                            onSuffixPressed: () {
+                              setState(() {
+                                isVisiblePassword = !isVisiblePassword;
+                              });
+                            },
+                          ),
+                          SizedBox(height: 40),
+                          Padding(
+                            padding: EdgeInsets.only(left: 120, right: 0),
+                            child: TextButton(
+                              onPressed: isLoading ? null : doLogin,
+                              child: Center(
+                                child: isLoading
+                                    ? SizedBox(
+                                        width: 17,
+                                        height: 17,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        "SUBMIT",
+                                        style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                                      ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: InkWell(
+                              child: Text(
+                                "Forget Password?",
+                                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 15, fontFamily: "Varela"),
+                              ),
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordBody()));
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 40),
+                          InkWell(
+                            child: RichText(
+                              text: TextSpan(
+                                  text: "Haven't registered Yet? ",
+                                  style: TextStyle(color: Theme.of(context).accentColor, fontSize: 14, fontFamily: "Varela"),
+                                  children: [
+                                    TextSpan(
+                                        text: "Register",
+                                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Theme.of(context).primaryColor))
+                                  ]),
+                            ),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ))
+                ]),
               ),
             ),
           ),
@@ -275,20 +232,17 @@ class TopClipper extends CustomClipper<Path> {
     /// [Top Left corner]
     var secondControlPoint = Offset(0, 0);
     var secondEndPoint = Offset(width * .2, height * .3);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
 
     /// [Left Middle]
     var fifthControlPoint = Offset(width * .3, height * .5);
     var fiftEndPoint = Offset(width * .23, height * .6);
-    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
-        fiftEndPoint.dx, fiftEndPoint.dy);
+    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy, fiftEndPoint.dx, fiftEndPoint.dy);
 
     /// [Bottom Left corner]
     var thirdControlPoint = Offset(0, height);
     var thirdEndPoint = Offset(width, height);
-    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
-        thirdEndPoint.dx, thirdEndPoint.dy);
+    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy, thirdEndPoint.dx, thirdEndPoint.dy);
 
     path.lineTo(0, size.height);
     path.close();

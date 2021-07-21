@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smsapp/CustomWidget/EventTile.dart';
+import 'package:smsapp/CustomWidget/TextField.dart';
 
 class AdminEventBody extends StatefulWidget {
   @override
@@ -13,54 +14,84 @@ class _AdminEventBodyState extends State<AdminEventBody> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Center(child: Text("Add Event")),
+          title: Center(
+              child: Text(
+            "Create Event".toUpperCase(),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontFamily: "Varela",
+              fontWeight: FontWeight.w600,
+            ),
+          )),
           content: Container(
-            width: 300,
-            height: 375,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Event Title",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  height: 35,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "title",
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Event Title",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontFamily: "Varela",
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Event Title",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  height: 35,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "title",
+                  SizedBox(height: 5),
+                  FormInputField(),
+                  SizedBox(height: 10),
+                  Text(
+                    "Description",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontFamily: "Varela",
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text("Who Can see?"),
-                Container(
-                  child: Column(
-                    children: [
-                      ListTile(
+                  SizedBox(height: 5),
+                  FormInputField(),
+                  SizedBox(height: 10),
+                  Text("Who Can see?"),
+                  Container(
+                    child: Column(
+                      children: [
+                        ListTile(
+                            onTap: () {
+                              setState(() {
+                                this.value = !value;
+                              });
+                            },
+                            title: Text("Parent"),
+                            leading: Checkbox(
+                              value: value,
+                              onChanged: (value) {
+                                setState(() {
+                                  this.value = value;
+                                });
+                              },
+                            )),
+                        ListTile(
+                            onTap: () {
+                              setState(() {
+                                this.value = !value;
+                              });
+                            },
+                            title: Text("Teacher"),
+                            leading: Checkbox(
+                              value: value,
+                              onChanged: (value) {
+                                setState(() {
+                                  this.value = value;
+                                });
+                              },
+                            )),
+                        ListTile(
                           onTap: () {
                             setState(() {
                               this.value = !value;
                             });
                           },
-                          title: Text("Parent"),
+                          dense: true,
+                          title: Text("Sponsor"),
                           leading: Checkbox(
                             value: value,
                             onChanged: (value) {
@@ -68,44 +99,25 @@ class _AdminEventBodyState extends State<AdminEventBody> {
                                 this.value = value;
                               });
                             },
-                          )),
-                      ListTile(
-                          onTap: () {
-                            setState(() {
-                              this.value = !value;
-                            });
-                          },
-                          title: Text("Teacher"),
-                          leading: Checkbox(
-                            value: value,
-                            onChanged: (value) {
-                              setState(() {
-                                this.value = value;
-                              });
-                            },
-                          )),
-                      ListTile(
-                        onTap: () {
-                          setState(() {
-                            this.value = !value;
-                          });
-                        },
-                        dense: true,
-                        title: Text("Sponsor"),
-                        leading: Checkbox(
-                          value: value,
-                          onChanged: (value) {
-                            setState(() {
-                              this.value = value;
-                            });
-                          },
+                          ),
                         ),
-                      ),
-                      ElevatedButton(onPressed: () {}, child: Text("Submit"))
-                    ],
+                        TextButton(
+                          onPressed: () {},
+                          child: Center(
+                            child: Text(
+                              "CREATE",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Varela",
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

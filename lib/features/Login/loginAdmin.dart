@@ -1,20 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/Classes/User.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
-import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
-import 'package:smsapp/core/api/AdminApi.dart';
-import 'package:smsapp/features/Admin/admin_dashboard_body.dart';
+import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'package:smsapp/features/ForgotPassword/forget_password1_body.dart';
-import 'package:smsapp/features/Login/Classes/Admin.dart';
 import 'dart:math';
 
 import 'package:smsapp/features/Login/registerPage.dart';
@@ -47,11 +41,14 @@ class _LoginAdminState extends State<LoginAdmin> {
     user.login(
         username: username,
         password: password,
-        onSuccess: (message) {
+        onSuccess: (message, data) {
           setState(() {
             isLoading = false;
           });
-
+          BlocProvider.of<SchoolBloc>(context).setUserInfo(
+            data['access'].toString(),
+            data['refresh'].toString(),
+          );
           Fluttertoast.showToast(
             msg: message.toString(),
             toastLength: Toast.LENGTH_SHORT,
@@ -66,6 +63,7 @@ class _LoginAdminState extends State<LoginAdmin> {
           setState(() {
             isLoading = false;
           });
+
           Fluttertoast.showToast(
             msg: error['message'].toString(),
             toastLength: Toast.LENGTH_SHORT,
@@ -82,38 +80,6 @@ class _LoginAdminState extends State<LoginAdmin> {
           print("error");
           print(error);
         });
-
-    // APIwithoutAuthentication api = APIwithoutAuthentication();
-    // api.post(
-    //   "school/user/login/admin/",
-    //   jsonEncode({"username": username, "password": password}),
-    //   (Response response) {
-    //     setState(() {
-    //       isLoading = false;
-    //     });
-    //     Map data = jsonDecode(response.body);
-    //     print(response.body);
-    //     Fluttertoast.showToast(
-    //       msg: data['message'].toString(),
-    //       toastLength: Toast.LENGTH_SHORT,
-    //       gravity: ToastGravity.BOTTOM,
-    //       timeInSecForIosWeb: 1,
-    //       backgroundColor: data['statusCode'] == 200 ? Colors.green : Colors.red,
-    //       textColor: Colors.white,
-    //     );
-    //     if (data['statusCode'] == 200) {
-    //       context.read<SchoolBloc>().setUserInfo(
-    //             data['access'].toString(),
-    //             data['refresh'].toString(),
-    //             data['authenticatedUser']['admin_id'].toString(),
-    //             data['authenticatedUser']['username'].toString(),
-    //             data['authenticatedUser']['role'].toString(),
-    //           );
-    //       Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage()));
-    //     }
-    //   },
-    //   (error) {},
-    // );
   }
 
   @override
