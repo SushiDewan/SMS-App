@@ -9,7 +9,6 @@ class TileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         boxShadow: [],
@@ -21,16 +20,10 @@ class TileButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              // height: 70,
-              // width: 70,
-              // decoration: BoxDecoration(
-              //   color: Theme.of(context).accentColor,
-              //   // shape: BoxShape.circle
-              // ),
+            
               child: Icon(
                 this.icon,
                 size: 25,
-                // color: Colors.white,
               ),
             ),
             SizedBox(height: 10),

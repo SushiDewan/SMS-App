@@ -57,6 +57,7 @@ class _AdminTimetableBodyState extends State<AdminTimetableBody>
                 child: Text(
                   "Create timetable".toUpperCase(),
                   style: TextStyle(
+                    fontSize: 13,
                       fontFamily: "Varela",
                       letterSpacing: 0.9,
                       fontWeight: FontWeight.w600),
@@ -68,6 +69,7 @@ class _AdminTimetableBodyState extends State<AdminTimetableBody>
                 child: Text(
                   "view timetable".toUpperCase(),
                   style: TextStyle(
+                    fontSize: 13,
                       fontFamily: "Varela",
                       letterSpacing: 0.9,
                       fontWeight: FontWeight.w600),

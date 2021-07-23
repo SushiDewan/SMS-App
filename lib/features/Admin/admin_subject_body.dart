@@ -59,6 +59,7 @@ class _AdminSubjectBodyState extends State<AdminSubjectBody>
                   "Create subject".toUpperCase(),
                   style: TextStyle(
                       fontFamily: "Varela",
+                      fontSize: 13,
                       letterSpacing: 0.9,
                       fontWeight: FontWeight.w600),
                 ),
@@ -69,6 +70,7 @@ class _AdminSubjectBodyState extends State<AdminSubjectBody>
                 child: Text(
                   "Assign subject".toUpperCase(),
                   style: TextStyle(
+                    fontSize: 13,
                       fontFamily: "Varela",
                       letterSpacing: 0.9,
                       fontWeight: FontWeight.w600),

@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
+import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
 import 'package:smsapp/features/ForgotPassword/forget_password1_body.dart';
-// import 'package:hexcolor/hexcolor.dart';
 
 class ForgetPasswordBody extends StatefulWidget {
   @override
@@ -12,9 +16,43 @@ class ForgetPasswordBody extends StatefulWidget {
 
 class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
   final _emailController = TextEditingController();
+  
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
-  @override
+  doReset() {
+    print(_formKey.currentState.validate());
+    if (!_formKey.currentState.validate()) return;
+    setState(() {
+      isLoading = true;
+    });
+    String email = _emailController.text;
+    APIwithoutAuthentication api = APIwithoutAuthentication();
+    api.post("api/reset_password/", jsonEncode({"email" : email}), (Response response) {
+        setState(() {
+          isLoading = false;
+        });
+        Map data = jsonDecode(response.body);
+        print(response.body);
+       Fluttertoast.showToast( msg: data['message'].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: data['statusCode'] == 200 ? Colors.green : Colors.red,
+          textColor: Colors.white,);
+        if(data['statusCode'] == 200){
+           Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword1Body()));
+        }
+      },
+      (error) {
+        setState(() {
+          isLoading = false;
+        });
+      },
+    );
+  }
+
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -31,85 +69,71 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Image.asset(
-            'assets/images/test.png',
-            width: 300,
-            height: 300,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 50),
-          Container(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  children: [
-                    Text(
-                      "Please enter Your registered Email ID/Phone",
-                      // textAlign: TextAlign.center,
-                      style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontFamily: "Varela", fontSize: 13),
-                    ),
-                    SizedBox(height: 40),
-                    Text(
-                      "We'll send a verification code to your registerd email Id/Phone",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Theme.of(context).accentColor, fontFamily: 'Varela', fontSize: 12),
-                    ),
-                    SizedBox(height: 40),
-                    FormInputField(
-                      icon: FontAwesomeIcons.userAlt,
-                      controller: _emailController,
-                      validator: (value) {
-                        return (value == null || value == '')
-                            ? 'Email cannot be empty'
-                            : (!EmailValidator.validate(value))
-                                ? "Enter valid email"
-                                : null;
-                      },
-                      hintText: "Email/Phone",
-                    ),
-                    SizedBox(height: 70),
-                    MaterialButton(
-                      height: 50,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      onPressed: () {
-                        if (_formKey.currentState.validate())
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              transitionDuration: Duration(milliseconds: 400),
-                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-                                return ForgetPassword1Body(
-                                  email: _emailController.text,
-                                );
-                              },
-                              transitionsBuilder:
-                                  (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-                                return Align(
-                                  child: SlideTransition(
-                                    position: Tween(begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0)).animate(animation),
-                                    child: child,
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                      },
-                      elevation: 10,
-                      color: Colors.deepPurple,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 80, right: 80),
-                        child: Text(
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+        child: Column(
+          children: [
+            Text(
+              "Please enter Your registered Email ID/Phone",
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Varela",
+                  fontSize: 13),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "We'll send a verification code to your registerd email Id/Phone",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontFamily: 'Varela',
+                  fontSize: 12),
+            ),
+            SizedBox(height: 20),
+            Form(
+              key: _formKey,
+              child: FormInputField(
+                icon: FontAwesomeIcons.userAlt,
+                controller: _emailController,
+                validator: (value) {
+                  return (value == null || value == '')
+                      ? 'Email cannot be empty'
+                      : (!EmailValidator.validate(value))
+                          ? "Enter valid email"
+                          : null;
+                },
+                errorText: null,
+                hintText: "Email/Phone",
+              ),
+            ),
+            SizedBox(height: 70),
+            Padding(
+              padding: EdgeInsets.only(left: 120, right: 0),
+              child: TextButton(
+                onPressed: isLoading ? null : doReset,
+                child: Center(
+                  child: isLoading
+                      ? SizedBox(
+                          width: 17,
+                          height: 17,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(
                           "Next",
-                          style: TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Varela",
+                              fontWeight: FontWeight.w600),
                         ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

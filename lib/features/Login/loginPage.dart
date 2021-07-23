@@ -99,9 +99,7 @@ class _LoginPageState extends State<LoginPage> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(
-                color: Theme.of(context).primaryColor, //change your color here
-              ),
+            automaticallyImplyLeading: false, 
             ),
             body: GestureDetector(
               behavior: HitTestBehavior.opaque,

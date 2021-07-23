@@ -8,7 +8,7 @@ import 'package:smsapp/core/api/APIWithoutAuthentication.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
-import 'package:smsapp/features/Card/choose_user_body.dart';
+import 'package:smsapp/features/Login/loginPage.dart';
 
 class SchoolCodeBody extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class _SchoolCodeBodyState extends State<SchoolCodeBody> {
             transitionDuration: Duration(milliseconds: 400),
             pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
               print(_myController.text);
-              return ChooseUserBody();
+              return LoginPage();
             },
             transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
               return Align(

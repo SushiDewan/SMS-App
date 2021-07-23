@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -28,7 +27,7 @@ class APINoToken {
 }
 
 class APIToken {
-  String apiurl = "http://localhost:8000/"; // dotenv.env['API_URL'];
+  String apiurl = dotenv.env['API_URL'];
   var dio = Dio();
   Future<void> refreshToken(context) async {
     try {

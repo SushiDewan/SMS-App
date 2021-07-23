@@ -53,16 +53,18 @@ class _AdminFeeBodyState extends State<AdminFeeBody>
                 color: Colors.white),
             tabs: [
               Text(
-                "Payment Structure".toUpperCase(),
+                "Create Category".toUpperCase(),
                 style: TextStyle(
                     fontFamily: "Varela",
                     letterSpacing: 0.9,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600),
               ),
               Text(
                 "Payment List".toUpperCase(),
                 style: TextStyle(
                     fontFamily: "Varela",
+                    fontSize: 13,
                     letterSpacing: 0.9,
                     fontWeight: FontWeight.w600),
               ),
@@ -70,6 +72,7 @@ class _AdminFeeBodyState extends State<AdminFeeBody>
                 "Send Remainder".toUpperCase(),
                 style: TextStyle(
                     fontFamily: "Varela",
+                    fontSize: 13,
                     letterSpacing: 0.9,
                     fontWeight: FontWeight.w600),
               ),
