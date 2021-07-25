@@ -73,19 +73,25 @@ class APIToken {
   }
 
   Future<void> get(context, endpoint, onSuccess, onError) async {
+    print("API fetching1");
     var client = http.Client();
     try {
       var url = Uri.parse(this.apiurl + endpoint);
+      print(url);
       var token = BlocProvider.of<SchoolBloc>(context).state.access;
+      print(token);
       var response = await client.get(
         url,
         headers: {
           "authorization": "JWT " + token,
         },
       );
+      print(response.statusCode);
+
       if (response.statusCode == 401) {
         this.refreshToken(context).then((value) => this.get(context, endpoint, onSuccess, onError));
       } else {
+        print("API fetching2");
         onSuccess(response);
       }
     } catch (e) {

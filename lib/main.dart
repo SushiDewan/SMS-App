@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
+import 'package:smsapp/features/Admin/Exam/Bloc/Bloc.dart';
 import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'dart:async';
 import 'package:smsapp/features/SchoolCode/school_code_body.dart';
@@ -21,52 +22,55 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SchoolBloc(),
-      child: BlocBuilder<SchoolBloc, UserInformation>(
-        builder: (_, theme) {
-          return MaterialApp(
-            theme: new ThemeData(
-              primaryColor: Colors.deepPurple,
-              accentColor: Colors.deepPurpleAccent,
-              backgroundColor: Colors.white,
-              inputDecorationTheme: InputDecorationTheme(
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.2,
+      child: BlocProvider(
+        create: (_) => ClassListBloc(),
+        child: BlocBuilder<SchoolBloc, UserInformation>(
+          builder: (_, theme) {
+            return MaterialApp(
+              theme: new ThemeData(
+                primaryColor: Colors.deepPurple,
+                accentColor: Colors.deepPurpleAccent,
+                backgroundColor: Colors.white,
+                inputDecorationTheme: InputDecorationTheme(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1.2,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 13,
+                    color: Colors.deepPurple,
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  suffixStyle: TextStyle(
+                    fontSize: 13,
                     color: Colors.deepPurple,
                   ),
                 ),
-                hintStyle: TextStyle(
-                  fontSize: 13,
-                  color: Colors.deepPurple,
-                ),
-                contentPadding: EdgeInsets.all(10),
-                suffixStyle: TextStyle(
-                  fontSize: 13,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              buttonTheme: ButtonThemeData(),
-              textButtonTheme: TextButtonThemeData(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-                  elevation: MaterialStateProperty.all(2.0),
-                  padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35.0),
+                buttonTheme: ButtonThemeData(),
+                textButtonTheme: TextButtonThemeData(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                    elevation: MaterialStateProperty.all(2.0),
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(vertical: 16),
                     ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0),
+                      ),
+                    ),
+                    textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600)),
                   ),
-                  textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600)),
                 ),
+                textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
               ),
-              textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
-            ),
-            debugShowCheckedModeBanner: false,
-            home: Home(),
-          );
-        },
+              debugShowCheckedModeBanner: false,
+              home: Home(),
+            );
+          },
+        ),
       ),
     );
   }

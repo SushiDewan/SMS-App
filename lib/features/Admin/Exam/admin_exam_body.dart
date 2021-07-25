@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/Classes/Exam.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
+import 'package:smsapp/features/Admin/Exam/Bloc/Bloc.dart';
+import 'package:smsapp/features/Admin/Exam/Bloc/Modal.dart';
 
 class AdminExamBody extends StatefulWidget {
   @override
@@ -14,6 +18,10 @@ class _AdminExamBodyState extends State<AdminExamBody> with TickerProviderStateM
   void initState() {
     super.initState();
     _tabController = new TabController(length: 2, vsync: this);
+
+    print("fetching");
+    BlocProvider.of<ClassListBloc>(context).setContext(context);
+    BlocProvider.of<ClassListBloc>(context).fetchExamOption();
   }
 
   @override
@@ -29,7 +37,7 @@ class _AdminExamBodyState extends State<AdminExamBody> with TickerProviderStateM
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Exam",
+            "Exam1",
             style: TextStyle(
               fontSize: 20,
               letterSpacing: 0.9,
@@ -211,20 +219,10 @@ class ExamList extends StatefulWidget {
 
 class _ExamListState extends State<ExamList> {
   String chooseValue;
-
-  Exam exam = new Exam();
-
-  List dropList = ["Class 1", "Class 2", "Class 3"];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    exam.setContext(context);
-    exam.getExamOptions(onSuccess: () {
-      setState(() {
-        exam = exam;
-      });
-    });
   }
 
   @override
@@ -241,27 +239,31 @@ class _ExamListState extends State<ExamList> {
               ),
               height: 40,
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: DropdownButton(
-                isExpanded: false,
-                value: chooseValue,
-                onChanged: (_newValue) {
-                  setState(() {
-                    chooseValue = _newValue;
-                  });
-                },
-                items: exam.examoptions.map((valueItem) {
-                  return DropdownMenuItem(
-                    value: valueItem['id'],
-                    child: Text(valueItem['grade']),
+              child: BlocBuilder<ClassListBloc, ClassList>(
+                builder: (_, classList) {
+                  return DropdownButton(
+                    isExpanded: false,
+                    value: chooseValue,
+                    onChanged: (_newValue) {
+                      setState(() {
+                        chooseValue = _newValue;
+                      });
+                    },
+                    items: classList.classList.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem.id,
+                        child: Text(valueItem.name),
+                      );
+                    }).toList(),
+                    hint: Text(
+                      "Select Class",
+                      style: TextStyle(color: Theme.of(context).accentColor),
+                    ),
+                    icon: Icon(Icons.arrow_drop_down),
+                    underline: SizedBox(),
+                    iconEnabledColor: Theme.of(context).primaryColor,
                   );
-                }).toList(),
-                hint: Text(
-                  "Select Class",
-                  style: TextStyle(color: Theme.of(context).accentColor),
-                ),
-                icon: Icon(Icons.arrow_drop_down),
-                underline: SizedBox(),
-                iconEnabledColor: Theme.of(context).primaryColor,
+                },
               ),
             ),
             InkWell(

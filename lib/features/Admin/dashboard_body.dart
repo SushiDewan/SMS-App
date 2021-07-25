@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
 import 'package:smsapp/CustomWidget/Profile.dart';
 import 'package:smsapp/CustomWidget/TileButton.dart';
-import 'package:smsapp/features/Admin/admin_event_body.dart';
-import 'package:smsapp/features/Admin/admin_exam_body.dart';
+import 'package:smsapp/features/Admin/Events/admin_event_body.dart';
+import 'package:smsapp/features/Admin/Exam/admin_exam_body.dart';
 import 'package:smsapp/features/Admin/admin_fee_body.dart';
 import 'package:smsapp/features/Admin/approve_user.dart';
 import 'package:smsapp/features/Admin/profile_body.dart';
@@ -33,16 +33,12 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
           return AlertDialog(
             content: Container(
               height: 120,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [
                   Text(
                     "Do you really want to Log out?",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "Varela"),
+                    style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600, fontFamily: "Varela"),
                   ),
                   SizedBox(
                     height: 20,
@@ -58,21 +54,14 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
                             context,
                             PageRouteBuilder(
                               transitionDuration: Duration(milliseconds: 400),
-                              pageBuilder: (BuildContext context,
-                                  Animation<double> animation,
-                                  Animation<double> secondaryAnimation) {
+                              pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
                                 return LoginPage();
                               },
-                              transitionsBuilder: (BuildContext context,
-                                  Animation<double> animation,
-                                  Animation<double> secondaryAnimation,
-                                  Widget child) {
+                              transitionsBuilder:
+                                  (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
                                 return Align(
                                   child: SlideTransition(
-                                    position: Tween(
-                                            begin: Offset(0.0, 1.0),
-                                            end: Offset(0.0, 0.0))
-                                        .animate(animation),
+                                    position: Tween(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)).animate(animation),
                                     child: child,
                                   ),
                                 );
@@ -259,10 +248,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
                       icon: tile['icon'],
                       title: tile['title'],
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => tile['page']));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => tile['page']));
                       },
                     );
                   }).toList(),
@@ -277,8 +263,7 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
         padding: EdgeInsets.only(top: 5, bottom: 10, left: 20, right: 20),
         // color: HexColor('#B9E2DA'),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -288,70 +273,57 @@ class _AdminDashboardBodyState extends State<AdminDashboardBody> {
                 offset: Offset(3, 3),
               )
             ]),
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+              child: Column(
             children: [
-              Container(
-                  child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications),
-                    onPressed: () {},
-                    iconSize: 30,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Text(
-                    "Notification",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontFamily: 'Varela',
-                        fontSize: 11),
-                  )
-                ],
-              )),
-              Container(
-                  child: Column(
-                children: [
-                  IconButton(
-                      icon: Icon(FontAwesomeIcons.userAlt),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfileBody()));
-                      },
-                      iconSize: 30,
-                      color: Theme.of(context).primaryColor),
-                  Text("Profile",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontFamily: 'Varela',
-                          fontSize: 11))
-                ],
-              )),
-              Container(
-                child: Column(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.logout),
-                        onPressed: () {
-                          createAlertDialog(context);
-                        },
-                        iconSize: 30,
-                        color: Theme.of(context).primaryColor),
-                    Text(
-                      "Logout",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontFamily: 'Varela',
-                        fontSize: 11,
-                      ),
-                    )
-                  ],
-                ),
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {},
+                iconSize: 30,
+                color: Theme.of(context).primaryColor,
               ),
-            ]),
+              Text(
+                "Notification",
+                style: TextStyle(color: Theme.of(context).primaryColor, fontFamily: 'Varela', fontSize: 11),
+              )
+            ],
+          )),
+          Container(
+              child: Column(
+            children: [
+              IconButton(
+                  icon: Icon(FontAwesomeIcons.userAlt),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileBody()));
+                  },
+                  iconSize: 30,
+                  color: Theme.of(context).primaryColor),
+              Text("Profile", style: TextStyle(color: Theme.of(context).primaryColor, fontFamily: 'Varela', fontSize: 11))
+            ],
+          )),
+          Container(
+            child: Column(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      createAlertDialog(context);
+                    },
+                    iconSize: 30,
+                    color: Theme.of(context).primaryColor),
+                Text(
+                  "Logout",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Varela',
+                    fontSize: 11,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }
