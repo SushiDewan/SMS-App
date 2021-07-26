@@ -5,7 +5,7 @@ import 'package:smsapp/CustomWidget/Profile.dart';
 import 'package:smsapp/CustomWidget/TileButton.dart';
 import 'package:smsapp/features/Admin/Events/admin_event_body.dart';
 import 'package:smsapp/features/Admin/Exam/admin_exam_body.dart';
-import 'package:smsapp/features/Admin/admin_fee_body.dart';
+import 'package:smsapp/features/Admin/Payments/admin_fee_body.dart';
 import 'package:smsapp/features/Admin/approve_user.dart';
 import 'package:smsapp/features/Admin/profile_body.dart';
 import 'package:smsapp/features/Admin/admin_staff_body.dart';

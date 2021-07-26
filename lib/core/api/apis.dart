@@ -51,6 +51,7 @@ class APIToken {
   }
 
   Future<void> post(context, endpoint, body, onSuccess, onError) async {
+    print(BlocProvider.of<SchoolBloc>(context).state.access);
     try {
       var url = Uri.parse(this.apiurl + endpoint);
       var response = await http.post(
@@ -59,7 +60,7 @@ class APIToken {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": "basic ${BlocProvider.of<SchoolBloc>(context).state.access}",
+          "Authorization": "JWT ${BlocProvider.of<SchoolBloc>(context).state.access}",
         },
       );
       if (response.statusCode == 401) {

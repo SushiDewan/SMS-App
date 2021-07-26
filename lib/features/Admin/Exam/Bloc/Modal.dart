@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:smsapp/core/api/apis.dart';
 
@@ -24,6 +25,7 @@ class ClassList {
 
   void getExamOptions() {
     print("API fetching");
+    classList.clear();
     this._api.get(this._context, "school/exam/", (Response response) {
       var result = jsonDecode(response.body);
       print(result);
@@ -37,7 +39,30 @@ class ClassList {
   }
 }
 
-class ExamDetail {
+class ExamDetailModal {
+  int id;
   String exam_type;
-  DateTime start_date_time, end_date_time;
+  String start_date_time, end_date_time;
+}
+
+class CreateExamModal {
+  String gradeId, examType, startDate, endDate;
+  var _api = APIToken();
+
+  CreateExamModal(this.gradeId, this.examType, this.startDate, this.endDate);
+  saveToApi(BuildContext context) {
+    var json = {"start_date": this.startDate, "end_date": this.endDate, "exam_type": this.examType, "grade_id": int.parse(this.gradeId)};
+    _api.post(context, "school/exam/", json, (Response response) {
+      var result = jsonDecode(response.body);
+      print(result);
+
+      if (response.statusCode == 201) {
+        Fluttertoast.showToast(msg: "Saved");
+      } else {
+        Fluttertoast.showToast(msg: "Error saving");
+      }
+    }, (error) {
+      Fluttertoast.showToast(msg: error.toString());
+    });
+  }
 }

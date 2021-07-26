@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smsapp/BLoc/UserInformation.dart';
-import 'package:smsapp/Classes/Exam.dart';
+import 'package:http/http.dart';
 import 'package:smsapp/CustomWidget/TextField.dart';
+import 'package:smsapp/core/api/apis.dart';
 import 'package:smsapp/features/Admin/Exam/Bloc/Bloc.dart';
 import 'package:smsapp/features/Admin/Exam/Bloc/Modal.dart';
 
@@ -37,7 +39,7 @@ class _AdminExamBodyState extends State<AdminExamBody> with TickerProviderStateM
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Exam1",
+            "Exam",
             style: TextStyle(
               fontSize: 20,
               letterSpacing: 0.9,
@@ -89,8 +91,11 @@ class CreateExam extends StatefulWidget {
 class _CreateExamState extends State<CreateExam> {
   String chooseValue;
   String chooseStudent;
-  List stuList = ["sushila", "Aadesh", "Supiya"];
+  List stuList = ["1", "2", "3"];
   List dropList = ["Class 1", "Class 2", "Class 3"];
+
+  final dateFromController = new TextEditingController();
+  final dateToController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +154,10 @@ class _CreateExamState extends State<CreateExam> {
                   child: Container(
                     child: DropdownButton(
                       isExpanded: true,
-                      value: chooseStudent,
+                      value: chooseValue,
                       onChanged: (_newValue) {
                         setState(() {
-                          chooseStudent = _newValue;
+                          chooseValue = _newValue;
                         });
                       },
                       items: stuList.map((valueItem) {
@@ -176,7 +181,12 @@ class _CreateExamState extends State<CreateExam> {
                   "Date From :",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: 'Varela'),
                 ),
-                Container(width: 145, height: 40, child: FormInputField())
+                Container(
+                    width: 145,
+                    height: 40,
+                    child: FormInputField(
+                      controller: dateFromController,
+                    ))
               ],
             )),
             SizedBox(height: 20),
@@ -191,13 +201,18 @@ class _CreateExamState extends State<CreateExam> {
                 Container(
                   width: 145,
                   height: 40,
-                  child: FormInputField(),
+                  child: FormInputField(
+                    controller: dateToController,
+                  ),
                 )
               ],
             )),
             SizedBox(height: 40),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                CreateExamModal createExamModel = new CreateExamModal(chooseStudent, chooseValue, dateFromController.text, dateToController.text);
+                createExamModel.saveToApi(context);
+              },
               child: Center(
                 child: Text(
                   "CREATE",
@@ -219,10 +234,29 @@ class ExamList extends StatefulWidget {
 
 class _ExamListState extends State<ExamList> {
   String chooseValue;
+  ExamDetailModal examDetail = new ExamDetailModal();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  void fetchDetail(String id) {
+    print(id);
+    var api = APIToken();
+    api.post(context, "school/exam/view/", {"grade_id": id}, (Response response) {
+      Map result = (jsonDecode(response.body));
+      if (result.containsKey('exam')) {
+        setState(() {
+          examDetail.id = result['exam']['1']['id'];
+          examDetail.exam_type = result['exam']['1']['exam_type'];
+          examDetail.start_date_time = result['exam']['1']['start_date'];
+          examDetail.end_date_time = result['exam']['1']['end_date'];
+        });
+      }
+    }, (error) {
+      print(error);
+    });
   }
 
   @override
@@ -245,6 +279,7 @@ class _ExamListState extends State<ExamList> {
                     isExpanded: false,
                     value: chooseValue,
                     onChanged: (_newValue) {
+                      fetchDetail(_newValue);
                       setState(() {
                         chooseValue = _newValue;
                       });
@@ -273,11 +308,9 @@ class _ExamListState extends State<ExamList> {
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                 child: Column(
                   children: [
-                    ExamDetail("Exam Type", "Final Exam"),
-                    ExamDetail("Start Date", "14th Jan 2020"),
-                    ExamDetail("End Date", "18th Jan 2020"),
-                    ExamDetail("Start Time", "8:00 AM"),
-                    ExamDetail("End Time", "10:00 AM"),
+                    ExamDetail("Exam Type", examDetail.exam_type ?? ""),
+                    ExamDetail("Start Date", examDetail.start_date_time ?? ""),
+                    ExamDetail("End Date", examDetail.end_date_time ?? ""),
                   ],
                 ),
               ),

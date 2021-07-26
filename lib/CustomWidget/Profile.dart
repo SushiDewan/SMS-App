@@ -12,17 +12,17 @@ class Profile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(border: Border.all(width: 2, color: Colors.white), borderRadius: BorderRadius.circular(90)),
-            child: ClipOval(
-              child: Image.network(
-                "https://myrepublica.nagariknetwork.com/uploads/media/RajeshHamal.jpg",
-                height: 90,
-                width: 90,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(border: Border.all(width: 2, color: Colors.white), borderRadius: BorderRadius.circular(90)),
+          //   child: ClipOval(
+          //     child: Image.network(
+          //       "https://myrepublica.nagariknetwork.com/uploads/media/RajeshHamal.jpg",
+          //       height: 90,
+          //       width: 90,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           SizedBox(width: 20),
           Expanded(
             child: InkWell(
