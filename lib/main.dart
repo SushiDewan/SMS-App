@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smsapp/BLoc/UserInformation.dart';
-import 'package:smsapp/features/Admin/presentation/pages/admin_dashboard_page.dart';
+import 'package:smsapp/features/Admin/Exam/Bloc/Bloc.dart';
+import 'package:smsapp/features/Admin/dashboard_body.dart';
 import 'dart:async';
-import 'package:smsapp/features/SchoolCode/presentation/widgets/school_code_body.dart';
+import 'package:smsapp/features/SchoolCode/school_code_body.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -22,51 +22,55 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SchoolBloc(),
-      child: BlocBuilder<SchoolBloc, UserInformation>(
-        builder: (_, theme) {
-          return MaterialApp(
-            theme: new ThemeData(
-              primaryColor: Colors.deepPurple,
-              accentColor: Colors.deepPurpleAccent,
-              backgroundColor: Colors.white,
-              inputDecorationTheme: InputDecorationTheme(
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1.2,
+      child: BlocProvider(
+        create: (_) => ClassListBloc(),
+        child: BlocBuilder<SchoolBloc, UserInformation>(
+          builder: (_, theme) {
+            return MaterialApp(
+              theme: new ThemeData(
+                primaryColor: Colors.deepPurple,
+                accentColor: Colors.deepPurpleAccent,
+                backgroundColor: Colors.white,
+                inputDecorationTheme: InputDecorationTheme(
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1.2,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  hintStyle: TextStyle(
+                    fontSize: 13,
+                    color: Colors.deepPurple,
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  suffixStyle: TextStyle(
+                    fontSize: 13,
                     color: Colors.deepPurple,
                   ),
                 ),
-                hintStyle: TextStyle(
-                  fontSize: 13,
-                  color: Colors.deepPurple,
-                ),
-                contentPadding: EdgeInsets.all(10),
-                suffixStyle: TextStyle(
-                  fontSize: 13,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              buttonTheme: ButtonThemeData(),
-              textButtonTheme: TextButtonThemeData(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
-                  elevation: MaterialStateProperty.all(2.0),
-                  padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35.0),
+                buttonTheme: ButtonThemeData(),
+                textButtonTheme: TextButtonThemeData(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                    elevation: MaterialStateProperty.all(2.0),
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(vertical: 16),
                     ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0),
+                      ),
+                    ),
+                    textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600)),
                   ),
-                  textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white, fontFamily: "Varela", fontWeight: FontWeight.w600)),
                 ),
+                textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
               ),
-              textTheme: TextTheme(headline1: TextStyle(fontSize: 20)),
-            ),
-            home: Home(),
-          );
-        },
+              debugShowCheckedModeBanner: false,
+              home: Home(),
+            );
+          },
+        ),
       ),
     );
   }
@@ -85,6 +89,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.initState();
     controller = AnimationController(duration: const Duration(milliseconds: 4000), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
     controller.forward();
   }
 
@@ -102,13 +107,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   child: Column(
                     children: [
                       FadeTransition(
-                        opacity: animation,
-                        child: Icon(
-                          FontAwesomeIcons.bookOpen,
-                          size: 130,
-                          color: Colors.white,
-                        ),
-                      ),
+                          opacity: animation,
+                          child: Image.asset(
+                            "assets/images/book.png",
+                            height: 120,
+                          )),
                       SizedBox(height: 25),
                       Text(
                         "SMEGP",
@@ -144,7 +147,7 @@ class _IndicatorState extends State<Indicator> {
 
   navigationIfSeesionExist() async {
     if (await context.read<SchoolBloc>().isLogin()) {
-      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardPage())));
+      Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboardBody())));
     } else
       Timer(Duration(milliseconds: 4000), () => Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolCodeBody())));
   }
